@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_home_ex"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/corner1"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/image_nhom_co"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/text_15"
+            android:layout_marginTop="@dimen/text_15"
+            android:layout_marginEnd="@dimen/text_15"
+            android:layout_marginBottom="@dimen/text_15"
+            android:src="@mipmap/logo1" />
+
+
+        <TextView
+            android:id="@+id/tv_ten_nhom_co"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_nhom_co"
+            android:textAlignment="center"
+            android:maxLines="2"
+            android:fontFamily="@font/baloo"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="3dp"
+            android:gravity="center_vertical"
+            android:text="Tên nhóm cơ"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</RelativeLayout>

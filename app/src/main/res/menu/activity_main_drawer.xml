@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:sweet="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_manage"
+        android:icon="@mipmap/manager_app"
+        android:title="Quản trị" />
+
+    <item
+        android:id="@+id/nav_share"
+        android:icon="@mipmap/share_app"
+        android:title="Chia sẻ" />
+    <item
+        android:id="@+id/nav_rate"
+        android:icon="@mipmap/rate_app"
+        android:title="Đánh giá" />
+
+    <item
+        android:id="@+id/nav_privacy"
+        android:icon="@mipmap/privacy_app"
+        android:title="Điều khoản" />
+
+    <item
+        android:id="@+id/nav_account"
+        android:icon="@mipmap/account_app"
+        android:title="Tài khoản" />
+
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@mipmap/setiing_app"
+        android:title="Cài đặt" />
+
+
+</menu>

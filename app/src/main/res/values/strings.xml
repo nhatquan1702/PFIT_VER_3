@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">PFIT ver 2</string>
+    <string name="navigation_drawer_close">Đóng ngăn điều hướng</string>
+    <string name="navigation_drawer_open">Mở ngăn điều hướng</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activity_summary_subtitle">Summary of activities</string>
+    <string name="steps">Steps</string>
+    <string name="summary_card_kilocalories">kcal</string>
+    <string name="pref_notification_message_value">Hey… Lets drink some water…</string>
+    <string name="add_info_text">Please provide some information to customize the experience for you…!!</string>
+    <string name="str_continue">Continue</string>
+    <string name="enter_your_name_hint">Enter your name</string>
+    <string name="age_hint">Enter your age</string>
+    <string name="weight_hint">Cân nặng (kg)</string>
+    <string name="v1_hint">Số đo vòng 1 (cm)</string>
+    <string name="v2_hint">Số đo vòng 2 (cm)</string>
+    <string name="v3_hint">Số đo vòng 3 (cm)</string>
+    <string name="workout_hint">Chiều cao (cm)</string>
+    <string name="hand_hint">Số đo vòng tay (cm)</string>
+    <string name="femoral_hint">Số đo vòng đùi (cm)</string>
+    <string name="tagline_text">Lets keep you hydrated…</string>
+    <string name="get_started">Get Started</string>
+    <string name="edit_info_text">Edit Your Info</string>
+    <string name="update">Update</string>
+    <string name="notif_setting_header">Đặt lời nhắc</string>
+    <string name="notif_messsage_hint">Điền vào lời nhắc</string>
+    <string name="notif_tone_hint">Notification Tone</string>
+    <string name="notif_freq_hint">Notification Frequency</string>
+    <string name="search">Tìm kiếm bài tập</string>
+    <string name="font_bold">fonts/proximanova_bold.otf</string>
+    <string name="font_light">fonts/proximanova_light.otf</string>
+    <string name="year">Năm</string>
+    <string name="month">Tháng</string>
+    <string name="week">Tuần</string>
+
+    <string name="activity_chart_summary_subtitle">số 1</string>
+</resources>

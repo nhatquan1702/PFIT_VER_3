@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_world"
+        android:enabled="true"
+        android:icon="@mipmap/menu_calculator"
+        android:title="Bài tập"/>
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@mipmap/menu_workout"
+        android:title="Tập luyện" />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@mipmap/menu_home"
+        android:title="Trang chủ" />
+
+    <item
+        android:id="@+id/navigation_walk"
+        android:icon="@mipmap/menu_walk"
+        android:title="Theo dõi" />
+
+    <item
+        android:id="@+id/navigation_news"
+        android:icon="@mipmap/menu_reminder"
+        android:title="Nhắc nhở" />
+</menu>
