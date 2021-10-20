@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.testbaitap.R;
-import com.example.testbaitap.process.adapter.fragment.MonthlyFragment;
-import com.example.testbaitap.process.adapter.fragment.WeeklyFragment;
-import com.example.testbaitap.process.adapter.fragment.YearlyFragment;
+import com.example.testbaitap.process.n.fragment.MonthlyFragment;
+import com.example.testbaitap.process.n.fragment.WeeklyFragment;
+import com.example.testbaitap.process.n.fragment.YearlyFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;

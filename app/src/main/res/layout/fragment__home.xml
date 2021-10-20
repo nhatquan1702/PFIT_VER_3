@@ -26,8 +26,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:background="@drawable/a1_grad">
-                </RelativeLayout>
+                    android:background="@drawable/a1_grad"></RelativeLayout>
 
 
                 <RelativeLayout
@@ -37,10 +36,12 @@
                     android:layout_margin="15dp"
                     app:cardCornerRadius="20dp"
                     sweet:cardMaxElevation="20dp">
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         sweet:cardCornerRadius="20dp">
+
                         <androidx.viewpager.widget.ViewPager
                             android:id="@+id/pager"
                             android:layout_width="match_parent"
@@ -55,8 +56,8 @@
                     android:id="@+id/rel_one"
                     android:layout_width="match_parent"
                     android:layout_height="170dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/top_banner">
+                    android:layout_below="@+id/top_banner"
+                    android:layout_marginTop="10dp">
 
 
                     <!--                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -84,32 +85,31 @@
 
                             <RelativeLayout
                                 android:id="@+id/relative4"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="10dp">
 
                                 <ImageView
                                     android:id="@+id/imag_4"
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
-                                    android:src="@mipmap/step_2"
-                                    android:layout_alignParentRight="true" />
+                                    android:layout_alignParentRight="true"
+                                    android:src="@mipmap/step_2" />
 
                                 <TextView
                                     android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toLeftOf="@+id/imag_4"
+                                    android:fontFamily="@font/baloo"
                                     android:text="Chỉ số BMI"
                                     android:textColor="@color/black"
-                                    android:fontFamily="@font/baloo"
-                                    android:textSize="16sp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_toLeftOf="@+id/imag_4"/>
+                                    android:textSize="16sp" />
                             </RelativeLayout>
-
 
 
                             <RelativeLayout
@@ -165,8 +165,8 @@
                                             android:layout_marginBottom="10dp"
                                             android:text="Thể trạng bình thường"
                                             android:textAlignment="center"
-                                            android:textSize="14sp"
                                             android:textColor="@color/grey_calendar"
+                                            android:textSize="14sp"
                                             android:typeface="serif" />
 
                                         <RelativeLayout
@@ -180,12 +180,12 @@
 
                                 </LinearLayout>
                             </RelativeLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
-                                android:visibility="gone">
-                            </LinearLayout>
+                                android:visibility="gone"></LinearLayout>
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -214,9 +214,9 @@
 
                         <RelativeLayout
                             android:id="@+id/rel_two"
-                            android:background="@color/colorWhite"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorWhite">
 
                             <RelativeLayout
                                 android:id="@+id/relative"
@@ -299,9 +299,9 @@
 
                         <RelativeLayout
                             android:id="@+id/rel_three"
-                            android:background="@color/colorWhite"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:background="@color/colorWhite">
 
                             <RelativeLayout
                                 android:id="@+id/relative1"
@@ -400,6 +400,69 @@
 
                 </LinearLayout>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_below="@+id/lin1"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/white"
+                    sweet:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:weightSum="9">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="7"
+                            sweet:cardCornerRadius="20dp"
+                            sweet:cardMaxElevation="@dimen/text_20">
+
+                            <androidx.viewpager.widget.ViewPager
+                                android:id="@+id/viewPagerKhoaTap"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <TextView
+                                android:id="@+id/tvXemTatCa"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:layout_weight="2"
+                                android:fontFamily="@font/kanit"
+                                android:gravity="center"
+                                android:text="Xem tất cả"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+
+                            <ImageButton
+                                android:id="@+id/imgButtonIcon"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:src="@drawable/ic_baseline_arrow_right_24" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 

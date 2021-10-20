@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_weight"
+            android:title="@string/action_weight" />
+        <item
+            android:id="@+id/menu_height"
+            android:title="@string/action_height" />
+        <item
+            android:id="@+id/menu_v1"
+            android:title="@string/action_v1" />
+        <item
+            android:id="@+id/menu_v2"
+            android:title="@string/action_v2" />
+        <item
+            android:id="@+id/menu_v3"
+            android:title="@string/action_v3" />
+        <item
+            android:id="@+id/menu_hand"
+            android:title="@string/action_hand" />
+        <item
+            android:id="@+id/menu_femoral"
+            android:title="@string/action_femoral" />
+        <item
+            android:id="@+id/menu_water"
+            android:title="@string/action_water" />
+    </group>
+</menu>

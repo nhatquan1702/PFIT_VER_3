@@ -31,7 +31,64 @@
     <string name="font_light">fonts/proximanova_light.otf</string>
     <string name="year">Năm</string>
     <string name="month">Tháng</string>
-    <string name="week">Tuần</string>
+    <string name="week">Ngày</string>
 
-    <string name="activity_chart_summary_subtitle">số 1</string>
+    <string name="activity_chart_summary_subtitle">SubTitle</string>
+    <string name="action_v1">Vòng 1</string>
+    <string name="action_v2">Vòng 2</string>
+    <string name="action_v3">Vòng 3</string>
+    <string name="action_hand">Vòng tay</string>
+    <string name="action_femoral">Vòng đùi</string>
+    <string name="action_weight">Cân nặng</string>
+    <string name="action_height">Chiều cao</string>
+    <string name="action_water">Lượng nước</string>
+
+    <string name="pref_default_daily_step_goal" translatable="false">5000</string>
+    <string name="pref_title_daily_step_goal">Personal daily step goal</string>
+    <string name="pref_unit_of_length" translatable="false">com.crazytrends.healthmanager.WalkandStep.pref.unit_of_length</string>
+    <string name="pref_title_unit_of_length">Unit of length</string>
+    <string-array name="pref_keys_unit_of_length">
+        <item>kilometers</item>
+        <item>miles</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_length" translatable="false">
+        <item>km</item>
+        <item>mi</item>
+    </string-array>
+    <string name="unit_of_length_km">1|km|kilometers|km/h|1000|m</string><!-- 1km = 1km -->
+    <string name="unit_of_length_mi">0.621371|mi|miles|mph|5280|ft</string><!-- 1km = 0.621371 miles -->
+    <string name="pref_unit_of_energy" translatable="false">com.crazytrends.healthmanager.WalkandStep.pref.unit_of_energy</string>
+    <string name="pref_title_unit_of_energy">Unit of energy</string>
+    <string-array name="pref_keys_unit_of_energy">
+        <item>calories</item>
+        <item>joules</item>
+    </string-array>
+    <string-array name="pref_values_unit_of_energy" translatable="false">
+        <item>cal</item>
+        <item>J</item>
+    </string-array>
+    <string name="joules">J</string>
+    <string name="kilojoules">kJ</string>
+    <string name="summary_card_calories">cal</string>
+    <string name="correct_steps">Correct steps</string>
+    <string name="correct_steps_dialog_title">Correct steps</string>
+    <string name="correct_steps_dialog_message">Please provide a new number of steps you walked.</string>
+    <string name="hint_steps">Number of steps</string>
+    <string name="pause_step_detection">Pause step detection</string>
+    <string name="continue_step_detection">Continue step detection</string>
+    <string name="activity_summary_chart_legend_stepgoal">Stepgoal</string>
+
+    <string name="pref_weight" translatable="false">com.crazytrends.healthmanager.WalkandStep.pref.weight</string>
+    <string name="pref_title_weight">Weight (kg)</string>
+    <string name="pref_default_weight" translatable="false">65.0</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+
+    <string name="banner_ad">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="g_native">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="interstitial_key">ca-app-pub-3940256099942544/1033173712</string>
+
+    <string name="email">Gmail</string>
+
+
+
 </resources>

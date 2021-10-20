@@ -4,23 +4,31 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/drawable/a1_grad.xml" value="0.1925925925925926" />
+        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/drawable/ic_baseline_arrow_right_24.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/drawable/ic_plus_solid.xml" value="0.1925925925925926" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout-v21/fragment_bottom_sheet.xml" value="0.10916919959473151" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_main.xml" value="0.10916919959473151" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_water.xml" value="0.10916919959473151" />
+        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/card_bar_chart.xml" value="0.1" />
+        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/card_chart.xml" value="0.1453804347826087" />
+        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/card_sumary.xml" value="0.1453804347826087" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/content_main.xml" value="0.10916919959473151" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/custom_excercise_item.xml" value="0.10916919959473151" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__excercise.xml" value="0.10916919959473151" />
-        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__home.xml" value="0.10916919959473151" />
+        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__home.xml" value="0.33" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__process.xml" value="0.10916919959473151" />
+        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__reminder.xml" value="0.25" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__workout.xml" value="0.10916919959473151" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.10916919959473151" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_home_excercise.xml" value="0.10916919959473151" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_monthly.xml" value="0.10916919959473151" />
+        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_weekly.xml" value="0.25" />
+        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_yearly.xml" value="0.1453804347826087" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/nav_header_main.xml" value="0.10916919959473151" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/sliding_layout.xml" value="0.5762032085561497" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/menu/activity_main_drawer.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/menu/bottom_nav_menu.xml" value="0.221025641025641" />
+        <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/menu/menu_card_activity_summary.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/nhatm/AndroidStudioProjects/TestBaiTap/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1925925925925926" />
       </map>
     </option>

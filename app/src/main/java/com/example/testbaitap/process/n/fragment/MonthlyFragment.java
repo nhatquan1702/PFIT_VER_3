@@ -1,4 +1,4 @@
-package com.example.testbaitap.process.adapter.fragment;
+package com.example.testbaitap.process.n.fragment;
 
 import android.os.Bundle;
 

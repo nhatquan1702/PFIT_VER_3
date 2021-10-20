@@ -27,7 +27,7 @@ import java.util.TimerTask;
 public class Fragment_Home extends Fragment {
     private int[] myImageList = new int[]{R.drawable.banner_1, R.mipmap.banner_calculator, R.mipmap.banner_3, R.mipmap.img_reminder, R.mipmap.banner_reminder, };
     private ArrayList<SlidingModel> imageModelArrayList;
-    private static ViewPager mPager;
+    private static ViewPager mPager, viewPagerKhoaTap;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
     private static final String ARG_PARAM1 = "param1";
@@ -74,6 +74,8 @@ public class Fragment_Home extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment__home, container, false);
         mPager = view.findViewById(R.id.pager);
+        viewPagerKhoaTap = view.findViewById(R.id.viewPagerKhoaTap);
+
 
         //Thể trạng
         rel_one = (RelativeLayout) view.findViewById(R.id.rel_one);
@@ -106,6 +108,7 @@ public class Fragment_Home extends Fragment {
         //        walk and steps report
 
         mPager.setAdapter(new SlidingAdapter(getActivity(), imageModelArrayList));
+        viewPagerKhoaTap.setAdapter(new SlidingAdapter(getActivity(), imageModelArrayList));
         NUM_PAGES = imageModelArrayList.size();
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
@@ -114,6 +117,7 @@ public class Fragment_Home extends Fragment {
                     currentPage = 0;
                 }
                 mPager.setCurrentItem(currentPage++, false);
+                viewPagerKhoaTap.setCurrentItem(currentPage++, false);
             }
         };
         Timer swipeTimer = new Timer();
