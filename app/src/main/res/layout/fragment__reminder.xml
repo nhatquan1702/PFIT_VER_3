@@ -11,10 +11,7 @@
     <RelativeLayout
         android:id="@+id/banner1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="-5dp"
-        android:layout_marginTop="-20dp"
-        android:layout_marginRight="-5dp"
+        android:layout_height="200dp"
         android:background="@mipmap/banner_reminder_new">
 
         <ImageView
@@ -30,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="Thiết lập nhắc nhở dành cho bạn"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_20"
+            android:textSize="@dimen/text_14"
             android:layout_below="@+id/i1"
             android:layout_marginLeft="@dimen/text_20"
             android:layout_marginTop="10dp"
@@ -68,7 +65,7 @@
                     android:layout_height="45dp"
                     android:layout_below="@+id/set_water"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="-60dp"
+                    android:layout_marginTop="-70dp"
                     android:layout_marginRight="25dp"
                     android:background="@mipmap/add_22" />
             </RelativeLayout>
@@ -93,7 +90,7 @@
                     android:layout_height="45dp"
                     android:layout_below="@+id/set_medicion"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="-60dp"
+                    android:layout_marginTop="-70dp"
                     android:layout_marginRight="25dp"
                     android:background="@mipmap/add_22" />
             </RelativeLayout>

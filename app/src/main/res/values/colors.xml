@@ -9,6 +9,10 @@
     <color name="colorPrimaryDark">#5A3A4B</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="line_color">#9BB5C1</color>
+    <color name="colorPurple">#983CFF</color>
+    <color name="colorPurpleT">#64983cff</color>
+    <color name="colorBlue">#2FB4FF</color>
+    <color name="colorBlueT">#642fb4ff</color>
 
     <color name="gray_color">#E6E6E6</color>
 

@@ -10,9 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestBaiTap">
         <activity
+            android:name=".activity.AccountActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.WaterActivity"
             android:exported="true" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

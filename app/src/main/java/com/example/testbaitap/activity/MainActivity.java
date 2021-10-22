@@ -1,4 +1,4 @@
-package com.example.testbaitap;
+package com.example.testbaitap.activity;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +11,16 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.testbaitap.R;
 import com.example.testbaitap.fragment.Fragment_Excercise;
 import com.example.testbaitap.fragment.Fragment_Home;
 import com.example.testbaitap.fragment.Fragment_Process;
@@ -26,12 +30,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     BottomNavigationView bottomNavigation;
     DrawerLayout drawer;
     ImageView imageView1;
     NavigationView navigationView;
     Toolbar toolbar;
+    MenuItem menuItemLogin, menuItemAccount, menuItemManage;
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -98,6 +104,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnNavigationItemSelectedListener(this.navigationItemSelectedListener);
         String str2 = "";
         openFragment(Fragment_Home.newInstance(str2 ,str2, MainActivity.this));
+
+        Menu menu = navigationView.getMenu();
+        menuItemLogin = menu.findItem(R.id.nav_login);
+        menuItemAccount = menu.findItem(R.id.nav_account);
+        menuItemManage = menu.findItem(R.id.nav_manage);
+
+        sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+        String role = sharedPreferences.getString("role", "-1");
+
+        menuItemLogin.setVisible(role.equals("-1"));
+        menuItemAccount.setVisible(!role.equals("-1"));
+        menuItemManage.setVisible(role.equals("1"));
+
     }
     public void openFragment(Fragment fragment) {
         FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
@@ -143,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent2 = new Intent("android.intent.action.SEND");
             intent2.setType("text/plain");
             StringBuilder sb3 = new StringBuilder();
-            sb3.append("Tải ngay ứng dụng PFIT.\n Cảm ơn!\n  https://play.google.com/store/apps/details?id=" + getPackageName());
+            sb3.append("Tải ngay ứng dụng PFIT.\n Xin cảm ơn!\n  https://play.google.com/store/apps/details?id=" + getPackageName());
             sb3.append(getApplicationContext().getPackageName());
             String sb4 = sb3.toString();
             intent2.putExtra(str2, "Share App");
@@ -155,6 +174,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Uri uri = Uri.parse("https://drive.google.com/file/d/1DvztngmjDeNSvOxqPcA82-6h2sa8o3Ok/view?usp=sharing");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
+        }
+        else if(itemId==R.id.nav_login){
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+        else if(itemId==R.id.nav_account){
+            Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+            startActivity(intent);
+        }
+
+        else if(itemId==R.id.nav_manage){
+            Toast.makeText(MainActivity.this, "Quản trị", Toast.LENGTH_SHORT).show();
         }
 
         this.drawer.closeDrawer((int) GravityCompat.START);

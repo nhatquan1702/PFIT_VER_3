@@ -32,5 +32,10 @@
         android:icon="@mipmap/setiing_app"
         android:title="Cài đặt" />
 
+    <item
+        android:id="@+id/nav_login"
+        android:icon="@mipmap/account_app"
+        android:title="Đăng nhập" />
+
 
 </menu>

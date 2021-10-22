@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.example.testbaitap.MainActivity;
+import com.example.testbaitap.activity.MainActivity;
 import com.example.testbaitap.R;
 import com.example.testbaitap.SlidingAdapter;
 import com.example.testbaitap.SlidingModel;
