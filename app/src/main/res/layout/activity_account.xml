@@ -1,18 +1,476 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.AccountActivity">
+    android:background="@color/gray"
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bgHeader"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/header_register"
+        android:elevation="5dp" />
+
+    <TextView
+        android:id="@+id/tvSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đăng xuất"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:elevation="10dp"
+        android:transitionName="tvLogin"
+        android:text="Thông tin tài khoản"
+        android:fontFamily="@font/baloo"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bgHeader"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp">
+
+        <RelativeLayout
+            android:id="@+id/rLayoutDK"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv"
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                app:cardCornerRadius="15dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/corner1"
+                    android:paddingBottom="50dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/tttk_bg"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/imgIconHoTen"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/ic_baseline_person_outline_24"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewHoTen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Pham Nhat Quan"
+                            android:fontFamily="@font/baloo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewTTHoTen" />
+
+                        <ImageView
+                            android:id="@+id/imageEditHoTen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/ic_baseline_arrow_right_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewTTHoTen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Họ và Tên"
+                            android:textColor="@color/colorPurple"
+                            android:fontFamily="@font/baloo"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgIconHoTen"
+                            app:layout_constraintStart_toEndOf="@+id/imgIconHoTen" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/tttk_bg"
+                        android:layout_height="wrap_content">
+
+
+                        <ImageView
+                            android:id="@+id/imgIconTuoi"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/ic_baseline_perm_contact_calendar_24"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewTuoi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="22"
+                            android:fontFamily="@font/baloo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imgIconTuoi" />
+
+                        <ImageView
+                            android:id="@+id/imgEditTuoi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/ic_baseline_arrow_right_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewTTTuoi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Tuổi"
+                            android:fontFamily="@font/baloo"
+                            android:textColor="@color/colorPurple"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgIconTuoi"
+                            app:layout_constraintStart_toEndOf="@+id/imgIconTuoi" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/tttk_bg"
+                        android:layout_height="wrap_content">
+
+
+                        <ImageView
+                            android:id="@+id/imgIconGioiTinh"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/ic_baseline_male_24"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewGioiTinh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Nam"
+                            android:fontFamily="@font/baloo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imgIconGioiTinh" />
+
+                        <ImageView
+                            android:id="@+id/imgEditGioiTinh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/ic_baseline_arrow_right_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewTTGioiTinh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Giới tính"
+                            android:fontFamily="@font/baloo"
+                            android:textColor="@color/colorPurple"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgIconGioiTinh"
+                            app:layout_constraintStart_toEndOf="@+id/imgIconGioiTinh" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/tttk_bg"
+                        android:layout_height="wrap_content">
+
+
+                        <ImageView
+                            android:id="@+id/imgIconSDT"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/ic_baseline_phone_24"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewSDT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="0356 329 294"
+                            android:fontFamily="@font/baloo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imgIconSDT" />
+
+                        <ImageView
+                            android:id="@+id/imgEditSDT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/ic_baseline_arrow_right_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewTTSDT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Số điện thọai"
+                            android:fontFamily="@font/baloo"
+                            android:textColor="@color/colorPurple"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgIconSDT"
+                            app:layout_constraintStart_toEndOf="@+id/imgIconSDT" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/tttk_bg"
+                        android:layout_height="wrap_content">
+
+
+                        <ImageView
+                            android:id="@+id/imgIconDiaChi"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/ic_baseline_location_on_24"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewDiaChi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="địa chỉ"
+                            android:fontFamily="@font/baloo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imgIconDiaChi" />
+
+                        <ImageView
+                            android:id="@+id/imgEditDiaChi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/ic_baseline_arrow_right_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewTTDiaChi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Địa chỉ"
+                            android:textColor="@color/colorPurple"
+                            android:fontFamily="@font/baloo"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgIconDiaChi"
+                            app:layout_constraintStart_toEndOf="@+id/imgIconDiaChi" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/tttk_bg"
+                        android:layout_height="wrap_content">
+
+
+                        <ImageView
+                            android:id="@+id/imgIconDMK"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginBottom="0dp"
+                            android:src="@drawable/ic_baseline_lock_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imgEditMK"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="0dp"
+                            android:src="@drawable/ic_baseline_arrow_right_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewDMK"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="Đổi mật khẩu"
+                            android:textColor="@color/colorPurple"
+                            android:fontFamily="@font/baloo"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgIconDMK"
+                            app:layout_constraintStart_toEndOf="@+id/imgIconDMK" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:background="@drawable/tttk_bg"
+                        android:layout_height="wrap_content">
+
+
+                        <ImageView
+                            android:id="@+id/imgIconQR"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginBottom="0dp"
+                            android:src="@drawable/ic_baseline_qr_code_24_black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imgEditQR"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="0dp"
+                            android:src="@drawable/ic_baseline_arrow_right_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewQR"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="QR code của tôi"
+                            android:textColor="@color/colorPurple"
+                            android:fontFamily="@font/baloo"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgIconQR"
+                            app:layout_constraintStart_toEndOf="@+id/imgIconQR" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cv"
+                android:layout_alignLeft="@+id/cv"
+                android:layout_alignRight="@+id/cv"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="-30dp"
+                android:layout_marginRight="35dp"
+                android:elevation="10dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvDKTK"
+                    android:layout_width="400dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    app:cardBackgroundColor="#FF58C7"
+                    app:cardCornerRadius="50dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_ui_login">
+
+                        <TextView
+                            android:id="@+id/btnDKTK"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/baloo"
+                            android:text="Đăng xuất"
+                            android:textColor="#fff"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvDaCoTK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cv"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/baloo"
+                android:text="Xóa tài khoản"
+                android:textColor="@color/colorPurple" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -9,7 +9,7 @@
         android:id="@+id/bgHeader"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="0dp"
         android:background="@drawable/header_register"
         android:elevation="5dp" />
 
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:elevation="10dp"
         android:transitionName="tvLogin"
         android:text="Đăng ký tài khoản"
@@ -119,78 +119,6 @@
                         android:layout_marginRight="10dp"
                         android:inputType="text" />
 
-                    <TextView
-                        android:id="@+id/tvGioiTinh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:fontFamily="@font/baloo"
-                        android:text="Giới tính"
-                        android:textColor="@color/colorPurple"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-
-                    <RadioGroup
-                        android:id="@+id/radio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="horizontal"
-                        android:layout_marginRight="10dp">
-                        <RadioButton
-                            android:id="@+id/radioNam"
-                            android:checked="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nam"/>
-                        <RadioButton
-                            android:id="@+id/radioNu"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:text="Nữ"/>
-                    </RadioGroup>
-
-                    <TextView
-                        android:id="@+id/tvNhapSDT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:fontFamily="@font/baloo"
-                        android:text="Nhập số điện thoại"
-                        android:textColor="@color/colorPurple"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/edtSDT"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="(+84) ít nhất 10 số"
-                        android:layout_marginRight="10dp"
-                        android:inputType="phone" />
-
-                    <TextView
-                        android:id="@+id/tvNhapDiaChi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:fontFamily="@font/baloo"
-                        android:text="Nhập địa chỉ"
-                        android:textColor="@color/colorPurple"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/edtDiaChi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="Nơi thường trú"
-                        android:layout_marginRight="10dp"
-                        android:inputType="phone" />
 
                     <TextView
                         android:id="@+id/tvNhapPass1"

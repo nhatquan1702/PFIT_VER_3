@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_home_ex"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -39,6 +40,7 @@
             android:gravity="center_vertical"
             android:text="Tên nhóm cơ"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:ignore="RtlCompat" />
     </RelativeLayout>
 </RelativeLayout>
