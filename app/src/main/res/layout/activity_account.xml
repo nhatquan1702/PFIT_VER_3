@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/gray"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
@@ -82,8 +82,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
-                            android:text="Pham Nhat Quan"
-                            android:fontFamily="@font/baloo"
+                            android:text="Phạm Nhật Quan"
+                            android:fontFamily="@font/kanit"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textViewTTHoTen" />
@@ -193,7 +193,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="Nam"
-                            android:fontFamily="@font/baloo"
+                            android:fontFamily="@font/kanit"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/imgIconGioiTinh" />
@@ -248,7 +248,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="0356 329 294"
-                            android:fontFamily="@font/baloo"
+                            android:fontFamily="@font/kanit"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/imgIconSDT" />
@@ -303,7 +303,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="địa chỉ"
-                            android:fontFamily="@font/baloo"
+                            android:fontFamily="@font/kanit"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/imgIconDiaChi" />

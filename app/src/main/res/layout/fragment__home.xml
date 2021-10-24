@@ -463,7 +463,7 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:background="@color/white"
-                                android:src="@drawable/ic_baseline_arrow_right_24" />
+                                android:src="@drawable/ic_baseline_arrow_right_24_black" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
