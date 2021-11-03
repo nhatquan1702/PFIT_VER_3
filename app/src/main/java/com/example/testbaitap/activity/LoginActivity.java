@@ -20,12 +20,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testbaitap.R;
+import com.example.testbaitap.api.Constants;
+import com.example.testbaitap.api.SimpleAPI;
+import com.example.testbaitap.entity.NhomCo;
+import com.example.testbaitap.entity.Status;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
-public class LoginActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class LoginActivity extends AppCompatActivity {
+    private SimpleAPI simpleAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,13 @@ public class LoginActivity extends AppCompatActivity {
         Animation animationy = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.tranlation_y);
         ImageButton imgButtonQR = findViewById(R.id.imgButtonQR);
         imgButtonQR.setAnimation(animationy);
+        imgButtonQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ScannerActivity.class);
+                startActivity(intent);
+            }
+        });
         EditText edtEmailLogin = findViewById(R.id.edtEmailLogin);
         edtEmailLogin.setAnimation(animationx);
         TextView tvEmailDN = findViewById(R.id.tvEmailDN);
@@ -85,8 +100,16 @@ public class LoginActivity extends AppCompatActivity {
                 if(isValid){
                     SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-
-
+                    simpleAPI = Constants.instance();
+                    simpleAPI.login(email, pass).enqueue(new Callback<Status>() {
+                        @Override
+                        public void onResponse(Call<Status> call, Response<Status> response) {
+                            Status status = response.body();
+                            Toast.makeText(LoginActivity.this, String.valueOf(status), Toast.LENGTH_SHORT).show();
+                            if(status.getStatus()<1 || status.equals(null)){
+                                Toast.makeText(LoginActivity.this, "Sai ten dang nhap hoac mat khau!", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
                                 Intent intent;
                                 editor.putString("email", email);
                                 editor.putString("pass", pass);
@@ -101,6 +124,17 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                                 intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                //finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Status> call, Throwable t) {
+
+                        }
+                    });
+
+
 
                 }
             }

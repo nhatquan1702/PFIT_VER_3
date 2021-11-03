@@ -7,8 +7,10 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +23,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.internal.CheckableImageButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.zxing.WriterException;
+import com.squareup.picasso.Picasso;
+
+import java.lang.reflect.Type;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 
 public class AccountActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
@@ -186,6 +195,22 @@ public class AccountActivity extends AppCompatActivity {
                 sheetDialog.dismiss();
             }
         });
+        String data = "quan_123";
+        ImageView imageView = (ImageView)viewDialog.findViewById(R.id.imgQR);
+        QRGEncoder qrgEncoder = new QRGEncoder(data, null, QRGContents.Type.TEXT, data.length());
+        try {
+            // Getting QR-Code as Bitmap
+            Bitmap bitmap = qrgEncoder.encodeAsBitmap();
+            // Setting Bitmap to ImageView
+            imageView.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            Toast.makeText(AccountActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+//        Picasso.get()
+//                .load(post.getPost_img())
+//                .placeholder(R.drawable.gallery)
+//                .error(R.drawable.gallery)
+//                .into(imageView);
         return sheetDialog;
     }
 }
