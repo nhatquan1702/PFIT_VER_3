@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -24,6 +25,7 @@ import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.NhomCo;
 import com.example.testbaitap.entity.Status;
+import com.example.testbaitap.entity.TaiKhoan;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -107,38 +109,40 @@ public class LoginActivity extends AppCompatActivity {
                             Status status = response.body();
                             Toast.makeText(LoginActivity.this, String.valueOf(status), Toast.LENGTH_SHORT).show();
                             if(status.getStatus()<1 || status.equals(null)){
-                                Toast.makeText(LoginActivity.this, "Sai ten dang nhap hoac mat khau!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                Intent intent;
-                                editor.putString("email", email);
-                                editor.putString("pass", pass);
-                                if(email.equals("quan"))
-                                {
-                                    editor.putString("role", String.valueOf(1));
-                                }
-                                else {
-                                    editor.putString("role", String.valueOf(0));
-                                }
-                                editor.commit();
-                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                                intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                //finish();
+                                simpleAPI.getTaiKhoan(email).enqueue(new Callback<TaiKhoan>() {
+                                    @Override
+                                    public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
+                                        TaiKhoan taiKhoan = response.body();
+                                        Intent intent;
+                                        editor.putString("email", taiKhoan.getMaHocVien().trim());
+                                        editor.putString("pass", taiKhoan.getMatKhau().trim());
+                                        editor.putString("role", String.valueOf(taiKhoan.getTrangThai()));
+                                        editor.commit();
+                                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<TaiKhoan> call, Throwable t) {
+                                        Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Status> call, Throwable t) {
-
+                            Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-
-
                 }
             }
-
         });
 
         ImageView imgDKTK = findViewById(R.id.imgbtnDKTK);

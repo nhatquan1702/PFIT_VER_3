@@ -19,6 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testbaitap.R;
+import com.example.testbaitap.api.Constants;
+import com.example.testbaitap.api.SimpleAPI;
+import com.example.testbaitap.entity.KhachHang;
+import com.example.testbaitap.entity.TaiKhoan;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.internal.CheckableImageButton;
@@ -30,18 +34,57 @@ import java.lang.reflect.Type;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AccountActivity extends AppCompatActivity {
+    private SimpleAPI simpleAPI;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ImageView imageEditHoTen, imgEditTuoi, imgEditGioiTinh, imgEditSDT, imgEditDiaChi, imgEditMK, imgEditQR;
+    TextView textViewHoTen, textViewTuoi, textViewGioiTinh, textViewSDT, textViewDiaChi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
         Toast.makeText(AccountActivity.this, sharedPreferences.getString("email", "username"), Toast.LENGTH_SHORT).show();
+        textViewHoTen = findViewById(R.id.textViewHoTen);
+        textViewTuoi = findViewById(R.id.textViewTuoi);
+        textViewGioiTinh = findViewById(R.id.textViewGioiTinh);
+        textViewSDT = findViewById(R.id.textViewSDT);
+        textViewDiaChi = findViewById(R.id.textViewDiaChi);
+        editor = sharedPreferences.edit();
+        simpleAPI = Constants.instance();
+        simpleAPI.getKhachHang(sharedPreferences.getString("email", "username")).enqueue(new Callback<KhachHang>() {
+            @Override
+            public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
+                KhachHang khachHang = response.body();
+                Log.d("quan", khachHang.getMaHocVien());
+                Log.d("quan", khachHang.getMatKhau());
+                Log.d("quan", String.valueOf(khachHang.getTrangThai()));
+                textViewHoTen.setText(khachHang.getHoTen());
+                textViewTuoi.setText(String.valueOf(khachHang.getTuoi()));
+                int gt = khachHang.getGioiTinh();
+                if(gt==1){
+                    textViewGioiTinh.setText("Nam");
+                }
+                else if(gt==0){
+                    textViewGioiTinh.setText("Nữ");
+                }
+                else{
+                    textViewGioiTinh.setText("Khác");
+                }
+                textViewSDT.setText(khachHang.getSoDienThoai());
+                textViewDiaChi.setText(khachHang.getDiaChi());
+            }
+
+            @Override
+            public void onFailure(Call<KhachHang> call, Throwable t) {
+                Toast.makeText(AccountActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         CardView button = findViewById(R.id.cvDKTK);
         button.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +151,11 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void LoadThongTinCaNhan(String tk){
+
+    }
+
     public BottomSheetDialog diaLogBottomHotten() {
         BottomSheetDialog sheetDialog = new BottomSheetDialog(AccountActivity.this, R.style.SheetDialog);
         View viewDialog = getLayoutInflater().inflate(R.layout.bottom_sheet_hoten, null);

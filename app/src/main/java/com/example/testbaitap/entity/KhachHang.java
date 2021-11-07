@@ -3,6 +3,7 @@ package com.example.testbaitap.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class KhachHang {
@@ -28,7 +29,7 @@ public class KhachHang {
 
     @SerializedName("ngayThamGia")
     @Expose
-    private LocalDate ngayThamGia;
+    private String ngayThamGia;
 
     @SerializedName("soDienThoai")
     @Expose
@@ -46,7 +47,7 @@ public class KhachHang {
     @Expose
     private Integer trangThai;
 
-    public KhachHang(String maHocVien, String matKhau, String hoTen, Integer tuoi, Integer gioiTinh, LocalDate ngayThamGia, String soDienThoai, String diaChi, String ghiChu, Integer trangThai) {
+    public KhachHang(String maHocVien, String matKhau, String hoTen, Integer tuoi, Integer gioiTinh, String ngayThamGia, String soDienThoai, String diaChi, String ghiChu, Integer trangThai) {
         this.maHocVien = maHocVien;
         this.matKhau = matKhau;
         this.hoTen = hoTen;
@@ -99,11 +100,11 @@ public class KhachHang {
         this.gioiTinh = gioiTinh;
     }
 
-    public LocalDate getNgayThamGia() {
+    public String getNgayThamGia() {
         return ngayThamGia;
     }
 
-    public void setNgayThamGia(LocalDate ngayThamGia) {
+    public void setNgayThamGia(String ngayThamGia) {
         this.ngayThamGia = ngayThamGia;
     }
 
