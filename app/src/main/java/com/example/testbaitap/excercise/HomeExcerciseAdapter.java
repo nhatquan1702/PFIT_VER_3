@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testbaitap.R;
+import com.example.testbaitap.entity.NhomCo;
 import com.example.testbaitap.utils.TypefaceManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -61,8 +63,14 @@ public class HomeExcerciseAdapter extends RecyclerView.Adapter<HomeExcerciseAdap
 
 
         public void bind(int i){
-            tvTenNhomCo.setText(nhomCoArrayList.get(i).tenNhomCo);
-            imgNhomCo.setImageResource(R.mipmap.logo1);
+            tvTenNhomCo.setText(nhomCoArrayList.get(i).getTenNhomCo());
+            Picasso.get()
+                    .load(nhomCoArrayList.get(i).getHinhMinhHoa())
+                    .resize(100, 100)
+                    .centerCrop()
+                    .placeholder(R.mipmap.logo1)
+                    .error(R.mipmap.logo1)
+                    .into(imgNhomCo);
             rl_home.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

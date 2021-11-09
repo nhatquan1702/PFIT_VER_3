@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/image_nhom_co"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/text_15"
             android:layout_marginTop="@dimen/text_15"
@@ -39,8 +39,9 @@
             android:layout_marginLeft="3dp"
             android:gravity="center_vertical"
             android:text="Tên nhóm cơ"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:ignore="RtlCompat" />
     </RelativeLayout>
 </RelativeLayout>

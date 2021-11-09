@@ -49,8 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     MenuItem menuItemLogin, menuItemAccount, menuItemManage;
 
-    private SimpleAPI simpleAPI;
-    ArrayList<NhomCo> nhomCoArrayList = new ArrayList<>();
+
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -202,23 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(MainActivity.this, "Quản trị", Toast.LENGTH_SHORT).show();
         }
         else if(itemId==R.id.nav_setting){
-            Toast.makeText(MainActivity.this, "Cai dat", Toast.LENGTH_SHORT).show();
-            simpleAPI = Constants.instance();
-            simpleAPI.getListNhomCo().enqueue(new Callback<ArrayList<NhomCo>>() {
-                @Override
-                public void onResponse(Call<ArrayList<NhomCo>> call, Response<ArrayList<NhomCo>> response) {
-                    nhomCoArrayList = response.body();
-                    for(int i=0; i< nhomCoArrayList.size(); i++){
-                        Toast.makeText(MainActivity.this, nhomCoArrayList.get(i).getTenNhomCo(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<NhomCo>> call, Throwable t) {
-                    Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
-                    Log.d("quan", t.toString());
-                }
-            });
+            Toast.makeText(MainActivity.this, "Cài đặt", Toast.LENGTH_SHORT).show();
         }
 
         this.drawer.closeDrawer((int) GravityCompat.START);
