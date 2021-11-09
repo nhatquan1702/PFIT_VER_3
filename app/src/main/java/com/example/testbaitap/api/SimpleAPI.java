@@ -1,6 +1,8 @@
 package com.example.testbaitap.api;
 
 import com.example.testbaitap.entity.BaiTap;
+import com.example.testbaitap.entity.BaiTapFull;
+import com.example.testbaitap.entity.ChiTietBaiTap;
 import com.example.testbaitap.entity.KhachHang;
 import com.example.testbaitap.entity.NhomCo;
 import com.example.testbaitap.entity.Status;
@@ -30,4 +32,10 @@ public interface SimpleAPI {
 
     @GET("api/baitap/baitaptheomanhomco")
     Call<ArrayList<BaiTap>> getBaiTapTheoNhomCo(@Query("manhomco") String maNhomCo);
+
+    @GET("api/baitap/baitaptheomabaitap")
+    Call<BaiTapFull> getFullBaiTapTheoMa(@Query("mabaitap") String maBaiTap);
+
+    @GET("api/chitietbaitap/chitietbaitaptheomabaitap")
+    Call<ChiTietBaiTap> getChiTietBaiTapTheoMa(@Query("mabaitap") String maBaiTap);
 }

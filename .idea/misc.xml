@@ -81,13 +81,15 @@
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/drawable/a3_grad.xml" value="0.17314814814814813" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/drawable/corner1.xml" value="0.17314814814814813" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_account.xml" value="0.18" />
-        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_detail_excercise.xml" value="0.1587962962962963" />
+        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_detail_excercise.xml" value="0.75" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_excercice_by_muscle.xml" value="0.1587962962962963" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/custom_excercise_item.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/excercise_item.xml" value="0.22" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__excercise.xml" value="0.1814814814814815" />
+        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__process.xml" value="0.1587962962962963" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__workout.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_home_excercise.xml" value="0.1814814814814815" />
+        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_weekly.xml" value="0.1587962962962963" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/menu/activity_main_drawer.xml" value="0.1587962962962963" />
       </map>
     </option>
