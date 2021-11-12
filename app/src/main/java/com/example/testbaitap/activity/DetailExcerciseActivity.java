@@ -2,6 +2,7 @@ package com.example.testbaitap.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -36,6 +37,8 @@ public class DetailExcerciseActivity extends AppCompatActivity {
     private TextView buttonURL;
     private SimpleAPI simpleAPI;
 
+    private CardView card_view_ct, cardVideo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,8 @@ public class DetailExcerciseActivity extends AppCompatActivity {
         String maBaiTap = intent.getStringExtra("maBaiTap");
 
         this.videoView = (VideoView) findViewById(R.id.videoView);
+        this.cardVideo = (CardView) findViewById(R.id.caedVideo);
+        this.card_view_ct = (CardView) findViewById(R.id.card_view_ct);
 //        this.buttonRaw = (Button) findViewById(R.id.button_raw);
 //        this.buttonLocal = (Button) findViewById(R.id.button_local );
         this.buttonURL = (TextView) findViewById(R.id.button_url);
@@ -70,9 +75,22 @@ public class DetailExcerciseActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<BaiTapFull> call, Response<BaiTapFull> response) {
                 BaiTapFull baiTapFull = response.body();
-                mtoolbar_title.setText(baiTapFull.getTenBaiTap());
-                tvCacBuoc.setText(baiTapFull.getMoTa());
-                tvTenDungCu.setText(baiTapFull.getTenDungCu());
+                try {
+                    if(baiTapFull.equals(null)){
+                        mtoolbar_title.setText("Chưa có bài tập này!");
+                        cardVideo.setVisibility(View.INVISIBLE);
+                        card_view_ct.setVisibility(View.INVISIBLE);
+                    }
+                    mtoolbar_title.setText(baiTapFull.getTenBaiTap());
+                    tvCacBuoc.setText(baiTapFull.getMoTa());
+                    tvTenDungCu.setText(baiTapFull.getTenDungCu());
+                }
+                catch (Exception e){
+                    mtoolbar_title.setText("Chưa có bài tập này!");
+                    cardVideo.setVisibility(View.INVISIBLE);
+                    card_view_ct.setVisibility(View.INVISIBLE);
+                }
+
             }
 
             @Override
@@ -85,12 +103,24 @@ public class DetailExcerciseActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ChiTietBaiTap> call, Response<ChiTietBaiTap> response) {
                 ChiTietBaiTap chiTietBaiTap = response.body();
-                tvKhoiLuong.setText(String.valueOf(chiTietBaiTap.getKhoiLuong()) + " (kg)");
-                tvSoHiep.setText(String.valueOf(chiTietBaiTap.getSoHiep()) + (" (hiệp)"));
-                tvSoLanLap.setText(String.valueOf(chiTietBaiTap.getSoLanLap()) + " (lần)");
-                tvTocDo.setText(String.valueOf(chiTietBaiTap.getTocDo()) + (" (giây)"));
-                tvThoiGianNghi.setText(String.valueOf(chiTietBaiTap.getThoiGianNghi())+ (" (giây"));
-                tvGhiChu.setText(chiTietBaiTap.getGhiChu());
+                try {
+                    if(chiTietBaiTap.equals(null)){
+                        mtoolbar_title.setText("Chưa có bài tập này!");
+                        cardVideo.setVisibility(View.INVISIBLE);
+                        card_view_ct.setVisibility(View.INVISIBLE);
+                    }
+                    tvKhoiLuong.setText(String.valueOf(chiTietBaiTap.getKhoiLuong()) + " (kg)");
+                    tvSoHiep.setText(String.valueOf(chiTietBaiTap.getSoHiep()) + (" (hiệp)"));
+                    tvSoLanLap.setText(String.valueOf(chiTietBaiTap.getSoLanLap()) + " (lần)");
+                    tvTocDo.setText(String.valueOf(chiTietBaiTap.getTocDo()) + (" (giây)"));
+                    tvThoiGianNghi.setText(String.valueOf(chiTietBaiTap.getThoiGianNghi())+ (" (giây)"));
+                    tvGhiChu.setText(chiTietBaiTap.getGhiChu());
+                }
+                catch (Exception e){
+                    mtoolbar_title.setText("Chưa có bài tập này!");
+                    cardVideo.setVisibility(View.INVISIBLE);
+                    card_view_ct.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override

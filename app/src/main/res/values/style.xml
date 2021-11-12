@@ -69,4 +69,17 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    <style name="NumberProgressBar_Custome1">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="progress_current">0</item>
+        <item name="progress_max">100</item>
+        <item name="progress_reached_bar_height">4.5dip</item>
+        <item name="progress_reached_color">@color/black</item>
+        <item name="progress_text_color">@color/black</item>
+        <item name="progress_text_size">9sp</item>
+        <item name="progress_unreached_bar_height">2.25dip</item>
+        <item name="progress_unreached_color">#ffffff</item>
+    </style>
+
 </resources>
