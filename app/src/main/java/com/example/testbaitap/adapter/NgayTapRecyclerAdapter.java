@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.example.testbaitap.R;
 import com.example.testbaitap.entity.NgayTap;
+import com.example.testbaitap.excercise.ItemCleckInterfaceCheckBox;
 import com.example.testbaitap.excercise.ItemClickInterface;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class NgayTapRecyclerAdapter extends RecyclerView.Adapter<NgayTapRecycler
     private ArrayList<Integer> process = new ArrayList<>();
     private Context context;
     private ItemClickInterface itemClickInterface;
+    private ItemCleckInterfaceCheckBox itemCleckInterfaceCheckBox;
 
     public NgayTapRecyclerAdapter(ArrayList<NgayTap> ngayTapArrayList, Context context, ArrayList<Integer> pro) {
         this.ngayTapArrayList = ngayTapArrayList;
@@ -61,6 +65,8 @@ public class NgayTapRecyclerAdapter extends RecyclerView.Adapter<NgayTapRecycler
         public CardView cardView;
         public ImageView imgNgayNghi;
         public RelativeLayout rel1,rel2;
+        public CheckBox checkboxHT;
+
 
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -70,6 +76,14 @@ public class NgayTapRecyclerAdapter extends RecyclerView.Adapter<NgayTapRecycler
             this.numberProgressBar = (NumberProgressBar) view.findViewById(R.id.progressbar);
             this.rel1 = (RelativeLayout) view.findViewById(R.id.rel1);
             this.rel2 = (RelativeLayout) view.findViewById(R.id.rel2);
+            this.checkboxHT = (CheckBox) view.findViewById(R.id.checkboxHT);
+            if (checkboxHT.isChecked()) {
+                checkboxHT.setChecked(false);
+            }
+            else {
+                checkboxHT.setChecked(true);
+            }
+            this.setIsRecyclable(false);
         }
 
 
@@ -89,6 +103,7 @@ public class NgayTapRecyclerAdapter extends RecyclerView.Adapter<NgayTapRecycler
                 }
             } else {
                 viewHolder.numberProgressBar.setVisibility(View.GONE);
+                viewHolder.checkboxHT.setVisibility(View.GONE);
                 viewHolder.rel1.setVisibility(View.GONE);
                 viewHolder.ngayTap.setText("Ngày nghỉ");
                 viewHolder.imgNgayNghi.setVisibility(View.VISIBLE);
@@ -101,10 +116,22 @@ public class NgayTapRecyclerAdapter extends RecyclerView.Adapter<NgayTapRecycler
                     itemClickInterface.onClick(v, i);
                 }
             });
+            viewHolder.checkboxHT.setOnCheckedChangeListener(null);
+            viewHolder.checkboxHT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    itemCleckInterfaceCheckBox.onClick(buttonView, i, isChecked);
+                }
+            });
+
+
         }
     }
     public void setOnClickItemRecyclerView(ItemClickInterface itemRecyclerView){
         itemClickInterface = itemRecyclerView;
+    }
+    public void setItemCleckInterfaceCheckBox(ItemCleckInterfaceCheckBox itemCleckInterfaceCB){
+        itemCleckInterfaceCheckBox = itemCleckInterfaceCB;
     }
     public int getItemViewType(int i) {
         return i;

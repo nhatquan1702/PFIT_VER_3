@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +40,8 @@ public class DetailExcerciseActivity extends AppCompatActivity {
     private Button buttonLocal;
     private TextView buttonURL;
     private SimpleAPI simpleAPI;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     private CardView card_view_ct, cardVideo;
 
@@ -70,6 +76,24 @@ public class DetailExcerciseActivity extends AppCompatActivity {
         tvThoiGianNghi = (TextView) findViewById(R.id.tvThoiGianNghi);
         tvCacBuoc = (TextView) findViewById(R.id.tvCacBuoc);
         tvGhiChu = (TextView) findViewById(R.id.tvGhiChu);
+        SharedPreferences sharedPreferences = getSharedPreferences("checkBT", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        CheckBox checkboxHTBT = (CheckBox) findViewById(R.id.checkboxHTBT);
+        checkboxHTBT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int check = 0;
+                if(checkboxHTBT.isChecked()){
+                    check = 1;
+                }
+                else {
+                    check= 0;
+                }
+                editor.putString("checkHTBT", String.valueOf(check));
+                editor.commit();
+            }
+        });
+
         simpleAPI = Constants.instance();
         simpleAPI.getFullBaiTapTheoMa(maBaiTap).enqueue(new Callback<BaiTapFull>() {
             @Override

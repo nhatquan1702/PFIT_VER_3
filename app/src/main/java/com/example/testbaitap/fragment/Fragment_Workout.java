@@ -36,6 +36,7 @@ import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
 import com.example.testbaitap.entity.NgayTap;
+import com.example.testbaitap.excercise.ItemCleckInterfaceCheckBox;
 import com.example.testbaitap.excercise.ItemClickInterface;
 import com.example.testbaitap.utils.Cont;
 
@@ -239,8 +240,17 @@ public class Fragment_Workout extends Fragment {
                     }
                 });
 
+                adapter.setItemCleckInterfaceCheckBox(new ItemCleckInterfaceCheckBox() {
+                    @Override
+                    public void onClick(View view, int position, boolean check) {
+                        int ngayHT = 0;
+                        if(ngayTapArrayList.get(position)!=null && check==true){
+                            ngayHT = ngayHT+1;
+                        }
+                        Toast.makeText(requireContext(), String.valueOf(ngayHT), Toast.LENGTH_SHORT).show();
+                    }
+                });
                 recyclerView.setLayoutManager(mLayoutManager);
-
             }
 
             @Override

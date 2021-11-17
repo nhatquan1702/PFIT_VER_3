@@ -25,36 +25,150 @@
                android:layout_height="match_parent">
 
                <TextView
-                   android:id="@+id/tvTenTheTrang"
-                   android:text="@string/action_weight"
-                   style="@style/CardViewPrimaryTitle" />
-
-               <TextView
+                   android:layout_marginTop="10dp"
+                   android:paddingTop="10dp"
                    android:id="@+id/tvTitleTenTheTrang"
                    style="@style/CardViewSubTitle"
                    android:layout_width="match_parent"
                    android:textAlignment="center"
                    android:textColor="@color/black"
                    android:layout_height="wrap_content"
-                   android:layout_below="@id/tvTenTheTrang"
-                   android:text="Từ năm 2011 đến năm 2022" />
+                   android:textSize="@dimen/text_16"
+                   android:textStyle="bold"
+                   android:text="Hôm nay" />
 
-               <ImageButton
-                   android:id="@+id/imgButtonTenTheTrang"
-                   style="@style/SimpleImageButton"
-                   android:layout_alignParentEnd="true"
-                   android:layout_alignParentRight="true"
-                   android:layout_alignTop="@+id/tvTenTheTrang"
-                   android:layout_marginRight="16dp"
-                   android:layout_marginEnd="16dp"
-                   android:src="@drawable/ic_more_vert_black_24dp" />
-               <com.github.mikephil.charting.charts.LineChart
-                   android:id="@+id/lineChart"
+               <TextView
+                   android:id="@+id/tvVien"
                    android:layout_below="@+id/tvTitleTenTheTrang"
                    android:layout_width="match_parent"
+                   android:layout_margin="5dp"
+                   android:background="@color/colorPrimary"
+                   android:layout_height="1dp"/>
+
+               <RelativeLayout
+
+                   android:id="@+id/rel_one"
+                   android:layout_width="match_parent"
+                   android:layout_height="170dp"
+                   android:layout_below="@+id/tvVien"
+                   android:layout_marginTop="10dp">
+
+                   <androidx.cardview.widget.CardView
+                       android:id="@+id/card_view"
+                       android:layout_width="match_parent"
+                       android:layout_height="160dp"
+                       android:layout_gravity="center"
+                       android:layout_marginLeft="15dp"
+                       android:layout_marginRight="15dp"
+                       android:layout_marginBottom="8dp"
+                       app:cardCornerRadius="20dp">
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:background="@color/colorWhite"
+                           android:orientation="vertical">
+
+
+                           <RelativeLayout
+                               android:id="@+id/relative4"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:layout_marginLeft="10dp"
+                               android:layout_marginTop="5dp"
+                               android:layout_marginRight="10dp">
+
+                               <Spinner
+                                   android:id="@+id/imgButtonTenTheTrang"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:spinnerMode="dropdown"
+                                   android:layout_marginLeft="5dp"
+                                   android:fontFamily="@font/baloo"
+                                   android:textColor="@color/black"
+                                   android:textSize="16sp"
+                                   android:layout_centerHorizontal="true"/>
+
+                           </RelativeLayout>
+
+
+                           <RelativeLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent">
+                                        <com.example.testbaitap.utils.CustomProcessbar
+                                            android:id="@+id/customSeekBar"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:max="100"
+                                            android:progress="0"
+                                            android:progressDrawable="@android:color/transparent"
+                                            android:thumb="@drawable/seek_thumb_normal"
+                                            android:thumbOffset="12dp" />
+                                       <TextView
+                                           android:id="@+id/txtProgress"
+                                           android:layout_width="70dp"
+                                           android:layout_height="wrap_content"
+                                           android:layout_centerHorizontal="true"
+                                           android:layout_centerVertical="true"
+                                           android:gravity="center"
+                                           android:singleLine="true"
+                                           android:text="0"
+                                           android:textSize="16sp"
+                                           android:textAppearance="?android:attr/textAppearanceSmall"
+                                           android:textColor="@color/dot_dark_screen" />
+
+
+                               <TextView
+                                   android:id="@+id/tvNhanXetBmi"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_below="@+id/txtProgress"
+                                   android:layout_centerHorizontal="true"
+                                   android:layout_marginTop="8dp"
+                                   android:text="Thể trạng bình thường"
+                                   android:textAlignment="center"
+                                   android:textColor="@color/grey_calendar"
+                                   android:textSize="14sp"
+                                   android:typeface="serif" />
+
+                                   </RelativeLayout>
+
+
+                       </LinearLayout>
+                   </androidx.cardview.widget.CardView>
+
+               </RelativeLayout>
+
+
+               <LinearLayout
+                   android:id="@+id/lin1"
+                   android:layout_width="match_parent"
                    android:layout_height="match_parent"
-                   android:layout_marginBottom="20dp"
-                   android:layout_marginTop="10dp"/>
+                   android:layout_below="@+id/rel_one"
+                   android:layout_marginTop="10dp">
+
+                   <androidx.cardview.widget.CardView
+                       android:id="@+id/cardView2"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_margin="15dp"
+                       android:layout_marginBottom="@dimen/text_20"
+                       android:layout_weight="1"
+                       app:cardCornerRadius="20dp"
+                       app:cardMaxElevation="@dimen/text_20">
+
+
+                       <RelativeLayout
+                           android:id="@+id/rel_two"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:background="@color/colorWhite">
+
+                       </RelativeLayout>
+                   </androidx.cardview.widget.CardView>
+
+               </LinearLayout>
+
            </RelativeLayout>
        </LinearLayout>
 

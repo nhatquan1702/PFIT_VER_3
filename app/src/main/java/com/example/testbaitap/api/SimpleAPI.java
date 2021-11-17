@@ -9,7 +9,9 @@ import com.example.testbaitap.entity.NgayTap;
 import com.example.testbaitap.entity.NhomCo;
 import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.entity.TaiKhoan;
+import com.example.testbaitap.entity.TheTrang;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -50,4 +52,6 @@ public interface SimpleAPI {
     @GET("api/baitap/baitaptheokhoavangay")
     Call<ArrayList<BaiTap>> getBaiTapTheoKhoaVaNgay(@Query("makhoatap") String maKhoaTap, @Query("ngaytap") String ngayTap);
 
+    @GET("api/thetrang/thetranghocvien")
+    Call<TheTrang> getTheTrangHVTheoNgay(@Header("mahocvien") String maHocVien, @Header("ngay") String ngay);
 }

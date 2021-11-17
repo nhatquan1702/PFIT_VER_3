@@ -306,8 +306,29 @@
                     android:textSize="@dimen/text_14"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ghiChu"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <RelativeLayout
+                    android:id="@+id/rlcuoi"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"
+                    app:layout_constraintBottom_toTopOf="@+id/checkboxHTBT"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvGhiChu" />
+                <CheckBox
+                    android:id="@+id/checkboxHTBT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="Hoàn thành bài tập"
+                    android:textSize="@dimen/text_14"
+                    android:textColor="@color/colorPurple"
+                    android:fontFamily="@font/baloo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvGhiChu"/>
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
