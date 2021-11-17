@@ -95,28 +95,29 @@
                            <RelativeLayout
                                android:layout_width="match_parent"
                                android:layout_height="match_parent">
-                                        <com.example.testbaitap.utils.CustomProcessbar
-                                            android:id="@+id/customSeekBar"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:max="100"
-                                            android:progress="0"
-                                            android:progressDrawable="@android:color/transparent"
-                                            android:thumb="@drawable/seek_thumb_normal"
-                                            android:thumbOffset="12dp" />
-                                       <TextView
-                                           android:id="@+id/txtProgress"
-                                           android:layout_width="70dp"
-                                           android:layout_height="wrap_content"
-                                           android:layout_centerHorizontal="true"
-                                           android:layout_centerVertical="true"
-                                           android:gravity="center"
-                                           android:singleLine="true"
-                                           android:text="0"
-                                           android:textSize="16sp"
-                                           android:textAppearance="?android:attr/textAppearanceSmall"
-                                           android:textColor="@color/dot_dark_screen" />
 
+                               <TextView
+                                   android:id="@+id/txtProgress"
+                                   android:layout_width="120dp"
+                                   android:layout_height="wrap_content"
+                                   android:layout_centerInParent="true"
+                                   android:gravity="center"
+                                   android:singleLine="true"
+                                   android:text="0"
+                                   android:textAppearance="?android:attr/textAppearanceSmall"
+                                   android:textColor="@color/dot_dark_screen"
+                                   android:textSize="16sp" />
+
+
+                               <com.example.testbaitap.utils.CustomProcessbar
+                                   android:id="@+id/customSeekBar"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:max="100"
+                                   android:progress="0"
+                                   android:progressDrawable="@android:color/transparent"
+                                   android:thumb="@drawable/seek_thumb_normal"
+                                   android:thumbOffset="12dp" />
 
                                <TextView
                                    android:id="@+id/tvNhanXetBmi"
@@ -151,20 +152,214 @@
                        android:id="@+id/cardView2"
                        android:layout_width="match_parent"
                        android:layout_height="match_parent"
-                       android:layout_margin="15dp"
+                       android:layout_marginTop="5dp"
+                       android:layout_marginLeft="15dp"
+                       android:layout_marginRight="15dp"
                        android:layout_marginBottom="@dimen/text_20"
                        android:layout_weight="1"
                        app:cardCornerRadius="20dp"
                        app:cardMaxElevation="@dimen/text_20">
 
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                       <RelativeLayout
-                           android:id="@+id/rel_two"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:background="@color/colorWhite">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_margin="10dp"
+                            android:id="@+id/constraintBMI"
+                            android:layout_height="match_parent">
 
-                       </RelativeLayout>
+                            <TextView
+                                android:id="@+id/MoTa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Ghi chú:"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_16"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/colorPrimary"
+                                app:layout_constraintBottom_toTopOf="@+id/tvTenDungCu"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/MoTa" />
+
+                            <TextView
+                                android:id="@+id/tvDungCu"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@color/teal_200"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/MoTa" />
+
+                            <TextView
+                                android:id="@+id/tvTenDungCu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:textSize="@dimen/text_12"
+                                android:text="BMI dưới 16: Gầy độ III"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvDungCu"
+                                app:layout_constraintStart_toEndOf="@+id/tvDungCu" />
+
+                            <TextView
+                                android:id="@+id/tvKL"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@color/teal_700"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvDungCu" />
+
+                            <TextView
+                                android:id="@+id/tvKhoiLuong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="BMI từ 16 đến dưới 18.5: Gầy độ II, I"
+                                android:textSize="@dimen/text_12"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvKL"
+                                app:layout_constraintStart_toEndOf="@+id/tvKL"/>
+
+                            <TextView
+                                android:id="@+id/tvSH"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@android:color/holo_green_dark"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvKL" />
+
+                            <TextView
+                                android:id="@+id/tvSoHiep"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:textSize="@dimen/text_12"
+                                android:text="BMI từ 18.5 đến dưới 25: Bình thường"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvSH"
+                                app:layout_constraintStart_toEndOf="@+id/tvSH"/>
+
+                            <TextView
+                                android:id="@+id/tvSLL"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@android:color/holo_green_light"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvSH" />
+
+                            <TextView
+                                android:id="@+id/tvSoLanLap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:textSize="@dimen/text_12"
+                                android:text="BMI từ 25 đến dưới 30: Thừa cân"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvSLL"
+                                app:layout_constraintStart_toEndOf="@+id/tvSLL"/>
+
+                            <TextView
+                                android:id="@+id/tvTD"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@android:color/holo_orange_light"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvSLL" />
+
+                            <TextView
+                                android:id="@+id/tvTocDo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:textSize="@dimen/text_12"
+                                android:text="BMI từ 30 đến dưới 35: Béo phì độ I"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvTD"
+                                app:layout_constraintStart_toEndOf="@+id/tvTD"/>
+
+                            <TextView
+                                android:id="@+id/tvTGN"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@android:color/holo_orange_dark"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvTD" />
+
+                            <TextView
+                                android:id="@+id/tvThoiGianNghi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:textSize="@dimen/text_12"
+                                android:text="BMI từ 35 đến dưới 40: Béo phì độ II"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvTGN"
+                                app:layout_constraintStart_toEndOf="@+id/tvTGN"/>
+
+                            <TextView
+                                android:id="@+id/cacBuoc"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@color/red"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvTGN" />
+
+                            <TextView
+                                android:id="@+id/tvCacBuoc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:textSize="@dimen/text_12"
+                                android:text="BMI từ 40 trở lên: Béo phì độ III"
+                                app:layout_constraintBottom_toBottomOf="@+id/cacBuoc"
+                                app:layout_constraintStart_toEndOf="@+id/cacBuoc" />
+
+                            <TextView
+                                android:id="@+id/tvLK"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Lời khuyên: "
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_14"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvCacBuoc" />
+
+                            <TextView
+                                android:id="@+id/tvLoiKhuyen"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="20dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="20dp"
+                                android:text="- BMI Gầy: bạn cần phải khám và áp dụng một chế độ dinh dưỡng tốt nhất để có thể tăng cân, đảm bảo sức khỏe. \n\n- BMI Bình thường: Bạn có một cơ thể tốt và tương đối khỏe mạnh.\n\n- BMI Thừa cân: Tình trạng thừa cân lúc này chưa quá trầm trọng nhưng bạn hãy tìm phương pháp và chế độ giảm cân để đưa cơ thể về vóc dáng cân đối, đảm bảo sức khỏe và phòng ngừa bệnh tật. \n\n - BMI Béo phì: Ở các cấp độ béo phì, cơ thể của bạn gặp khó khăn mỗi ngày khi trọng lượng mỡ tạo áp lực lên cơ xương. Từ đó, không chỉ sinh hoạt của bạn bị xáo trộn mà sức khỏe của bạn cũng bị ảnh hưởng rất nhiều. "
+                                android:textSize="@dimen/text_12"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tvLK" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </ScrollView>
+
                    </androidx.cardview.widget.CardView>
 
                </LinearLayout>

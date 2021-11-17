@@ -71,11 +71,11 @@ public class WeeklyFragment extends Fragment {
 
     private float teal700 = 16;
     private float teal200 = 3;
-    private float greenlight = 5;
-    private float greendark = 6;
+    private float greenlight = 6;
+    private float greendark = 5;
     private float smoking = 5;
     private float oglight = 5;
-    private float ogdark = 6;
+    private float ogdark = 5;
     private float red;
     private  TheTrang theTrang;
 
@@ -161,11 +161,35 @@ public class WeeklyFragment extends Fragment {
                 public void onResponse(Call<TheTrang> call, Response<TheTrang> response) {
                     theTrang = response.body();
                     try {
+                        float chieuCaoM = theTrang.getChieuCao()/100;
+                        float bmi = theTrang.getCanNang() / (chieuCaoM*2);
                         seekbar.setVisibility(View.VISIBLE);
-                        seekbar.setProgress((int)(theTrang.getCanNang() / (theTrang.getChieuCao()/100*2)));
-                        String strDouble = String.format("%.2f", theTrang.getCanNang() / (theTrang.getChieuCao()/100*2));
-                        txtProgress.setText(strDouble);
-                        tvNhanXetBmi.setText("Thể trạng bình thường");
+                        seekbar.setProgress((int)(bmi));
+                        String strDouble = String.format("%.2f", bmi);
+                        txtProgress.setText(strDouble + "kg/m2");
+                        String txt = "";
+                        if (bmi<16){
+                            txt = "Trông bạn quá gầy";
+                        }
+                        if (bmi<18 &&bmi>16 || bmi ==16){
+                            txt = "Trông bạn hơi gầy";
+                        }
+                        if (bmi>18 && bmi<25 || bmi ==18){
+                            txt = "Thể trạng bình thường";
+                        }
+                        if (bmi>25 && bmi<30 || bmi ==25){
+                            txt = "Trông bạn hơi béo";
+                        }
+                        if (bmi>30 && bmi<35 || bmi ==30){
+                            txt = "Trông bạn quá béo";
+                        }
+                        if (bmi>35 && bmi<40 || bmi ==35){
+                            txt = "Trông bạn rất béo";
+                        }
+                        if (bmi>40 || bmi ==40){
+                            txt = "Thể trạng nguy hiểm";
+                        }
+                        tvNhanXetBmi.setText(txt);
                     }
                     catch (Exception e ){
                         seekbar.setVisibility(View.INVISIBLE);
@@ -177,7 +201,8 @@ public class WeeklyFragment extends Fragment {
                         public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                             //đối số postion là vị trí phần tử trong list Data
                             try {
-                                float bmi = theTrang.getCanNang() / (theTrang.getChieuCao()/100*2);
+                                float chieuCaoM = theTrang.getChieuCao()/100;
+                                float bmi = theTrang.getCanNang() / (chieuCaoM*2);
                                 String msg = "position :" + position + " value :" + list.get(position);
                                 String strDouble1 = String.format("%.2f", theTrang.getCanNang());
                                 String strDouble2 = String.format("%.2f", theTrang.getChieuCao());
@@ -186,63 +211,84 @@ public class WeeklyFragment extends Fragment {
                                 String strDouble5 = String.format("%.2f", theTrang.getVong3());
                                 String strDouble6 = String.format("%.2f", theTrang.getVongTay());
                                 String strDouble7 = String.format("%.2f", theTrang.getVongDui());
-                                String strDouble8 = String.format("%.2f", theTrang.getLuongNuoc());
+                                String strDouble8 = String.format("%.0f", theTrang.getLuongNuoc());
                                 String strDouble = String.format("%.2f", bmi);
-                                String txt = "Thể trạng bình thường";
+                                String txt = "";
+                                if (bmi<16){
+                                    txt = "Trông bạn quá gầy";
+                                }
+                                if (bmi<18 &&bmi>16 || bmi ==16){
+                                    txt = "Trông bạn hơi gầy";
+                                }
+                                if (bmi>18 && bmi<25 || bmi ==18){
+                                    txt = "Thể trạng bình thường";
+                                }
+                                if (bmi>25 && bmi<30 || bmi ==25){
+                                    txt = "Trông bạn hơi béo";
+                                }
+                                if (bmi>30 && bmi<35 || bmi ==30){
+                                    txt = "Trông bạn quá béo";
+                                }
+                                if (bmi>35 && bmi<40 || bmi ==35){
+                                    txt = "Trông bạn rất béo";
+                                }
+                                if (bmi>40 || bmi ==40){
+                                    txt = "Thể trạng nguy hiểm";
+                                }
 
                                 switch (position){
                                     case 0: {
                                         seekbar.setVisibility(View.VISIBLE);
                                         seekbar.setProgress((int)(bmi));
-                                        txtProgress.setText(strDouble);
+                                        txtProgress.setText(strDouble +" kg/m2");
                                         tvNhanXetBmi.setText(txt);
                                         break;
                                     }
                                     case 1: {
                                         seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble1);
+                                        txtProgress.setText(strDouble1+ " kg");
                                         tvNhanXetBmi.setText(txt);
                                         break;
                                     }
                                     case 2: {
                                         seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble2);
+                                        txtProgress.setText(strDouble2 + " cm");
                                         tvNhanXetBmi.setText(txt);
                                         break;
                                     }
                                     case 3: {
                                         seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble3);
+                                        txtProgress.setText(strDouble3 +" cm");
                                         tvNhanXetBmi.setText(txt);
                                         break;
                                     }
                                     case 4: {
                                         seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble4);
+                                        txtProgress.setText(strDouble4 +" cm");
                                         tvNhanXetBmi.setText(txt);
                                         break;
                                     }
                                     case 5: {
                                         seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble5);
+                                        txtProgress.setText(strDouble5 +" cm");
                                         tvNhanXetBmi.setText(txt);
                                         break;
                                     }
                                     case 6: {
                                         seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble6);
+                                        txtProgress.setText(strDouble6 +" cm");
                                         tvNhanXetBmi.setText(txt);
                                         break;
                                     }
                                     case 7: {
                                         seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble7);
+                                        txtProgress.setText(strDouble7 +" cm");
                                         tvNhanXetBmi.setText(txt);
                                         break;
                                     }
                                     case 8: {
                                         seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble8);
+                                        txtProgress.setText(strDouble8 +" ml");
                                         tvNhanXetBmi.setText(txt);
                                         break;
                                     }
