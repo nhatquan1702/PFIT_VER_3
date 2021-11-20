@@ -23,33 +23,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tvTenTheTrang"
-                    android:text="@string/action_weight"
-                    style="@style/CardViewPrimaryTitle" />
-
-                <TextView
-                    android:id="@+id/tvTitleTenTheTrang"
-                    style="@style/CardViewSubTitle"
-                    android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvTenTheTrang"
-                    android:text="Từ năm 2011 đến năm 2022" />
+                    android:spinnerMode="dropdown"
+                    android:layout_centerHorizontal="true"/>
 
-                <ImageButton
-                    android:id="@+id/imgButtonTenTheTrang"
-                    style="@style/SimpleImageButton"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/tvTenTheTrang"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_more_vert_black_24dp" />
+                <LinearLayout
+                    android:id="@+id/linearSpin"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/spinner"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Năm"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_16"
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content"/>
+                    <Spinner
+                        android:id="@+id/spinnerNam"
+                        android:layout_width="wrap_content"
+                        android:spinnerMode="dropdown"
+                        android:layout_marginLeft="5dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
                 <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/lineChart"
-                    android:layout_below="@+id/tvTitleTenTheTrang"
+                    android:id="@+id/lineChartY"
+                    android:layout_below="@+id/linearSpin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="20dp"

@@ -41,8 +41,8 @@ import retrofit2.Response;
 
 
 public class MonthlyFragment extends Fragment {
-    private Spinner spinner, spinnerThang, spinnerNam;
-    private List<String> list, listThang, listNam;
+    private Spinner spinner, spinnerThang ;
+    private List<String> list, listThang;
     private SimpleAPI simpleAPI;
     ArrayList<TheTrang> trangArrayList;
     LineChart lineChart;
@@ -112,13 +112,6 @@ public class MonthlyFragment extends Fragment {
         listThang.add("11");
         listThang.add("12");
 
-//        listNam = new ArrayList<>();
-//        listNam.add("2017");
-//        listNam.add("2018");
-//        listNam.add("2019");
-//        listNam.add("2020");
-//        listNam.add("2021");
-//        listNam.add("2022");
 
         spinner = (Spinner) view.findViewById(R.id.imgButtonTenTheTrang);
         ArrayAdapter spinnerAdapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, list);
@@ -130,10 +123,6 @@ public class MonthlyFragment extends Fragment {
         spinnerThang.setAdapter(spinnerAdapterThang);
         spinnerThang.setSelection(0);
 
-//        spinnerNam = (Spinner) view.findViewById(R.id.spinnerNam);
-//        ArrayAdapter spinnerAdapterNam = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, listNam);
-//        spinnerNam.setAdapter(spinnerAdapterNam);
-//        spinnerNam.setSelection(0);
         trangArrayList = new ArrayList<>();
         SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd");
         String tgHienTai = simpleDateFormat.format(Calendar.getInstance().getTime());
@@ -142,12 +131,66 @@ public class MonthlyFragment extends Fragment {
         spinnerThang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                trangArrayList=new ArrayList<>();
                 LoadData("quan", listThang.get(position), tam);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(requireContext(),"Chưa chọn", Toast.LENGTH_SHORT).show();
+            }
+        });
+        TextView tvThang = view.findViewById(R.id.tvThang);
+        tvThang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog datePicker = new DatePickerDialog(requireContext(),(view, year, month, dayOfMonth) ->
+                {
+                    trangArrayList = new ArrayList<>();
+                    //Log.d("quan", String.valueOf(month+1)+"+"+String.valueOf(year));
+                    LoadData("quan", String.valueOf(month+1), String.valueOf(year));
+                    int a = month+1;
+                    if(a==1){
+                        spinnerThang.setSelection(0);
+                    }
+                    if(a==2){
+                        spinnerThang.setSelection(1);
+                    }
+                    if(a==3){
+                        spinnerThang.setSelection(2);
+                    }
+                    if(a==4){
+                        spinnerThang.setSelection(3);
+                    }
+                    if(a==5){
+                        spinnerThang.setSelection(4);
+                    }
+                    if(a==6){
+                        spinnerThang.setSelection(5);
+                    }
+                    if(a==7){
+                        spinnerThang.setSelection(6);
+                    }
+                    if(a==8){
+                        spinnerThang.setSelection(7);
+                    }
+                    if(a==9){
+                        spinnerThang.setSelection(7);
+                    }
+                    if(a==10){
+                        spinnerThang.setSelection(9);
+                    }
+                    if(a==11){
+                        spinnerThang.setSelection(10);
+                    }
+                    if(a==12){
+                        spinnerThang.setSelection(11);
+                    }
+
+                },now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+                datePicker.show();
             }
         });
 
@@ -171,10 +214,6 @@ public class MonthlyFragment extends Fragment {
                     ArrayList<Entry> entryArrayList = new ArrayList<>();
                     for(int i=0; i<trangArrayList.size(); i++){
                         if(trangArrayList.size()>0){
-//                            Log.d("quan", trangArrayList.get(i).getNgay().substring(7,10));
-//                            Log.d("quan", trangArrayList.get(i).getNgay().substring(8,10));
-//                            Log.d("quan", trangArrayList.get(i).getNgay().substring(6,9));
-
                             entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getBmi()));
                         }
                         else { //2021-01-11
