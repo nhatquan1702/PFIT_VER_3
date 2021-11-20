@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testbaitap.R;
+import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.TheTrang;
 import com.github.mikephil.charting.charts.LineChart;
@@ -28,17 +30,22 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class MonthlyFragment extends Fragment {
-    private TextView tvTitleTenTheTrang;
-    private Spinner spinner;
-    private List<String> list;
+    private Spinner spinner, spinnerThang, spinnerNam;
+    private List<String> list, listThang, listNam;
     private SimpleAPI simpleAPI;
     ArrayList<TheTrang> trangArrayList;
+    LineChart lineChart;
 
     public MonthlyFragment() {
         // Required empty public constructor
@@ -64,51 +71,8 @@ public class MonthlyFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_monthly, container, false);
 
+        lineChart = view.findViewById(R.id.lineChart);
 
-        LineChart lineChart = view.findViewById(R.id.lineChart);
-        ArrayList<Entry> entryArrayList = new ArrayList<>();
-        entryArrayList.add(new Entry(2011, 60));
-        entryArrayList.add(new Entry(2012, 50));
-        entryArrayList.add(new Entry(2013, 30));
-        entryArrayList.add(new Entry(2015, 40));
-        entryArrayList.add(new Entry(2016, 20));
-        entryArrayList.add(new Entry(2019, 60));
-        entryArrayList.add(new Entry(2020, 45));
-        entryArrayList.add(new Entry(2021, 35));
-        entryArrayList.add(new Entry(2022, 25));
-
-//        for (YourData data : dataObjects) {
-//            entryArrayList.add(new Entry(data.getValueX(), data.getValueY()));
-//        }
-        LineDataSet dataSet = new LineDataSet(entryArrayList, "Cân nặng"); // add entries to dataset
-        dataSet.setColor(getResources().getColor(R.color.red));
-        dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
-        LineData lineData = new LineData(dataSet);
-        lineChart.setData(lineData);
-        lineChart.invalidate(); // refresh
-
-
-        Description description = new Description();
-        description.setText("Mô tả: Trục đứng biểu thị cân nặng, trục ngang biểu thị các năm");
-        lineChart.setDescription(description);
-
-        lineChart.setNoDataText("Chưa có dữ liệu");
-        lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
-        XAxis xAxis = lineChart.getXAxis();
-        YAxis yAxisL = lineChart.getAxisLeft();
-        YAxis yAxisR = lineChart.getAxisRight();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                if (value == (int) value) {
-                    if (value == 0)
-                        return "0";
-                    else
-                        return String.valueOf((int)(value )).split(" ")[0];
-                }
-                else return "";
-            }
-        });
 
 //        setBackgroundColor(int color): set màu background bao phủ toàn bộ Chart, ngoài ra backgroundColor có thể set trong xml
 //        setDescription(String desc): hiển thị text mô tả sẽ xuẩt hiện ở góc phải dưới của biểu đồ
@@ -124,7 +88,7 @@ public class MonthlyFragment extends Fragment {
 
 
         list = new ArrayList<>();
-        list.add("Bmi");
+        list.add("Chỉ số bmi");
         list.add("Cân nặng");
         list.add("Chiều cao");
         list.add("Vòng 1");
@@ -133,37 +97,60 @@ public class MonthlyFragment extends Fragment {
         list.add("Vòng tay");
         list.add("Vòng đùi");
         list.add("Lượng nước");
-        tvTitleTenTheTrang = (TextView) view.findViewById(R.id.tvTitleTenTheTrang);
-        tvTitleTenTheTrang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar now = Calendar.getInstance();
-                DatePickerDialog datePicker = new DatePickerDialog(requireContext(),(view, year, month, dayOfMonth) ->
-                {
-                    String strDate = "'" +year + "-" + (month + 1) + "-" + dayOfMonth + "'";
-                    tvTitleTenTheTrang.setText("Ngày " + dayOfMonth + " Tháng " + (month + 1) + " Năm " + year);
-                    Toast.makeText(requireContext(), strDate, Toast.LENGTH_SHORT).show();
 
-                },now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
-                datePicker.show();
-            }
-        });
+        listThang = new ArrayList<>();
+        listThang.add("01");
+        listThang.add("02");
+        listThang.add("03");
+        listThang.add("04");
+        listThang.add("05");
+        listThang.add("06");
+        listThang.add("07");
+        listThang.add("08");
+        listThang.add("09");
+        listThang.add("10");
+        listThang.add("11");
+        listThang.add("12");
+
+//        listNam = new ArrayList<>();
+//        listNam.add("2017");
+//        listNam.add("2018");
+//        listNam.add("2019");
+//        listNam.add("2020");
+//        listNam.add("2021");
+//        listNam.add("2022");
 
         spinner = (Spinner) view.findViewById(R.id.imgButtonTenTheTrang);
         ArrayAdapter spinnerAdapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, list);
         spinner.setAdapter(spinnerAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setSelection(0);
+
+        spinnerThang = (Spinner) view.findViewById(R.id.spinnerThang);
+        ArrayAdapter spinnerAdapterThang = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, listThang);
+        spinnerThang.setAdapter(spinnerAdapterThang);
+        spinnerThang.setSelection(0);
+
+//        spinnerNam = (Spinner) view.findViewById(R.id.spinnerNam);
+//        ArrayAdapter spinnerAdapterNam = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, listNam);
+//        spinnerNam.setAdapter(spinnerAdapterNam);
+//        spinnerNam.setSelection(0);
+        trangArrayList = new ArrayList<>();
+        SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd");
+        String tgHienTai = simpleDateFormat.format(Calendar.getInstance().getTime());
+        String tam = tgHienTai.substring(0,4);
+        LoadData("quan", "01", tam);
+        spinnerThang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                //đối số postion là vị trí phần tử trong list Data
-                String msg = "position :" + position + " value :" + list.get(position);
-                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                LoadData("quan", listThang.get(position), tam);
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                Toast.makeText(requireContext(), "onNothingSelected", Toast.LENGTH_SHORT).show();
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
+
         return view;
 
     }
@@ -174,4 +161,495 @@ public class MonthlyFragment extends Fragment {
         }
     }
 
+    public void LoadData(String maHocVien, String thang, String nam){
+        simpleAPI = Constants.instance();
+        simpleAPI.getTheTrangHVTheoThang(maHocVien, thang, nam).enqueue(new Callback<ArrayList<TheTrang>>() {
+            @Override
+            public void onResponse(Call<ArrayList<TheTrang>> call, Response<ArrayList<TheTrang>> response) {
+                trangArrayList = response.body();
+                try {
+                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                    for(int i=0; i<trangArrayList.size(); i++){
+                        if(trangArrayList.size()>0){
+//                            Log.d("quan", trangArrayList.get(i).getNgay().substring(7,10));
+//                            Log.d("quan", trangArrayList.get(i).getNgay().substring(8,10));
+//                            Log.d("quan", trangArrayList.get(i).getNgay().substring(6,9));
+
+                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getBmi()));
+                        }
+                        else { //2021-01-11
+                            lineChart.setNoDataText("Chưa có dữ liệu");
+                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                        }
+                    }
+
+                    LineDataSet dataSet = new LineDataSet(entryArrayList, "Chỉ số bmi"); // add entries to dataset
+                    dataSet.setColor(getResources().getColor(R.color.red));
+                    dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                    LineData lineData = new LineData(dataSet);
+                    lineChart.setData(lineData);
+                    lineChart.invalidate(); // refresh
+
+
+                    Description description = new Description();
+                    description.setText("Mô tả: Trục đứng biểu thị chỉ số bmi, trục ngang biểu thị các tháng");
+                    lineChart.setDescription(description);
+
+                    lineChart.setNoDataText("Chưa có dữ liệu");
+                    lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                    XAxis xAxis = lineChart.getXAxis();
+                    YAxis yAxisL = lineChart.getAxisLeft();
+                    YAxis yAxisR = lineChart.getAxisRight();
+                    xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                        @Override
+                        public String getFormattedValue(float value) {
+                            if (value == (int) value) {
+                                if (value == 0)
+                                    return "0";
+                                else
+                                    return String.valueOf((int)(value )).split(" ")[0];
+                            }
+                            else return "";
+                        }
+                    });
+                }
+                catch (Exception e){
+                    lineChart.setNoDataText("Chưa có dữ liệu");
+                    lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                }
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                        //đối số postion là vị trí phần tử trong list Data
+                        try {
+
+                            switch (position){
+                                case 0: {
+                                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                                    entryArrayList = new ArrayList<>();
+                                    for(int i=0; i<trangArrayList.size(); i++){
+                                        if(trangArrayList.size()>0){
+                                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getBmi()));
+
+                                            LineDataSet dataSet = new LineDataSet(entryArrayList, "Chỉ số bmi"); // add entries to dataset
+                                            dataSet.setColor(getResources().getColor(R.color.red));
+                                            dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                                            LineData lineData = new LineData(dataSet);
+                                            lineChart.setData(lineData);
+                                            lineChart.invalidate(); // refresh
+
+
+                                            Description description = new Description();
+                                            description.setText("Mô tả: Trục đứng biểu thị chỉ số bmi, trục ngang biểu thị các ngày");
+                                            lineChart.setDescription(description);
+
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                            XAxis xAxis = lineChart.getXAxis();
+                                            YAxis yAxisL = lineChart.getAxisLeft();
+                                            YAxis yAxisR = lineChart.getAxisRight();
+                                            xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                                                @Override
+                                                public String getFormattedValue(float value) {
+                                                    if (value == (int) value) {
+                                                        if (value == 0)
+                                                            return "0";
+                                                        else
+                                                            return String.valueOf((int)(value )).split(" ")[0];
+                                                    }
+                                                    else return "";
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            //chưa có dữ liệu
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 1: {
+                                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                                    for(int i=0; i<trangArrayList.size(); i++){
+                                        if(trangArrayList.size()>0){
+                                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getCanNang()));
+
+                                            LineDataSet dataSet = new LineDataSet(entryArrayList, "Cân nặng"); // add entries to dataset
+                                            dataSet.setColor(getResources().getColor(R.color.red));
+                                            dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                                            LineData lineData = new LineData(dataSet);
+                                            lineChart.setData(lineData);
+                                            lineChart.invalidate(); // refresh
+
+
+                                            Description description = new Description();
+                                            description.setText("Mô tả: Trục đứng biểu thị cân nặng, trục ngang biểu thị các ngày");
+                                            lineChart.setDescription(description);
+
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                            XAxis xAxis = lineChart.getXAxis();
+                                            YAxis yAxisL = lineChart.getAxisLeft();
+                                            YAxis yAxisR = lineChart.getAxisRight();
+                                            xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                                                @Override
+                                                public String getFormattedValue(float value) {
+                                                    if (value == (int) value) {
+                                                        if (value == 0)
+                                                            return "0";
+                                                        else
+                                                            return String.valueOf((int)(value )).split(" ")[0];
+                                                    }
+                                                    else return "";
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            //chưa có dữ liệu
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 2: {
+                                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                                    for(int i=0; i<trangArrayList.size(); i++){
+                                        if(trangArrayList.size()>0){
+                                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getChieuCao()));
+
+
+                                            LineDataSet dataSet = new LineDataSet(entryArrayList, "Chiều cao"); // add entries to dataset
+                                            dataSet.setColor(getResources().getColor(R.color.red));
+                                            dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                                            LineData lineData = new LineData(dataSet);
+                                            lineChart.setData(lineData);
+                                            lineChart.invalidate(); // refresh
+
+
+                                            Description description = new Description();
+                                            description.setText("Mô tả: Trục đứng biểu thị chiều cao, trục ngang biểu thị các ngày");
+                                            lineChart.setDescription(description);
+
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                            XAxis xAxis = lineChart.getXAxis();
+                                            YAxis yAxisL = lineChart.getAxisLeft();
+                                            YAxis yAxisR = lineChart.getAxisRight();
+                                            xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                                                @Override
+                                                public String getFormattedValue(float value) {
+                                                    if (value == (int) value) {
+                                                        if (value == 0)
+                                                            return "0";
+                                                        else
+                                                            return String.valueOf((int)(value )).split(" ")[0];
+                                                    }
+                                                    else return "";
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            //chưa có dữ liệu
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 3: {
+                                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                                    for(int i=0; i<trangArrayList.size(); i++){
+                                        if(trangArrayList.size()>0){
+                                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getVong1()));
+
+
+                                            LineDataSet dataSet = new LineDataSet(entryArrayList, "Số đo vòng 1"); // add entries to dataset
+                                            dataSet.setColor(getResources().getColor(R.color.red));
+                                            dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                                            LineData lineData = new LineData(dataSet);
+                                            lineChart.setData(lineData);
+                                            lineChart.invalidate(); // refresh
+
+
+                                            Description description = new Description();
+                                            description.setText("Mô tả: Trục đứng biểu thị số đo vòng 1, trục ngang biểu thị các ngày");
+                                            lineChart.setDescription(description);
+
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                            XAxis xAxis = lineChart.getXAxis();
+                                            YAxis yAxisL = lineChart.getAxisLeft();
+                                            YAxis yAxisR = lineChart.getAxisRight();
+                                            xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                                                @Override
+                                                public String getFormattedValue(float value) {
+                                                    if (value == (int) value) {
+                                                        if (value == 0)
+                                                            return "0";
+                                                        else
+                                                            return String.valueOf((int)(value )).split(" ")[0];
+                                                    }
+                                                    else return "";
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            //chưa có dữ liệu
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 4: {
+                                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                                    for(int i=0; i<trangArrayList.size(); i++){
+                                        if(trangArrayList.size()>0){
+                                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getVong2()));
+
+
+                                            LineDataSet dataSet = new LineDataSet(entryArrayList, "Số đo vòng 2"); // add entries to dataset
+                                            dataSet.setColor(getResources().getColor(R.color.red));
+                                            dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                                            LineData lineData = new LineData(dataSet);
+                                            lineChart.setData(lineData);
+                                            lineChart.invalidate(); // refresh
+
+
+                                            Description description = new Description();
+                                            description.setText("Mô tả: Trục đứng biểu thị số đo vòng 2, trục ngang biểu thị các ngày");
+                                            lineChart.setDescription(description);
+
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                            XAxis xAxis = lineChart.getXAxis();
+                                            YAxis yAxisL = lineChart.getAxisLeft();
+                                            YAxis yAxisR = lineChart.getAxisRight();
+                                            xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                                                @Override
+                                                public String getFormattedValue(float value) {
+                                                    if (value == (int) value) {
+                                                        if (value == 0)
+                                                            return "0";
+                                                        else
+                                                            return String.valueOf((int)(value )).split(" ")[0];
+                                                    }
+                                                    else return "";
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            //chưa có dữ liệu
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 5: {
+                                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                                    for(int i=0; i<trangArrayList.size(); i++){
+                                        if(trangArrayList.size()>0){
+                                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getVong3()));
+
+
+                                            LineDataSet dataSet = new LineDataSet(entryArrayList, "Số đo vòng 3"); // add entries to dataset
+                                            dataSet.setColor(getResources().getColor(R.color.red));
+                                            dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                                            LineData lineData = new LineData(dataSet);
+                                            lineChart.setData(lineData);
+                                            lineChart.invalidate(); // refresh
+
+
+                                            Description description = new Description();
+                                            description.setText("Mô tả: Trục đứng biểu thị số đo vòng 3, trục ngang biểu thị các ngày");
+                                            lineChart.setDescription(description);
+
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                            XAxis xAxis = lineChart.getXAxis();
+                                            YAxis yAxisL = lineChart.getAxisLeft();
+                                            YAxis yAxisR = lineChart.getAxisRight();
+                                            xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                                                @Override
+                                                public String getFormattedValue(float value) {
+                                                    if (value == (int) value) {
+                                                        if (value == 0)
+                                                            return "0";
+                                                        else
+                                                            return String.valueOf((int)(value )).split(" ")[0];
+                                                    }
+                                                    else return "";
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            //chưa có dữ liệu
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 6: {
+                                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                                    for(int i=0; i<trangArrayList.size(); i++){
+                                        if(trangArrayList.size()>0){
+                                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getVongTay()));
+
+
+                                            LineDataSet dataSet = new LineDataSet(entryArrayList, "Số đo vòng tay"); // add entries to dataset
+                                            dataSet.setColor(getResources().getColor(R.color.red));
+                                            dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                                            LineData lineData = new LineData(dataSet);
+                                            lineChart.setData(lineData);
+                                            lineChart.invalidate(); // refresh
+
+
+                                            Description description = new Description();
+                                            description.setText("Mô tả: Trục đứng biểu thị số đo vòng tay, trục ngang biểu thị các ngày");
+                                            lineChart.setDescription(description);
+
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                            XAxis xAxis = lineChart.getXAxis();
+                                            YAxis yAxisL = lineChart.getAxisLeft();
+                                            YAxis yAxisR = lineChart.getAxisRight();
+                                            xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                                                @Override
+                                                public String getFormattedValue(float value) {
+                                                    if (value == (int) value) {
+                                                        if (value == 0)
+                                                            return "0";
+                                                        else
+                                                            return String.valueOf((int)(value )).split(" ")[0];
+                                                    }
+                                                    else return "";
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            //chưa có dữ liệu
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 7: {
+                                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                                    for(int i=0; i<trangArrayList.size(); i++){
+                                        if(trangArrayList.size()>0){
+                                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getVongDui()));
+
+
+                                            LineDataSet dataSet = new LineDataSet(entryArrayList, "Số đo vòng đùi"); // add entries to dataset
+                                            dataSet.setColor(getResources().getColor(R.color.red));
+                                            dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                                            LineData lineData = new LineData(dataSet);
+                                            lineChart.setData(lineData);
+                                            lineChart.invalidate(); // refresh
+
+
+                                            Description description = new Description();
+                                            description.setText("Mô tả: Trục đứng biểu thị số đo vòng đùi, trục ngang biểu thị các ngày");
+                                            lineChart.setDescription(description);
+
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                            XAxis xAxis = lineChart.getXAxis();
+                                            YAxis yAxisL = lineChart.getAxisLeft();
+                                            YAxis yAxisR = lineChart.getAxisRight();
+                                            xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                                                @Override
+                                                public String getFormattedValue(float value) {
+                                                    if (value == (int) value) {
+                                                        if (value == 0)
+                                                            return "0";
+                                                        else
+                                                            return String.valueOf((int)(value )).split(" ")[0];
+                                                    }
+                                                    else return "";
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            //chưa có dữ liệu
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 8: {
+                                    ArrayList<Entry> entryArrayList = new ArrayList<>();
+                                    for(int i=0; i<trangArrayList.size(); i++){
+                                        if(trangArrayList.size()>0){
+                                            entryArrayList.add(new Entry(Integer.parseInt(trangArrayList.get(i).getNgay().substring(8,10)), trangArrayList.get(i).getLuongNuoc()));
+
+                                            LineDataSet dataSet = new LineDataSet(entryArrayList, "Lượng nước"); // add entries to dataset
+                                            dataSet.setColor(getResources().getColor(R.color.red));
+                                            dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
+                                            LineData lineData = new LineData(dataSet);
+                                            lineChart.setData(lineData);
+                                            lineChart.invalidate(); // refresh
+
+
+                                            Description description = new Description();
+                                            description.setText("Mô tả: Trục đứng biểu thị lượng nước, trục ngang biểu thị các ngày");
+                                            lineChart.setDescription(description);
+
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                            XAxis xAxis = lineChart.getXAxis();
+                                            YAxis yAxisL = lineChart.getAxisLeft();
+                                            YAxis yAxisR = lineChart.getAxisRight();
+                                            xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+                                                @Override
+                                                public String getFormattedValue(float value) {
+                                                    if (value == (int) value) {
+                                                        if (value == 0)
+                                                            return "0";
+                                                        else
+                                                            return String.valueOf((int)(value )).split(" ")[0];
+                                                    }
+                                                    else return "";
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            //chưa có dữ liệu
+                                            lineChart.setNoDataText("Chưa có dữ liệu");
+                                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                                        }
+                                    }
+                                    break;
+                                }
+                                default: break;
+                            }
+                        }
+                        catch (Exception e ){
+                            lineChart.setNoDataText("Chưa có dữ liệu");
+                            lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                        }
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parentView) {
+                        Toast.makeText(requireContext(), "onNothingSelected", Toast.LENGTH_SHORT).show();
+                        lineChart.setNoDataText("Chưa có dữ liệu");
+                        lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<TheTrang>> call, Throwable t) {
+                Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                lineChart.setNoDataText("Chưa có dữ liệu");
+                lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+            }
+        });
+    }
 }

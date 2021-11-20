@@ -12,7 +12,7 @@ public class TheTrang {
 
     @SerializedName("ngay")
     @Expose
-    private Date ngay;
+    private String ngay;
 
     @SerializedName("chieuCao")
     @Expose
@@ -46,7 +46,7 @@ public class TheTrang {
     @Expose
     private Float luongNuoc;
 
-    public TheTrang(String maHocVien, Date ngay, Float chieuCao, Float canNang, Float vong1, Float vong2, Float vong3, Float vongTay, Float vongDui, Float luongNuoc) {
+    public TheTrang(String maHocVien, String ngay, Float chieuCao, Float canNang, Float vong1, Float vong2, Float vong3, Float vongTay, Float vongDui, Float luongNuoc) {
         this.maHocVien = maHocVien;
         this.ngay = ngay;
         this.chieuCao = chieuCao;
@@ -63,11 +63,11 @@ public class TheTrang {
 
     }
 
-    public Date getNgay() {
+    public String getNgay() {
         return ngay;
     }
 
-    public void setNgay(Date ngay) {
+    public void setNgay(String ngay) {
         this.ngay = ngay;
     }
 
@@ -141,5 +141,11 @@ public class TheTrang {
 
     public void setLuongNuoc(Float luongNuoc) {
         this.luongNuoc = luongNuoc;
+    }
+
+    public float getBmi(){
+        float chieuCaoM = chieuCao/100;
+        float bmi = canNang / (chieuCaoM*2);
+        return bmi;
     }
 }

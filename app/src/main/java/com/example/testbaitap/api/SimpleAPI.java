@@ -54,4 +54,7 @@ public interface SimpleAPI {
 
     @GET("api/thetrang/thetranghocvien")
     Call<TheTrang> getTheTrangHVTheoNgay(@Header("mahocvien") String maHocVien, @Header("ngay") String ngay);
+
+    @GET("api/thetrang/thetranghocvientheothang")
+    Call<ArrayList<TheTrang>> getTheTrangHVTheoThang(@Query("mahocvien") String maHocVien, @Query("thang") String thang, @Query("nam") String nam);
 }

@@ -31,21 +31,46 @@
                     android:spinnerMode="dropdown"
                     android:layout_centerHorizontal="true"/>
 
-                <TextView
-                    android:id="@+id/tvTitleTenTheTrang"
-                    style="@style/CardViewSubTitle"
+                <LinearLayout
+                    android:id="@+id/linearSpin"
                     android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/imgButtonTenTheTrang"
-                    android:text="Từ năm 2011 đến năm 2022" />
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/imgButtonTenTheTrang"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="Tháng"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_16"
+                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content"/>
+                    <Spinner
+                        android:id="@+id/spinnerThang"
+                        android:layout_width="wrap_content"
+                        android:spinnerMode="dropdown"
+                        android:layout_marginLeft="5dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_height="wrap_content"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:text="Năm"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_height="wrap_content"/>-->
+<!--                    <Spinner-->
+<!--                        android:id="@+id/spinnerNam"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:spinnerMode="dropdown"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_centerHorizontal="true"-->
+<!--                        android:layout_height="wrap_content"/>-->
+                </LinearLayout>
 
 
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/lineChart"
-                    android:layout_below="@+id/tvTitleTenTheTrang"
+                    android:layout_below="@+id/linearSpin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="20dp"
