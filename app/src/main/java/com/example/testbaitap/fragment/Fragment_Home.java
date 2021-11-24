@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -25,14 +26,20 @@ import com.example.testbaitap.SlidingModel;
 import com.example.testbaitap.activity.WaterActivity;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
+import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.entity.TheTrang;
 import com.example.testbaitap.utils.CustomProcessbar;
 import com.example.testbaitap.utils.ProgressItem;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,7 +49,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Fragment_Home extends Fragment {
-    private int[] myImageList = new int[]{R.drawable.banner_1, R.mipmap.banner_calculator, R.mipmap.banner_3, R.mipmap.img_reminder, R.mipmap.banner_reminder };
+    private int[] myImageList = new int[]{R.mipmap.banner_reminder, R.mipmap.banner_calculator, R.mipmap.banner_3, R.mipmap.img_reminder, R.mipmap.banner_1 };
     private ArrayList<SlidingModel> imageModelArrayList;
     private static ViewPager mPager, viewPagerKhoaTap;
     private static int currentPage = 0;
@@ -148,8 +155,6 @@ public class Fragment_Home extends Fragment {
             }
         });
 
-        //        walk and steps report
-
         mPager.setAdapter(new SlidingAdapter(getActivity(), imageModelArrayList));
         viewPagerKhoaTap.setAdapter(new SlidingAdapter(getActivity(), imageModelArrayList));
         NUM_PAGES = imageModelArrayList.size();
@@ -213,12 +218,123 @@ public class Fragment_Home extends Fragment {
         sheetDialog.setContentView(viewDialog);
         BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) viewDialog.getParent());
         mBehavior.setPeekHeight(2000);
+        EditText tvCanNang = (EditText) viewDialog.findViewById(R.id.edtCN);
+        EditText tvChieuCao = (EditText) viewDialog.findViewById(R.id.edtCC);
+        EditText tvVongTay = (EditText) viewDialog.findViewById(R.id.edtVT);
+        EditText tvVongDui = (EditText) viewDialog.findViewById(R.id.edtVD);
+        EditText tvV1 = (EditText) viewDialog.findViewById(R.id.edtV1);
+        EditText tvV2 = (EditText) viewDialog.findViewById(R.id.edtV2);
+        EditText tvV3= (EditText) viewDialog.findViewById(R.id.edtV3);
+
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        simpleAPI = Constants.instance();
+        simpleAPI.getTheTrangHVTheoNgay("quan", currentDate).enqueue(new Callback<TheTrang>() {
+            @Override
+            public void onResponse(Call<TheTrang> call, Response<TheTrang> response) {
+                TheTrang tt = response.body();
+                try {
+                    tvCanNang.setText(String.valueOf(tt.getCanNang()));
+                    tvChieuCao.setText(String.valueOf(tt.getChieuCao()));
+                    tvVongTay.setText(String.valueOf(tt.getVongTay()));
+                    tvVongDui.setText(String.valueOf(tt.getVongDui()));
+                    tvV1.setText(String.valueOf(tt.getVong1()));
+                    tvV2.setText(String.valueOf(tt.getVong2()));
+                    tvV3.setText(String.valueOf(tt.getVong3()));
+                }
+                catch (Exception e){
+                    tvCanNang.setText("");
+                    tvChieuCao.setText("");
+                    tvVongTay.setText("");
+                    tvVongDui.setText("");
+                    tvV1.setText("");
+                    tvV2.setText("");
+                    tvV3.setText("");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TheTrang> call, Throwable t) {
+                Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         viewDialog.findViewById(R.id.btnUpdate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sheetDialog.dismiss();
+                String cn = tvCanNang.getText().toString().trim();
+                String cc = tvChieuCao.getText().toString().trim();
+                String vt = tvVongTay.getText().toString().trim();
+                String vd = tvVongDui.getText().toString().trim();
+                String v1 = tvV1.getText().toString().trim();
+                String v2 = tvV2.getText().toString().trim();
+                String v3 = tvV3.getText().toString().trim();
+                String ln = "0";
+
+                boolean check = true;
+                if(cn.isEmpty()){
+                    tvCanNang.setError("Cân nặng không được bỏ trống!");
+                    check = false;
+                }
+                if(cc.isEmpty()){
+                    tvChieuCao.setError("Chiều cao không được bỏ trống!");
+                    check = false;
+                }
+                if(vt.isEmpty()){
+                    tvVongTay.setError("Vòng tay không được bỏ trống!");
+                    check = false;
+                }
+                if(vd.isEmpty()){
+                    tvVongDui.setError("Vòng đùi không được bỏ trống!");
+                    check = false;
+                }
+                if(v1.isEmpty()){
+                    tvV1.setError("Vòng 1 không được bỏ trống!");
+                    check = false;
+                }
+                if(v2.isEmpty()){
+                    tvV2.setError("Vòng 2 không được bỏ trống!");
+                    check = false;
+                }
+                if(v3.isEmpty()){
+                    tvV3.setError("Vòng 3 không được bỏ trống!");
+                    check = false;
+                }
+                if (check){
+                    TheTrang theTrang = new TheTrang("quan", currentDate, Float.valueOf(cc), Float.valueOf(cn), Float.valueOf(v1), Float.valueOf(v2), Float.valueOf(v3), Float.valueOf(vt), Float.valueOf(vd), Float.valueOf(ln));
+                    simpleAPI = Constants.instance();
+                    simpleAPI.insertTheTrang(theTrang).enqueue(new Callback<Status>() {
+                        @Override
+                        public void onResponse(Call<Status> call, Response<Status> response) {
+                            Status status = response.body();
+                            try {
+                                if(status.getStatus()==2){
+                                    Toast.makeText(requireContext(), "Thể trạng đã cập nhật rồi!", Toast.LENGTH_SHORT).show();
+                                }
+                                if(status.getStatus()==1){
+                                    sheetDialog.dismiss();
+                                    Toast.makeText(requireContext(), "Thể trạng cập nhật thành công!", Toast.LENGTH_SHORT).show();
+                                }
+                                if(status.getStatus()==0){
+                                    Toast.makeText(requireContext(), "Thể trạng cập nhật không thành công!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            catch (Exception e){
+                                sheetDialog.dismiss();
+                                Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Status> call, Throwable t) {
+                            sheetDialog.dismiss();
+                            Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
+
+
         return sheetDialog;
     }
     private void initDataToSeekbar() {
