@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_activity_parent"
+    android:id="@+id/main_activity_water"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_color"
@@ -18,21 +18,8 @@
         app:layout_constraintTop_toTopOf="parent">
     </RelativeLayout>
 
-
-    <ImageView
-        android:id="@+id/btnMenu"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="?attr/selectableItemBackground"
-        android:padding="8dp"
-        android:src="@drawable/ic_baseline_settings_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnNotific"
+        android:id="@+id/fabNotifi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -41,7 +28,7 @@
         android:layout_marginBottom="8dp"
         android:padding="8dp"
         android:src="@drawable/ic_bell"
-
+        android:visibility="gone"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fabAdd"
@@ -49,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnStats"
+        android:id="@+id/fabStas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -59,6 +46,7 @@
         android:padding="8dp"
         android:src="@drawable/ic_stats"
         app:fabSize="mini"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fabAdd"
@@ -135,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/text_15"
                         android:layout_marginRight="5dp"
-                        android:text="2000"
+                        android:text="0"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="25sp"
                         android:textStyle="bold" />
@@ -147,9 +135,7 @@
                         android:layout_toRightOf="@+id/tvIntook"
                         android:text="/3500 ml"
                         android:textColor="@color/black"
-                        android:textSize="25sp"
-
-                        />
+                        android:textSize="25sp" />
 
                 </RelativeLayout>
 
@@ -162,13 +148,13 @@
 
                     <params.com.stepprogressview.StepProgressView
                         android:id="@+id/intakeProgress"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="15dp"
                         android:layout_marginEnd="15dp"
                         android:maxWidth="5dp"
-                        app:currentProgress="60"
+                        app:currentProgress="0"
                         app:markerColor="@color/colorSkyBlue"
                         app:markers="100"
                         app:progressBackgroundColor="#98EEF4"

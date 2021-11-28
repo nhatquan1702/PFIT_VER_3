@@ -68,4 +68,7 @@ public interface SimpleAPI {
     @POST("api/thetrang/insert")
     Call<Status> insertTheTrang (@Body TheTrang theTrang);
 
+    @POST("api/thetrang/updateln")
+    Call<Status> updateLuongNuoc (@Query("ngay") String ngay, @Query("luongnuoc") Float luongNuoc);
+
 }

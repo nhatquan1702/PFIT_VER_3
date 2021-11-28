@@ -49,7 +49,7 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
-        Toast.makeText(AccountActivity.this, sharedPreferences.getString("email", "username"), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(AccountActivity.this, sharedPreferences.getString("email", "username"), Toast.LENGTH_SHORT).show();
         textViewHoTen = findViewById(R.id.textViewHoTen);
         textViewTuoi = findViewById(R.id.textViewTuoi);
         textViewGioiTinh = findViewById(R.id.textViewGioiTinh);
