@@ -3,6 +3,7 @@ package com.example.testbaitap.api;
 import com.example.testbaitap.entity.BaiTap;
 import com.example.testbaitap.entity.BaiTapFull;
 import com.example.testbaitap.entity.ChiTietBaiTap;
+import com.example.testbaitap.entity.ChiTietBaiTapChoHV;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
 import com.example.testbaitap.entity.KhachHang;
 import com.example.testbaitap.entity.NgayTap;
@@ -69,6 +70,23 @@ public interface SimpleAPI {
     Call<Status> insertTheTrang (@Body TheTrang theTrang);
 
     @POST("api/thetrang/updateln")
-    Call<Status> updateLuongNuoc (@Query("ngay") String ngay, @Query("luongnuoc") Float luongNuoc);
+    Call<Status> updateLuongNuoc (@Query("ngay") String ngay, @Query("mahocvien") String maHocVien, @Query("luongnuoc") Float luongNuoc);
 
+    @POST("api/thetrang/updatett")
+    Call<Status> updateTheTrang (@Body TheTrang theTrang);
+
+    @GET("api/chitietbaitap/chitietbaitapchohv")
+    Call<ChiTietBaiTapChoHV> getChiTietBaiTapChoHocVien(@Query("mabaitap") String maBaiTap, @Query("mahocvien") String maHocVien);
+
+    @POST("api/chitietbaitap/updatettbtchohv")
+    Call<Status> updateTrangThaiChoHocVien (@Query("mabaitap") String maBaiTap, @Query("mahocvien") String maHocVien, @Query("trangthai") Integer trangThai);
+
+    @POST("api/chitietbaitap/updategcbtchohv")
+    Call<Status> updateChiChuChoHocVien (@Query("mabaitap") String maBaiTap, @Query("mahocvien") String maHocVien, @Query("ghichu") String ghiChu);
+
+    @GET("api/chitietbaitap/ptbthtngay")
+    Call<Status> getPhanTramBTTheoNgay(@Query("makhoatap") String maKhoaTap, @Query("mahocvien") String maHocVien, @Query("ngaytap") Integer ngayTap);
+
+    @GET("api/chitietbaitap/ptbthtkhoa")
+    Call<Status> getPhanTramBTTheoKhoa(@Query("makhoatap") String maKhoaTap, @Query("mahocvien") String maHocVien);
 }

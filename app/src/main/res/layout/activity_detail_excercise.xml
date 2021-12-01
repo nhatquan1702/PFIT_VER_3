@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/relDetailEx"
     android:background="@color/gray_color">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -292,13 +293,14 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:text="Ghi chú: "
+                    android:drawableEnd="@drawable/ic_baseline_edit_24"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_14"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvCacBuoc" />
 
                 <TextView
-                    android:id="@+id/tvGhiChu"
+                    android:id="@+id/tvGhiChuFinal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -314,7 +316,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/checkboxHTBT"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvGhiChu" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvGhiChuFinal" />
                 <CheckBox
                     android:id="@+id/checkboxHTBT"
                     android:layout_width="wrap_content"
@@ -326,7 +328,7 @@
                     android:textColor="@color/colorPurple"
                     android:fontFamily="@font/baloo"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvGhiChu"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tvGhiChuFinal"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

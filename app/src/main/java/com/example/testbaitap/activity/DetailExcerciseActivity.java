@@ -4,16 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -23,7 +29,10 @@ import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.BaiTapFull;
 import com.example.testbaitap.entity.ChiTietBaiTap;
+import com.example.testbaitap.entity.ChiTietBaiTapChoHV;
+import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.utils.VideoViewUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +40,7 @@ import retrofit2.Response;
 
 public class DetailExcerciseActivity extends AppCompatActivity {
 
-    private TextView mtoolbar_title, tvTenDungCu, tvKhoiLuong, tvSoHiep, tvSoLanLap, tvTocDo, tvThoiGianNghi, tvCacBuoc, tvGhiChu;
+    private TextView mtoolbar_title, tvTenDungCu, tvKhoiLuong, tvSoHiep, tvSoLanLap, tvTocDo, tvThoiGianNghi, tvCacBuoc, tvGhiChu, tvGhiChuFinal;
     private VideoView videoView;
     private Button button_raw, button_local, button_url;
     private int position = 0;
@@ -42,6 +51,8 @@ public class DetailExcerciseActivity extends AppCompatActivity {
     private SimpleAPI simpleAPI;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    CheckBox checkboxHTBT;
+    RelativeLayout relDetailEx;
 
     private CardView card_view_ct, cardVideo;
 
@@ -75,24 +86,90 @@ public class DetailExcerciseActivity extends AppCompatActivity {
         tvTocDo = (TextView) findViewById(R.id.tvTocDo);
         tvThoiGianNghi = (TextView) findViewById(R.id.tvThoiGianNghi);
         tvCacBuoc = (TextView) findViewById(R.id.tvCacBuoc);
-        tvGhiChu = (TextView) findViewById(R.id.tvGhiChu);
+        tvGhiChuFinal = (TextView) findViewById(R.id.ghiChu);
+        tvGhiChu = (TextView) findViewById(R.id.tvGhiChuFinal);
+        tvGhiChuFinal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(DetailExcerciseActivity.this);
+                builder.setTitle("Cập nhật ghi chú");
+                final EditText input = new EditText(DetailExcerciseActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String dm_Text = input.getText().toString();
+                        if(!dm_Text.isEmpty()){
+                            UpdateGhiChuBTChoHV("quan", maBaiTap, dm_Text);
+                        }
+                        else {
+                            dialog.dismiss();
+                            Snackbar snackbar = Snackbar.make(relDetailEx, "Bạn chưa nhập ghi chú!", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+        relDetailEx = (RelativeLayout) findViewById(R.id.relDetailEx);
         SharedPreferences sharedPreferences = getSharedPreferences("checkBT", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        CheckBox checkboxHTBT = (CheckBox) findViewById(R.id.checkboxHTBT);
+        LoadChiTietBTChoHV("quan", maBaiTap);
+        checkboxHTBT = (CheckBox) findViewById(R.id.checkboxHTBT);
         checkboxHTBT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int check = 0;
                 if(checkboxHTBT.isChecked()){
-                    check = 1;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailExcerciseActivity.this);
+                    builder.setTitle("Bạn có muốn thay đổi trạng thái hoàn thành bài tập?");
+                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            UpdateTrangThaiBTChoHV("quan", maBaiTap, 1);
+                        }
+                    });
+                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
                 else {
-                    check= 0;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailExcerciseActivity.this);
+                    builder.setTitle("Bạn có muốn thay đổi trạng thái hoàn thành bài tập?");
+                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            UpdateTrangThaiBTChoHV("quan", maBaiTap, 0);
+                        }
+                    });
+                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
-                editor.putString("checkHTBT", String.valueOf(check));
-                editor.commit();
+//                editor.putString("checkHTBT", String.valueOf(check));
+//                editor.commit();
             }
         });
+
+
 
         simpleAPI = Constants.instance();
         simpleAPI.getFullBaiTapTheoMa(maBaiTap).enqueue(new Callback<BaiTapFull>() {
@@ -138,7 +215,6 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                     tvSoLanLap.setText(String.valueOf(chiTietBaiTap.getSoLanLap()) + " (lần)");
                     tvTocDo.setText(String.valueOf(chiTietBaiTap.getTocDo()) + (" (giây)"));
                     tvThoiGianNghi.setText(String.valueOf(chiTietBaiTap.getThoiGianNghi())+ (" (giây)"));
-                    tvGhiChu.setText(chiTietBaiTap.getGhiChu());
                 }
                 catch (Exception e){
                     mtoolbar_title.setText("Chưa có bài tập này!");
@@ -212,6 +288,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                 VideoViewUtils.playURLVideo(DetailExcerciseActivity.this, videoView, videoURL);
             }
         });
+
     }
 
     // When you change direction of phone, this method will be called.
@@ -234,6 +311,108 @@ public class DetailExcerciseActivity extends AppCompatActivity {
         // Get saved position.
         position = savedInstanceState.getInt("CurrentPosition");
         videoView.seekTo(position);
+    }
+
+    public void LoadChiTietBTChoHV(String maHocVien, String maBaiTap){
+        simpleAPI = Constants.instance();
+        simpleAPI.getChiTietBaiTapChoHocVien(maBaiTap, maHocVien).enqueue(new Callback<ChiTietBaiTapChoHV>() {
+            @Override
+            public void onResponse(Call<ChiTietBaiTapChoHV> call, Response<ChiTietBaiTapChoHV> response) {
+                ChiTietBaiTapChoHV chiTietBaiTapChoHV = response.body();
+                try {
+                    if(chiTietBaiTapChoHV.getGhiChu() != null){
+                        tvGhiChu.setText(chiTietBaiTapChoHV.getGhiChu());
+                    }
+                    else {
+                        tvGhiChu.setText("Chưa có ghi chú nào!");
+                    }
+                    if(chiTietBaiTapChoHV.getTrangThai()==0){
+                        checkboxHTBT.setChecked(false);
+                    }
+                    else if(chiTietBaiTapChoHV.getTrangThai()==1){
+                        checkboxHTBT.setChecked(true);
+                    }
+                    else {
+                        checkboxHTBT.setChecked(false);
+                    }
+                }
+                catch (Exception e ){
+                    tvGhiChu.setText("Chưa có ghi chú nào!");
+                    checkboxHTBT.setChecked(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChiTietBaiTapChoHV> call, Throwable t) {
+                tvGhiChu.setText("Chưa có ghi chú nào!");
+                checkboxHTBT.setChecked(false);
+                Log.d("quan", t.toString());
+            }
+        });
+    }
+
+    public void UpdateTrangThaiBTChoHV(String maHocVien, String maBaiTap, Integer trangThai){
+        simpleAPI = Constants.instance();
+        simpleAPI.updateTrangThaiChoHocVien(maBaiTap, maHocVien, trangThai).enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                Status status = response.body();
+                try {
+                    if(status.getStatus()==4){
+                        Snackbar snackbar = Snackbar.make(relDetailEx, "Không tìm thấy bài tập này!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    if(status.getStatus()==0){
+                        Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật không thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    if(status.getStatus()==1){
+                        Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                }catch (Exception e){
+                    Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật không thành công!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                Log.d("quan", t.toString());
+            }
+        });
+    }
+
+    public void UpdateGhiChuBTChoHV(String maHocVien, String maBaiTap, String ghiChu){
+        simpleAPI = Constants.instance();
+        simpleAPI.updateChiChuChoHocVien(maBaiTap, maHocVien, ghiChu).enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                Status status = response.body();
+                try {
+                    if(status.getStatus()==4){
+                        Snackbar snackbar = Snackbar.make(relDetailEx, "Không tìm thấy bài tập này!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    if(status.getStatus()==0){
+                        Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật không thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    if(status.getStatus()==1){
+                        Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                }catch (Exception e){
+                    Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật không thành công!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                Log.d("quan", t.toString());
+            }
+        });
     }
 
 }

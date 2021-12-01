@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.example.testbaitap.adapter.BaiTapTheoNhomCoRecyclerAdapter;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.BaiTap;
+import com.example.testbaitap.entity.ChiTietBaiTap;
 import com.example.testbaitap.excercise.ItemClickInterface;
 
 import java.util.ArrayList;

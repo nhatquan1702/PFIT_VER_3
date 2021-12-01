@@ -1,6 +1,8 @@
 package com.example.testbaitap.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +37,7 @@ import com.example.testbaitap.utils.CustomProcessbar;
 import com.example.testbaitap.utils.ProgressItem;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
@@ -68,6 +72,7 @@ public class Fragment_Home extends Fragment {
     private List<String> list;
     private SimpleAPI simpleAPI;
     ArrayList<TheTrang> trangArrayList;
+    private boolean checkUpdate;
 
 
     private CustomProcessbar customSeekBarH;
@@ -88,6 +93,7 @@ public class Fragment_Home extends Fragment {
 
     private WaveLoadingView waterLevelView;
     private ProgressBar progressBarTL;
+    private RelativeLayout relHomeFr;
 
     public Fragment_Home() {
         // Required empty public constructor
@@ -127,6 +133,7 @@ public class Fragment_Home extends Fragment {
         View view = inflater.inflate(R.layout.fragment__home, container, false);
         mPager = view.findViewById(R.id.pager);
         viewPagerKhoaTap = view.findViewById(R.id.viewPagerKhoaTap);
+        relHomeFr = view.findViewById(R.id.relHomeFr);
 
 
         //Thể trạng
@@ -277,68 +284,162 @@ public class Fragment_Home extends Fragment {
                     tvCanNang.setError("Cân nặng không được bỏ trống!");
                     check = false;
                 }
+
                 if(cc.isEmpty()){
                     tvChieuCao.setError("Chiều cao không được bỏ trống!");
                     check = false;
                 }
+
                 if(vt.isEmpty()){
                     tvVongTay.setError("Vòng tay không được bỏ trống!");
                     check = false;
                 }
+
                 if(vd.isEmpty()){
                     tvVongDui.setError("Vòng đùi không được bỏ trống!");
                     check = false;
                 }
+
                 if(v1.isEmpty()){
                     tvV1.setError("Vòng 1 không được bỏ trống!");
                     check = false;
                 }
+
                 if(v2.isEmpty()){
                     tvV2.setError("Vòng 2 không được bỏ trống!");
                     check = false;
                 }
+
                 if(v3.isEmpty()){
                     tvV3.setError("Vòng 3 không được bỏ trống!");
                     check = false;
                 }
+
                 if (check){
-                    TheTrang theTrang = new TheTrang("quan", currentDate, Float.valueOf(cc), Float.valueOf(cn), Float.valueOf(v1), Float.valueOf(v2), Float.valueOf(v3), Float.valueOf(vt), Float.valueOf(vd), Float.valueOf(ln));
                     simpleAPI = Constants.instance();
-                    simpleAPI.insertTheTrang(theTrang).enqueue(new Callback<Status>() {
+                    simpleAPI.getTheTrangHVTheoNgay("quan", currentDate).enqueue(new Callback<TheTrang>() {
                         @Override
-                        public void onResponse(Call<Status> call, Response<Status> response) {
-                            Status status = response.body();
+                        public void onResponse(Call<TheTrang> call, Response<TheTrang> response) {
+                            theTrang = response.body();
                             try {
-                                if(status.getStatus()==2){
-                                    Toast.makeText(requireContext(), "Thể trạng đã cập nhật rồi!", Toast.LENGTH_SHORT).show();
+                                float bmi = theTrang.getBmi();
+                                if(bmi != 0 || !String.valueOf(theTrang.getBmi()).isEmpty()){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                                    builder.setTitle("Thể trạng đã cập nhật rồi");
+                                    builder.setMessage("Bạn có muốn chỉnh sửa?");
+                                    final EditText input = new EditText(requireContext());
+                                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            updateTT(sheetDialog, currentDate, "quan", Float.valueOf(cc), Float.valueOf(cn), Float.valueOf(v1), Float.valueOf(v2), Float.valueOf(v3), Float.valueOf(vt), Float.valueOf(vd), Float.valueOf(ln));
+                                        }
+                                    });
+                                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
                                 }
-                                if(status.getStatus()==1){
-                                    sheetDialog.dismiss();
-                                    Toast.makeText(requireContext(), "Thể trạng cập nhật thành công!", Toast.LENGTH_SHORT).show();
-                                }
-                                if(status.getStatus()==0){
-                                    Toast.makeText(requireContext(), "Thể trạng cập nhật không thành công!", Toast.LENGTH_SHORT).show();
+                                else {
+                                    insertTT(sheetDialog, currentDate, "quan", Float.valueOf(cc), Float.valueOf(cn), Float.valueOf(v1), Float.valueOf(v2), Float.valueOf(v3), Float.valueOf(vt), Float.valueOf(vd), Float.valueOf(ln));
                                 }
                             }
-                            catch (Exception e){
-                                sheetDialog.dismiss();
-                                Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                            catch (Exception e ){
+                                insertTT(sheetDialog, currentDate, "quan", Float.valueOf(cc), Float.valueOf(cn), Float.valueOf(v1), Float.valueOf(v2), Float.valueOf(v3), Float.valueOf(vt), Float.valueOf(vd), Float.valueOf(ln));
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<Status> call, Throwable t) {
-                            sheetDialog.dismiss();
-                            Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                        public void onFailure(Call<TheTrang> call, Throwable t) {
+                            insertTT(sheetDialog, currentDate, "quan", Float.valueOf(cc), Float.valueOf(cn), Float.valueOf(v1), Float.valueOf(v2), Float.valueOf(v3), Float.valueOf(vt), Float.valueOf(vd), Float.valueOf(ln));
                         }
                     });
                 }
             }
         });
-
-
         return sheetDialog;
     }
+
+    public void insertTT(BottomSheetDialog sheetDialog, String currentDate, String mahocvien, Float cc, Float cn, Float v1, Float v2, Float v3, Float vt, Float vd, Float ln){
+        TheTrang theTrang = new TheTrang(mahocvien, currentDate, Float.valueOf(cc), Float.valueOf(cn), Float.valueOf(v1), Float.valueOf(v2), Float.valueOf(v3), Float.valueOf(vt), Float.valueOf(vd), Float.valueOf(ln));
+        simpleAPI = Constants.instance();
+        simpleAPI.insertTheTrang(theTrang).enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                Status status = response.body();
+                try {
+                    if(status.getStatus()==2){
+                        Snackbar snackbar = Snackbar.make(relHomeFr, "Thể trạng đã cập nhật rồi!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+//                        Toast.makeText(requireContext(), "Thể trạng đã cập nhật rồi!", Toast.LENGTH_SHORT).show();
+                    }
+                    if(status.getStatus()==1){
+                        sheetDialog.dismiss();
+                        Snackbar snackbar = Snackbar.make(relHomeFr, "Thể trạng cập nhật thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+//                        Toast.makeText(requireContext(), "Thể trạng cập nhật thành công!", Toast.LENGTH_SHORT).show();
+                    }
+                    if(status.getStatus()==0){
+                        Snackbar snackbar = Snackbar.make(relHomeFr, "Thể trạng cập nhật không thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+//                        Toast.makeText(requireContext(), "Thể trạng cập nhật không thành công!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Exception e){
+                    sheetDialog.dismiss();
+                    //Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                sheetDialog.dismiss();
+                //Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void updateTT(BottomSheetDialog sheetDialog, String currentDate, String mahocvien, Float cc, Float cn, Float v1, Float v2, Float v3, Float vt, Float vd, Float ln) {
+        TheTrang theTrang = new TheTrang(mahocvien, currentDate, Float.valueOf(cc), Float.valueOf(cn), Float.valueOf(v1), Float.valueOf(v2), Float.valueOf(v3), Float.valueOf(vt), Float.valueOf(vd), Float.valueOf(ln));
+        simpleAPI = Constants.instance();
+        simpleAPI.updateTheTrang(theTrang).enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                Status status = response.body();
+                try {
+                    if (status.getStatus() == 2) {
+                        Snackbar snackbar = Snackbar.make(relHomeFr, "Bạn chưa cập nhật thể trạng hôm nay!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+//                        Toast.makeText(requireContext(), "Bạn chưa cập nhật thể trạng hôm nay!", Toast.LENGTH_SHORT).show();
+                    }
+                    if (status.getStatus() == 1) {
+                        sheetDialog.dismiss();
+                        Snackbar snackbar = Snackbar.make(relHomeFr, "Thể trạng cập nhật thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+//                        Toast.makeText(requireContext(), "Thể trạng cập nhật thành công!", Toast.LENGTH_SHORT).show();
+                    }
+                    if (status.getStatus() == 0) {
+                        Snackbar snackbar = Snackbar.make(relHomeFr, "Thể trạng cập nhật không thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+//                        Toast.makeText(requireContext(), "Thể trạng cập nhật không thành công!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    sheetDialog.dismiss();
+                    //Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                sheetDialog.dismiss();
+                //Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void initDataToSeekbar() {
         progressItemList = new ArrayList<ProgressItem>();
         // red span
@@ -427,20 +528,23 @@ public class Fragment_Home extends Fragment {
                     customSeekBarH.setProgress(0);
                     txtProgress.setText("0");
                     waterLevelView.setProgressValue(0);
-                    tvLuongNuoc.setText("Lượng nước uống: 0 ml");
+                    tvLuongNuoc.setText("0 ml");
                     tvNhanXetBmiH.setText("Chưa có số liệu vào ngày này!");
                 }
             }
 
             @Override
             public void onFailure(Call<TheTrang> call, Throwable t) {
-                Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
                 customSeekBarH.setProgress(0);
                 txtProgress.setText("0");
                 tvNhanXetBmiH.setText("Chưa có số liệu vào ngày này!");
                 waterLevelView.setProgressValue(0);
-                tvLuongNuoc.setText("Lượng nước uống: 0 ml");
+                tvLuongNuoc.setText("0 ml");
             }
         });
+    }
+    public void CheckUpdateTT(String maHocVien, String ngay){
+
     }
 }

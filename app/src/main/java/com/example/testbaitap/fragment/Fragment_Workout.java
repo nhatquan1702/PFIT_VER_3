@@ -12,12 +12,15 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +39,11 @@ import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
 import com.example.testbaitap.entity.NgayTap;
+import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.excercise.ItemCleckInterfaceCheckBox;
 import com.example.testbaitap.excercise.ItemClickInterface;
 import com.example.testbaitap.utils.Cont;
+import com.example.testbaitap.viewModel.PTNgayTapViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +69,7 @@ public class Fragment_Workout extends Fragment {
     private ArrayList<NgayTap> ngayTapArrayList;
     private ArrayList<Integer> processArraylist;
     private int workoutPosition = -1;
+    public PTNgayTapViewModel ptNgayTapViewModel;
 
     SharedPreferences sharedPreferences1;
     SharedPreferences.Editor editor;
@@ -188,48 +194,48 @@ public class Fragment_Workout extends Fragment {
                     processArraylist.add(ngayTapArrayList.get(i).getNgayTap());
                 }
 
-                int daysCompletionConter = 0;
-                double k = 0.0d;
-                for (int i = 0; i < Cont.TOTAL_DAYS; i++) {
-                    double d = k;
-                    double progress = (double) processArraylist.get(i);
-                    Double.isNaN(progress);
-                    k = (double) ((float) (d + ((progress * 4.348d) / 100.0d)));
-                    if (processArraylist.get(i) >= 99.0f) {
-                        daysCompletionConter++;
-                    }
-                }
-                int i2 = daysCompletionConter;
-                daysCompletionConter = i2 + (i2 / 3);
-                progressBar.setProgress((int) k);
-                TextView textView = percentScore1;
-                StringBuilder sb = new StringBuilder();
-                sb.append((int) k);
-                sb.append("%");
-                textView.setText(sb.toString());
-                TextView textView2 = dayleft;
-                StringBuilder sb2 = new StringBuilder();
-                sb2.append(Cont.TOTAL_DAYS - daysCompletionConter);
-                sb2.append(" ngày còn lại");
-                textView2.setText(sb2.toString());
+//                int daysCompletionConter = 0;
+//                double k = 0.0d;
+//                for (int i = 0; i < Cont.TOTAL_DAYS; i++) {
+//                    double d = k;
+//                    double progress = (double) processArraylist.get(i);
+//                    Double.isNaN(progress);
+//                    k = (double) ((float) (d + ((progress * 4.348d) / 100.0d)));
+//                    if (processArraylist.get(i) >= 99.0f) {
+//                        daysCompletionConter++;
+//                    }
+//                }
+//                int i2 = daysCompletionConter;
+//                daysCompletionConter = i2 + (i2 / 3);
+//                progressBar.setProgress((int) k);
+//                TextView textView = percentScore1;
+//                StringBuilder sb = new StringBuilder();
+//                sb.append((int) k);
+//                sb.append("%");
+//                textView.setText(sb.toString());
+//                TextView textView2 = dayleft;
+//                StringBuilder sb2 = new StringBuilder();
+//                sb2.append(Cont.TOTAL_DAYS - daysCompletionConter);
+//                sb2.append(" ngày tập luyện");
+//                textView2.setText(sb2.toString());
 
                 adapter = new NgayTapRecyclerAdapter(ngayTapArrayList, requireContext(), processArraylist);
 
                 arr = new ArrayList<>();
                 recyclerView.getRecycledViewPool().clear();
-                for (int i3 = 1; i3 <= Cont.TOTAL_DAYS; i3++) {
-                    ArrayList<String> arrayList = arr;
-                    StringBuilder sb3 = new StringBuilder();
-                    sb3.append("Ngày ");
-                    sb3.append(i3);
-                    arrayList.add(sb3.toString());
-                }
-                if (z) {
-                    SharedPreferences.Editor edit2 = sharedPreferences.edit();
-                    edit2.putBoolean(str, false);
-                    edit2.apply();
-                    daysCompletionConter = 0;
-                }
+//                for (int i3 = 1; i3 <= Cont.TOTAL_DAYS; i3++) {
+//                    ArrayList<String> arrayList = arr;
+//                    StringBuilder sb3 = new StringBuilder();
+//                    sb3.append("Ngày ");
+//                    sb3.append(i3);
+//                    arrayList.add(sb3.toString());
+//                }
+//                if (z) {
+//                    SharedPreferences.Editor edit2 = sharedPreferences.edit();
+//                    edit2.putBoolean(str, false);
+//                    edit2.apply();
+//                    daysCompletionConter = 0;
+//                }
                 recyclerView.setAdapter(adapter);
                 adapter.setOnClickItemRecyclerView(new ItemClickInterface() {
                     @Override
@@ -237,17 +243,6 @@ public class Fragment_Workout extends Fragment {
                         Intent intent = new Intent(requireContext(), ExcerciseByCourseActivity.class);
                         intent.putExtra("ngayTap", String.valueOf(ngayTapArrayList.get(position).getNgayTap()));
                         startActivity(intent);
-                    }
-                });
-
-                adapter.setItemCleckInterfaceCheckBox(new ItemCleckInterfaceCheckBox() {
-                    @Override
-                    public void onClick(View view, int position, boolean check) {
-                        int ngayHT = 0;
-                        if(ngayTapArrayList.get(position)!=null && check==true){
-                            ngayHT = ngayHT+1;
-                        }
-                        Toast.makeText(requireContext(), String.valueOf(ngayHT), Toast.LENGTH_SHORT).show();
                     }
                 });
                 recyclerView.setLayoutManager(mLayoutManager);
@@ -261,5 +256,30 @@ public class Fragment_Workout extends Fragment {
 
 
         return view;
+    }
+
+    public void  LoadPhanTramNgayTap (PTNgayTapViewModel ptNgayTapViewModel, String maKhoaTap, String maHocVien, Integer ngayTap){
+        ptNgayTapViewModel = new ViewModelProvider(this).get(PTNgayTapViewModel.class);
+
+        simpleAPI = Constants.instance();
+        PTNgayTapViewModel finalPtNgayTapViewModel = ptNgayTapViewModel;
+        simpleAPI.getPhanTramBTTheoNgay(maKhoaTap, maHocVien, ngayTap).enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                Status status = response.body();
+                finalPtNgayTapViewModel.addData(Integer.parseInt(String.valueOf(status.getStatus())));
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                Log.d("quan", t.toString());
+            }
+        });
+        ptNgayTapViewModel.getArrayListMutableLiveData().observe(this, new Observer<ArrayList<Integer>>() {
+            @Override
+            public void onChanged(ArrayList<Integer> integers) {
+                processArraylist.addAll(integers);
+            }
+        });
     }
 }

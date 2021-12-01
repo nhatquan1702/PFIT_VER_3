@@ -6,10 +6,10 @@
     android:layout_marginBottom="60dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4.0dip"
+    android:layout_margin="4dp"
     android:orientation="horizontal"
-    app:cardCornerRadius="200dip"
-    app:cardElevation="2.0dip">
+    app:cardCornerRadius="200dp"
+    app:cardElevation="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,13 +21,13 @@
             android:id="@+id/row_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/robotomedium"
-            android:padding="4.0dip"
+            android:fontFamily="@font/kanit"
+            android:padding="4dp"
             android:text="Ngày"
             android:layout_marginLeft="20dp"
             android:textStyle="bold"
             android:textColor="@color/mainactivity_text"
-            android:textSize="16.0sp"
+            android:textSize="@dimen/text_16"
             android:layout_centerInParent="true"
             android:layout_alignParentLeft="true"
             app:layout_constraintLeft_toLeftOf="parent" />
@@ -39,20 +39,17 @@
             android:layout_centerInParent="true"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_height="65dp">
-            <CheckBox
-                android:id="@+id/checkboxHT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"/>
 
-            <com.daimajia.numberprogressbar.NumberProgressBar
+            <TextView
                 android:id="@+id/progressbar"
-                style="@style/NumberProgressBar_Custome1"
-                android:layout_width="20dp"
-                android:layout_marginLeft="-20dp"
-                android:layout_toRightOf="@+id/checkboxHT"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content" />
+                android:layout_centerInParent="true"
+                android:text="0%"
+                android:textColor="@color/dot_dark_screen"
+                android:textStyle="bold"
+                android:fontFamily="@font/kanit"
+                android:textSize="@dimen/text_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 

@@ -194,7 +194,7 @@ public class WaterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if ((checkClick == true)){
-                    UpDateLuongNuoc(currentDate, luongNuocTam);
+                    UpDateLuongNuoc(currentDate,"quan",luongNuocTam);
                 }
                 else {
                     Snackbar snackbar = Snackbar.make(main_activity_water, "Vui lòng chọn lượng nước cần thêm!", Snackbar.LENGTH_LONG);
@@ -244,9 +244,9 @@ public class WaterActivity extends AppCompatActivity {
         });
     }
 
-    public void UpDateLuongNuoc(String ngay, Float luongNuoc){
+    public void UpDateLuongNuoc(String ngay, String mahocvien, Float luongNuoc){
         simpleAPI = Constants.instance();
-        simpleAPI.updateLuongNuoc(ngay, luongNuoc).enqueue(new Callback<Status>() {
+        simpleAPI.updateLuongNuoc(ngay, mahocvien, luongNuoc).enqueue(new Callback<Status>() {
             @Override
             public void onResponse(Call<Status> call, Response<Status> response) {
                 Status status = response.body();
@@ -316,6 +316,7 @@ public class WaterActivity extends AppCompatActivity {
 //
 //        int notificationId = 2;
 //        this.notificationManagerCompat.notify(notificationId, notification);
+
         Notification notification = new NotificationCompat.Builder(this, NotificationReceiver.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_bell)
                 .setContentTitle(title)
