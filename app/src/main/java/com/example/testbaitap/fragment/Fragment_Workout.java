@@ -134,6 +134,7 @@ public class Fragment_Workout extends Fragment {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("maHocVien", hocVien_khoaTap.getMaHocVien().trim());
                     editor.putString("maKhoaTap", hocVien_khoaTap.getMaKhoaTap().trim());
+                    LoadPTKhoaTap(hocVien_khoaTap.getMaKhoaTap().trim(), hocVien_khoaTap.getMaHocVien().trim());
                     editor.commit();
                     if(hocVien_khoaTap == null){
                         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -279,6 +280,34 @@ public class Fragment_Workout extends Fragment {
             @Override
             public void onChanged(ArrayList<Integer> integers) {
                 processArraylist.addAll(integers);
+            }
+        });
+    }
+
+    public void LoadPTKhoaTap(String maKhoaTap, String maHocVien){
+        simpleAPI = Constants.instance();
+        simpleAPI.getPhanTramBTTheoKhoa(maKhoaTap, maHocVien).enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                try {
+                    Status status = response.body();
+                    if(status.getStatus()>0){
+                        percentScore1.setText(String.valueOf(status.getStatus())+"%");
+                    }
+                    else{
+                        percentScore1.setText(String.valueOf(0)+"%");
+                    }
+                }
+                catch (Exception e){
+                    percentScore1.setText(String.valueOf(0)+"%");
+                    Log.d("quan", e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                percentScore1.setText(String.valueOf(0)+"%");
+                Log.d("quan", t.toString());
             }
         });
     }

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.example.testbaitap.reciver.NotificationReceiver"
+        android:name=".reciver.NotificationReceiver"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestBaiTap"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activity.QLKhoaTapActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.DSKhoaTapActivity"
             android:exported="false" />

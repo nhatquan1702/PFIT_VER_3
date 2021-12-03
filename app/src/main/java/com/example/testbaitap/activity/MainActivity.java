@@ -198,7 +198,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         else if(itemId==R.id.nav_manage){
-            Toast.makeText(MainActivity.this, "Quản trị", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "Quản trị", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, QLKhoaTapActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivityIfNeeded(intent, 0);
         }
         else if(itemId==R.id.nav_setting){
             Toast.makeText(MainActivity.this, "Cài đặt", Toast.LENGTH_SHORT).show();
