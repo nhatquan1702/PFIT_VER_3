@@ -16,6 +16,12 @@
         android:theme="@style/Theme.TestBaiTap"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.InsertKhoaTapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.EditKhoaTapActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.QLKhoaTapActivity"
             android:exported="false" />
         <activity

@@ -49,8 +49,6 @@ public class TrainingCourseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         khoaTapViewHolder.mTitle.setText(mObjects.get(position).getTenKhoaTap());
         Picasso.get()
                 .load(mObjects.get(position).getHinhQuangCao())
-                .resize(100, 100)
-                .centerCrop()
                 .placeholder(R.mipmap.logo1)
                 .error(R.mipmap.logo1)
                 .into(khoaTapViewHolder.mImg);

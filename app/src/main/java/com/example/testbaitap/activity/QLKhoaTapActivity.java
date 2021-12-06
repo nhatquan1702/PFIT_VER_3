@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -120,17 +121,21 @@ public class QLKhoaTapActivity extends AppCompatActivity {
         trainingCourseAdapter.setOnItemClickListener(new ItemClickInterface() {
             @Override
             public void onClick(View view, int position) {
-                KhoaTap mPost = trainingCourseAdapter.getAtPosition(position);
+                KhoaTap khoaTap = trainingCourseAdapter.getAtPosition(position);
                 // call update
-//                Intent intent = new Intent(QLKhoaTapActivity.this, EditTCActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("post_title", mPost.getPost_title());
-//                bundle.putString("post_content", mPost.getPost_content());
-//                bundle.putString("post_img", mPost.getPost_img());
-//                bundle.putInt("post_id", mPost.getPost_id());
-//                intent.putExtras(bundle);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                startActivityIfNeeded(intent, 0);
+                Intent intent = new Intent(QLKhoaTapActivity.this, EditKhoaTapActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("maKT", khoaTap.getMaKhoaTap());
+                bundle.putString("tenKT", khoaTap.getTenKhoaTap());
+                bundle.putString("hinhKT", khoaTap.getHinhQuangCao());
+                bundle.putInt("dtKT", khoaTap.getChoDoiTuong());
+                bundle.putInt("giaKT", khoaTap.getGiaTheoThang());
+                bundle.putInt("ttKT", khoaTap.getTrangThai());
+                bundle.putString("nvKT", khoaTap.getMaNhanVien());
+                bundle.putString("hlvKT", khoaTap.getMaHuanLuyenVien());
+                intent.putExtras(bundle);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(intent, 0);
             }
         });
         mSwipeRefresh.setOnRefreshListener(() -> {
@@ -156,7 +161,7 @@ public class QLKhoaTapActivity extends AppCompatActivity {
         });
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//search
 //                Calendar now = Calendar.getInstance();
 //                DatePickerDialog datePicker = new DatePickerDialog(QLKhoaTapActivity.this,(view, year, month, dayOfMonth) ->{
 //                    String strDate = "'" +year +"-"+ (month+1) +"-"+ dayOfMonth +"'";
@@ -188,9 +193,9 @@ public class QLKhoaTapActivity extends AppCompatActivity {
         fab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(QLKhoaTapActivity.this, ChiTietKhoaTap.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                startActivityIfNeeded(intent, 0);
+                Intent intent = new Intent(QLKhoaTapActivity.this, InsertKhoaTapActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(intent, 0);
             }
         });
         fab4.setOnClickListener(new View.OnClickListener() {
