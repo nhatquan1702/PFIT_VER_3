@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.KhoaTap;
 import com.example.testbaitap.entity.Status;
-import com.squareup.picasso.Picasso;
+import com.example.testbaitap.viewModel.HLVViewModel;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditKhoaTapActivity extends AppCompatActivity {
+public class InsertTCActivity extends AppCompatActivity {
     private EditText edtMaKT, edtTenKT, edtGiaKT;
     private TextView tvLamLai, mText, tvCapNhat;
     private SimpleAPI simpleAPI;
@@ -55,8 +56,10 @@ public class EditKhoaTapActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private ImageButton imageButton;
     private ImageView imgHinhKT;
-    private CardView  btnCapNhat;
+    private CardView btnCapNhat;
     private RadioButton rNam, rNu, rNN;
+    private HLVViewModel viewModel;
+    private Spinner spinner;
 
     private static final int PERMISSION_CODE =1;
     private static final int PICK_IMAGE=1;
@@ -68,16 +71,16 @@ public class EditKhoaTapActivity extends AppCompatActivity {
         config.put("api_key", "258945955129684");
         config.put("api_secret", "taQ7f4rtk6nM2DzRGo9Crzj3WVs");
         config.put("secure", true);
-        MediaManager.init(EditKhoaTapActivity.this,null, config);
+        MediaManager.init(InsertTCActivity.this,null, config);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_khoa_tap);
-
+        setContentView(R.layout.activity_insert_khoa_tap);
 
         edtMaKT = findViewById(R.id.edtMaKT);
-        edtMaKT.setEnabled(false);
+        edtMaKT.setEnabled(true);
         edtTenKT = findViewById(R.id.edtTenKT);
         edtGiaKT = findViewById(R.id.edtGiaKTTheoThang);
         mText = findViewById(R.id.tvLink);
@@ -92,7 +95,24 @@ public class EditKhoaTapActivity extends AppCompatActivity {
         tvCapNhat = findViewById(R.id.tvCapNhat);
         tvLamLai = findViewById(R.id.tvLamLai);
         tvCapNhat.setText("Cập nhật");
-       // mBtnUpload.setVisibility(View.GONE);
+
+//        spinner = (Spinner) findViewById(R.id.spinnerHLV);
+//        viewModel = new ViewModelProvider(this).get(HLVViewModel.class);
+//        HuanLuyenVien huanLuyenVien = new HuanLuyenVien("01", "Huy", "011" ,"Q9", "", 1);
+//        HuanLuyenVien huanLuyenVien1 = new HuanLuyenVien("02", "Q", "022" ,"Q9", "", 1);
+//        viewModel.addHLVData(huanLuyenVien);
+//        viewModel.addHLVData(huanLuyenVien1);
+
+//        viewModel.getHLVList().observe(this, new Observer<ArrayList<HuanLuyenVien>>() {
+//            @Override
+//            public void onChanged(ArrayList<HuanLuyenVien> huanLuyenViens) {
+//                //set adapter
+//                ArrayAdapter spinnerAdapter = new ArrayAdapter<>(InsertKhoaTapActivity.this, R.layout.support_simple_spinner_dropdown_item, huanLuyenViens);
+//                spinner.setAdapter(spinnerAdapter);
+//                spinner.setSelection(0);
+//            }
+//        });
+        // mBtnUpload.setVisibility(View.GONE);
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
         String mAuthor = sharedPreferences.getString("email", "admin");
         if(checkInit){
@@ -109,33 +129,6 @@ public class EditKhoaTapActivity extends AppCompatActivity {
         LoadButton();
 
         // receive update
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!= null) {
-            edtMaKT.setText(bundle.getString("maKT", ""));
-            edtTenKT.setText(bundle.getString("tenKT", ""));
-            imgReceive = bundle.getString("hinhKT", "");
-            hlv = bundle.getString("hlvKT", "");
-            trangThai = bundle.getInt("ttKT", 0);
-            int choDT = bundle.getInt("dtKT", 2);
-            if(choDT == 1){
-                rNam.setChecked(true);
-            }
-            else if(choDT == 0){
-                rNu.setChecked(true);
-            }
-            else {
-                rNN.setChecked(true);
-            }
-            giaKT = bundle.getInt("giaKT", 0);
-            nv = bundle.getString("nv", "");
-            edtGiaKT.setText(String.valueOf(giaKT));
-            Picasso.get()
-                    .load(imgReceive)
-                    .placeholder(R.mipmap.logo1)
-                    .error(R.mipmap.logo1)
-                    .into(imgHinhKT);
-            mText.setText(imgReceive);
-        }
     }
 
     private void LoadButton() {
@@ -164,18 +157,18 @@ public class EditKhoaTapActivity extends AppCompatActivity {
                 try {
                     try {
                         if(filePath.isEmpty() || filePath.toString().trim().equals("")){
-                            Toast.makeText(EditKhoaTapActivity.this, "Vui lòng chọn ảnh!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InsertTCActivity.this, "Vui lòng chọn ảnh!", Toast.LENGTH_SHORT).show();
                         }
                     }
                     catch (Exception e){
                         Log.d("quan", e.toString());
-                        Toast.makeText(EditKhoaTapActivity.this, "Vui lòng chọn ảnh!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InsertTCActivity.this, "Vui lòng chọn ảnh!", Toast.LENGTH_SHORT).show();
                     }
                     uploadToCloudinary(filePath);
                 }
                 catch (Exception e){
                     Log.d("quan", e.toString());
-                    Toast.makeText(EditKhoaTapActivity.this, "Vui lòng chọn ảnh!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InsertTCActivity.this, "Vui lòng chọn ảnh!", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -195,13 +188,19 @@ public class EditKhoaTapActivity extends AppCompatActivity {
                 else {
                     dt = 2;
                 }
-                edtMaKT.setEnabled(false);
+                edtMaKT.setEnabled(true);
                 String maKT = edtMaKT.getText().toString().trim();
                 String tenKT = edtTenKT.getText().toString().trim();
                 String giaKT = edtGiaKT.getText().toString().trim();
                 String hinhKT = mText.getText().toString().trim();
 
                 boolean check = true;
+
+                if(maKT.isEmpty()){
+                    edtMaKT.setError("Mã khóa tập không được bỏ trống!");
+                    check=false;
+                }
+
 
                 if(tenKT.isEmpty()){
                     edtTenKT.setError("Tên khóa tập không được bỏ trống!");
@@ -214,14 +213,13 @@ public class EditKhoaTapActivity extends AppCompatActivity {
                 }
 
                 if(hinhKT.isEmpty()){
-                    Toast.makeText(EditKhoaTapActivity.this, "Hình ảnh không được bỏ trống!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InsertTCActivity.this, "Hình ảnh không được bỏ trống!", Toast.LENGTH_SHORT).show();
                     check=false;
                 }
                 if(check==true){
                     try {
                         KhoaTap khoaTap = new KhoaTap(maKT, tenKT, hinhKT, Integer.parseInt(giaKT), dt, 1, "01", "01");
-                        Toast.makeText(EditKhoaTapActivity.this, nv, Toast.LENGTH_SHORT).show();
-                        //EditKT(khoaTap);
+                        EditKT(khoaTap);
                     }
                     catch (Exception e){
                         Log.d("quan", e.toString());
@@ -234,26 +232,26 @@ public class EditKhoaTapActivity extends AppCompatActivity {
 
     public void EditKT(KhoaTap khoaTap){
         simpleAPI  = Constants.instance();
-        simpleAPI.updateKhoaTap(khoaTap).enqueue(new Callback<Status>() {
+        simpleAPI.insertKhoaTap(khoaTap).enqueue(new Callback<Status>() {
             @Override
             public void onResponse(Call<Status> call, Response<Status> response) {
                 Status status = response.body();
                 try {
                     if(status.getStatus()==1){
                         Intent intent;
-                        Toast.makeText(EditKhoaTapActivity.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
-                        intent = new Intent(EditKhoaTapActivity.this, QLKhoaTapActivity.class);
+                        Toast.makeText(InsertTCActivity.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(InsertTCActivity.this, ManageTCActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivityIfNeeded(intent, 0);
                         finish();
                     }
                     else {
-                        Toast.makeText(EditKhoaTapActivity.this, "Cập nhật không thành công!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InsertTCActivity.this, "Cập nhật không thành công!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 catch (Exception e){
                     Log.d("quan", e.toString());
-                    Toast.makeText(EditKhoaTapActivity.this, "Cập nhật không thành công!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InsertTCActivity.this, "Cập nhật không thành công!", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -267,14 +265,14 @@ public class EditKhoaTapActivity extends AppCompatActivity {
 
     private void requestPermission(){
         if(ContextCompat.checkSelfPermission
-                (EditKhoaTapActivity.this,
+                (InsertTCActivity.this,
                         Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED
         ){
             accessTheGallery();
         } else {
             ActivityCompat.requestPermissions(
-                    EditKhoaTapActivity.this,
+                    InsertTCActivity.this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     PERMISSION_CODE
             );
@@ -288,7 +286,7 @@ public class EditKhoaTapActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 accessTheGallery();
             } else {
-                Toast.makeText(EditKhoaTapActivity.this, "Không có quyền truy cập vào thư viện", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InsertTCActivity.this, "Không có quyền truy cập vào thư viện", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -307,7 +305,7 @@ public class EditKhoaTapActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         //get the image's file location
-        filePath = getRealPathFromUri(data.getData(), EditKhoaTapActivity.this);
+        filePath = getRealPathFromUri(data.getData(), InsertTCActivity.this);
 
         if(requestCode==PICK_IMAGE && resultCode==RESULT_OK){
             try {

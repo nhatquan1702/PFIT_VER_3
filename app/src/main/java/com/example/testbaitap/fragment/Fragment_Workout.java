@@ -6,10 +6,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -24,13 +24,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testbaitap.R;
-import com.example.testbaitap.activity.AccountActivity;
-import com.example.testbaitap.activity.ExcerciceByMuscleActivity;
+import com.example.testbaitap.activity.DetailTCActivity;
 import com.example.testbaitap.activity.ExcerciseByCourseActivity;
 import com.example.testbaitap.activity.LoginActivity;
 import com.example.testbaitap.activity.MainActivity;
@@ -38,15 +38,14 @@ import com.example.testbaitap.adapter.NgayTapRecyclerAdapter;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
+import com.example.testbaitap.entity.KhoaTap;
 import com.example.testbaitap.entity.NgayTap;
 import com.example.testbaitap.entity.Status;
-import com.example.testbaitap.excercise.ItemCleckInterfaceCheckBox;
 import com.example.testbaitap.excercise.ItemClickInterface;
-import com.example.testbaitap.utils.Cont;
 import com.example.testbaitap.viewModel.PTNgayTapViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,6 +69,8 @@ public class Fragment_Workout extends Fragment {
     private ArrayList<Integer> processArraylist;
     private int workoutPosition = -1;
     public PTNgayTapViewModel ptNgayTapViewModel;
+    private ImageView b;
+    private CardView cvHKT;
 
     SharedPreferences sharedPreferences1;
     SharedPreferences.Editor editor;
@@ -96,6 +97,8 @@ public class Fragment_Workout extends Fragment {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         ConstraintLayout constraintLayout = view.findViewById(R.id.constraintLayoutProcess);
         this.recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        b = (ImageView) view.findViewById(R.id.b);
+        cvHKT = (CardView) view.findViewById(R.id.cvHKT);
 
         sharedPreferences = getContext().getSharedPreferences("dataLogin", MODE_PRIVATE);
         //Toast.makeText(requireContext(), sharedPreferences.getString("email", "username"), Toast.LENGTH_SHORT).show();
@@ -130,32 +133,38 @@ public class Fragment_Workout extends Fragment {
                 @Override
                 public void onResponse(Call<HocVien_KhoaTap> call, Response<HocVien_KhoaTap> response) {
                     HocVien_KhoaTap hocVien_khoaTap = response.body();
-                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("dataHV_KT", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("maHocVien", hocVien_khoaTap.getMaHocVien().trim());
-                    editor.putString("maKhoaTap", hocVien_khoaTap.getMaKhoaTap().trim());
-                    LoadPTKhoaTap(hocVien_khoaTap.getMaKhoaTap().trim(), hocVien_khoaTap.getMaHocVien().trim());
-                    editor.commit();
-                    if(hocVien_khoaTap == null){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                        builder.setTitle("Thông báo");
-                        builder.setMessage("Bạn chưa tham gia khóa tập nào?");
-                        builder.setPositiveButton("Đăng ký khóa tập", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                Intent intent = new Intent(requireContext(), MainActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+                    try {
+                        LoadKhoaTap(hocVien_khoaTap.getMaKhoaTap());
+                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("dataHV_KT", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("maHocVien", hocVien_khoaTap.getMaHocVien().trim());
+                        editor.putString("maKhoaTap", hocVien_khoaTap.getMaKhoaTap().trim());
+                        LoadPTKhoaTap(hocVien_khoaTap.getMaKhoaTap().trim(), hocVien_khoaTap.getMaHocVien().trim());
+                        editor.commit();
+                        if(hocVien_khoaTap == null){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                            builder.setTitle("Thông báo");
+                            builder.setMessage("Bạn chưa tham gia khóa tập nào?");
+                            builder.setPositiveButton("Đăng ký khóa tập", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    Intent intent = new Intent(requireContext(), MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                            builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    }
+                    catch (Exception e){
+                        Log.d("quan", e.toString());
                     }
                 }
 
@@ -308,6 +317,50 @@ public class Fragment_Workout extends Fragment {
             public void onFailure(Call<Status> call, Throwable t) {
                 percentScore1.setText(String.valueOf(0)+"%");
                 Log.d("quan", t.toString());
+            }
+        });
+    }
+
+    public void LoadKhoaTap(String maKT){
+        simpleAPI = Constants.instance();
+        simpleAPI.getKhoaTap(maKT).enqueue(new Callback<KhoaTap>() {
+            @Override
+            public void onResponse(Call<KhoaTap> call, Response<KhoaTap> response) {
+                try {
+                    KhoaTap khoaTap = response.body();
+                    Picasso.get()
+                            .load(khoaTap.getHinhQuangCao())
+                            .placeholder(R.drawable.banner_1)
+                            .error(R.drawable.banner_1)
+                            .into(b);
+                    cvHKT.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(requireContext(), DetailTCActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("maKT", khoaTap.getMaKhoaTap());
+                            bundle.putString("tenKT", khoaTap.getTenKhoaTap());
+                            bundle.putString("hinhKT", khoaTap.getHinhQuangCao());
+                            bundle.putInt("dtKT", khoaTap.getChoDoiTuong());
+                            bundle.putInt("giaKT", khoaTap.getGiaTheoThang());
+                            bundle.putInt("ttKT", khoaTap.getTrangThai());
+                            bundle.putString("nvKT", khoaTap.getMaNhanVien());
+                            bundle.putString("hlvKT", khoaTap.getMaHuanLuyenVien());
+                            intent.putExtras(bundle);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                            startActivity(intent);
+                        }
+                    });
+                }
+                catch (Exception e){
+                    percentScore1.setText(String.valueOf(0)+"%");
+                    Log.d("quan", e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KhoaTap> call, Throwable t) {
+
             }
         });
     }

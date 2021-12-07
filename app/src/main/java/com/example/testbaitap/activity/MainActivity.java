@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.testbaitap.R;
-import com.example.testbaitap.api.Constants;
-import com.example.testbaitap.api.SimpleAPI;;
-import com.example.testbaitap.entity.NhomCo;
+;
 import com.example.testbaitap.fragment.Fragment_Excercise;
 import com.example.testbaitap.fragment.Fragment_Home;
 import com.example.testbaitap.fragment.Fragment_Process;
@@ -32,12 +29,6 @@ import com.example.testbaitap.fragment.Fragment_Reminder;
 import com.example.testbaitap.fragment.Fragment_Workout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     SharedPreferences sharedPreferences;
@@ -199,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         else if(itemId==R.id.nav_manage){
             //Toast.makeText(MainActivity.this, "Quản trị", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, QLKhoaTapActivity.class);
+            Intent intent = new Intent(MainActivity.this, ManageTCActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivityIfNeeded(intent, 0);
         }

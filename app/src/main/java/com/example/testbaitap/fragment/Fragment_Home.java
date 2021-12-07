@@ -1,17 +1,14 @@
 package com.example.testbaitap.fragment;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.testbaitap.activity.DSKhoaTapActivity;
+import com.example.testbaitap.activity.ListTCActivity;
 import com.example.testbaitap.activity.MainActivity;
 import com.example.testbaitap.R;
 import com.example.testbaitap.SlidingAdapter;
@@ -38,10 +35,8 @@ import com.example.testbaitap.utils.ProgressItem;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -200,7 +195,7 @@ public class Fragment_Home extends Fragment {
         lnXemNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DSKhoaTapActivity.class);
+                Intent intent = new Intent(getActivity(), ListTCActivity.class);
                 startActivity(intent);
             }
         });
@@ -208,7 +203,7 @@ public class Fragment_Home extends Fragment {
         progressBarTL = (ProgressBar) view.findViewById(R.id.progressTL);
         progressBarTL.setProgress(79);
         tvProcessTL.setText("79"+"%");
-        tvNgayConLai.setText("19"+" ngày còn lại");
+        tvNgayConLai.setText("");
 
         return view;
     }

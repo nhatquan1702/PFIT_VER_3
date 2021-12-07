@@ -16,16 +16,22 @@
         android:theme="@style/Theme.TestBaiTap"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.InsertKhoaTapActivity"
+            android:name=".activity.RegisterTCActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.EditKhoaTapActivity"
+            android:name=".activity.DetailTCActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.QLKhoaTapActivity"
+            android:name=".activity.InsertTCActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.DSKhoaTapActivity"
+            android:name=".activity.EditTCActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ManageTCActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ListTCActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ExcerciseByCourseActivity"

@@ -5,21 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.EditTCActivity"
+    tools:context=".activity.DetailTCActivity"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/clEditKT"
-        tools:context=".activity.EditTCActivity">
+        android:id="@+id/clEditKTDT"
+        tools:context=".activity.DetailTCActivity">
 
         <TextView
-            android:id="@+id/tvTieuDe"
+            android:id="@+id/tvTieuDeDT"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/a1_grad"
-            android:text="Chỉnh sửa khoá tập"
+            android:text="Thông tin khoá tập"
             android:gravity="center"
             android:fontFamily="@font/kanit"
             android:textSize="20dp"
@@ -27,11 +27,11 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/clEditKT"/>
+            app:layout_constraintTop_toTopOf="@+id/clEditKTDT"/>
 
 
         <ImageView
-            android:id="@+id/imgKT"
+            android:id="@+id/imgKTDT"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginLeft="10dp"
@@ -43,67 +43,12 @@
             android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTieuDe"/>
-
-        <ImageButton
-            android:id="@id/imgButtonUp"
-            android:layout_width="wrap_content"
-            android:background="@drawable/ic_baseline_add_24"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgKT"/>
+            app:layout_constraintTop_toBottomOf="@id/tvTieuDeDT"/>
 
         <TextView
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:id="@+id/tvLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:textColor="#651FFF"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgButtonUp" />
-
-
-        <TextView
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/tvMaKT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Mã khóa tập"
-            android:fontFamily="@font/kanit"
-            android:textColor="@color/dot_dark_screen"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLink" />
-
-        <EditText
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/edtMaKT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:hint="Nhập mã khóa tập"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMaKT" />
-
-        <TextView
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/tvTenKT"
+            android:id="@+id/tvTenKTDT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -114,27 +59,25 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtMaKT" />
-
-        <EditText
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/edtTenKT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:hint="Nhập tên khóa tập"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTenKT" />
+            app:layout_constraintTop_toBottomOf="@+id/imgKTDT" />
 
         <TextView
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:id="@+id/tvGiaKT"
+            android:id="@+id/edtTenKTDT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTenKTDT" />
+
+        <TextView
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tvGiaKTDT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -145,101 +88,85 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtTenKT" />
+            app:layout_constraintTop_toBottomOf="@+id/edtTenKTDT" />
 
-        <EditText
-            android:id="@+id/edtGiaKTTheoThang"
+        <TextView
+            android:id="@+id/edtGiaKTTheoThangDT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
-            android:hint="Nhập giá khóa tập"
-            android:inputType="number"
             android:textColor="@color/black"
             android:textSize="@dimen/text_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvGiaKT" />
+            app:layout_constraintTop_toBottomOf="@+id/tvGiaKTDT" />
 
         <TextView
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:id="@+id/tvChoDT"
+            android:id="@+id/tvChoDTDT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Chọn đối tượng"
+            android:text="Cho đối tượng"
             android:textSize="20sp"
             android:fontFamily="@font/kanit"
             android:textColor="@color/dot_dark_screen"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtGiaKTTheoThang" />
-
-        <RadioGroup
-            android:id="@+id/rGroup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvChoDT"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rNam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nam" />
-
-            <RadioButton
-                android:id="@+id/rNu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nữ" />
-            <RadioButton
-                android:id="@+id/rNN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="Cả nam và nữ" />
-        </RadioGroup>
+            app:layout_constraintTop_toBottomOf="@+id/edtGiaKTTheoThangDT" />
 
         <TextView
-            android:id="@+id/tvHLV"
+            android:id="@+id/DoiTuongDT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvChoDTDT" />
+
+        <TextView
+            android:id="@+id/tvHLVDT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:text="Chọn HLV cho khóa tập: "
+            android:text="Huấn luyện viên cho khóa tập "
             android:textSize="20sp"
             android:textStyle="bold"
             android:fontFamily="@font/kanit"
             android:textColor="@color/dot_dark_screen"
             android:paddingBottom="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rGroup"/>
+            app:layout_constraintTop_toBottomOf="@+id/DoiTuongDT"/>
 
-        <Spinner
-            android:id="@+id/spinnerHLV"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvTTHLVDT"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvHLV" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tvHLVDT" />
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/btnCapNhat"
+            android:id="@+id/btnCapNhatDT"
             android:layout_marginTop="10dp"
             android:layout_marginStart="@dimen/text_20"
             android:layout_marginEnd="@dimen/text_20"
@@ -248,7 +175,7 @@
             android:layout_height="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerHLV"
+            app:layout_constraintTop_toBottomOf="@+id/tvTTHLVDT"
             app:cardBackgroundColor="#FF58C7"
             app:cardCornerRadius="50dp">
 
@@ -257,19 +184,18 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_ui_login">
                 <TextView
-                    android:id="@+id/tvCapNhat"
+                    android:id="@+id/tvCapNhatDT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Cập nhật"
+                    android:text="Đăng ký"
                     android:fontFamily="@font/kanit"
                     android:textColor="#fff"
                     android:textSize="20sp" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
         <TextView
-            android:id="@+id/tvLamLai"
+            android:id="@+id/tvLamLaiDT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/dot_dark_screen"
@@ -281,7 +207,6 @@
             android:fontFamily="@font/kanit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnCapNhat" />
-
+            app:layout_constraintTop_toBottomOf="@+id/btnCapNhatDT" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

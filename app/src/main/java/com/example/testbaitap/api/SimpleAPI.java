@@ -5,6 +5,7 @@ import com.example.testbaitap.entity.BaiTapFull;
 import com.example.testbaitap.entity.ChiTietBaiTap;
 import com.example.testbaitap.entity.ChiTietBaiTapChoHV;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
+import com.example.testbaitap.entity.HuanLuyenVien;
 import com.example.testbaitap.entity.KhachHang;
 import com.example.testbaitap.entity.KhoaTap;
 import com.example.testbaitap.entity.NgayTap;
@@ -103,5 +104,10 @@ public interface SimpleAPI {
     @POST("api/khoatap/updatettkt")
     Call<Status> updateTrangThaiKhoaTap(@Query("makhoatap") String maKhoaTap, @Query("trangthai") int trangThai);
 
+    @GET("api/huanluyenvien/tthlv")
+    Call<HuanLuyenVien> getHLV(@Query("mahuanluyenvien") String maHLV);
+
+    @GET("api/khoatap/ttkhoatap")
+    Call<KhoaTap> getKhoaTap(@Query("makhoatap") String maKT);
 
 }
