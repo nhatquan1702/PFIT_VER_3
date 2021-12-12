@@ -1,6 +1,5 @@
 package com.example.testbaitap.activity;
 
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -8,11 +7,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -21,16 +18,8 @@ import android.widget.Toast;
 import com.example.testbaitap.R;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
-import com.example.testbaitap.entity.KhachHang;
-import com.example.testbaitap.entity.TaiKhoan;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.example.testbaitap.entity.HocVien;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.internal.CheckableImageButton;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.zxing.WriterException;
-import com.squareup.picasso.Picasso;
-
-import java.lang.reflect.Type;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -57,10 +46,10 @@ public class AccountActivity extends AppCompatActivity {
         textViewDiaChi = findViewById(R.id.textViewDiaChi);
         editor = sharedPreferences.edit();
         simpleAPI = Constants.instance();
-        simpleAPI.getKhachHang(sharedPreferences.getString("email", "username")).enqueue(new Callback<KhachHang>() {
+        simpleAPI.getKhachHang(sharedPreferences.getString("email", "username")).enqueue(new Callback<HocVien>() {
             @Override
-            public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
-                KhachHang khachHang = response.body();
+            public void onResponse(Call<HocVien> call, Response<HocVien> response) {
+                HocVien khachHang = response.body();
                 Log.d("quan", khachHang.getMaHocVien());
                 Log.d("quan", khachHang.getMatKhau());
                 Log.d("quan", String.valueOf(khachHang.getTrangThai()));
@@ -81,7 +70,7 @@ public class AccountActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<KhachHang> call, Throwable t) {
+            public void onFailure(Call<HocVien> call, Throwable t) {
                 Toast.makeText(AccountActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
         });

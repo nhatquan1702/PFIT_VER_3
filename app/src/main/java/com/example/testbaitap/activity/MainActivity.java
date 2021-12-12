@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView imageView1;
     NavigationView navigationView;
     Toolbar toolbar;
-    MenuItem menuItemLogin, menuItemAccount, menuItemManage;
+    MenuItem menuItemLogin, menuItemAccount, menuItemManage, menuItemSales;
 
 
 
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuItemLogin = menu.findItem(R.id.nav_login);
         menuItemAccount = menu.findItem(R.id.nav_account);
         menuItemManage = menu.findItem(R.id.nav_manage);
+        menuItemSales = menu.findItem(R.id.nav_sales);
 
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
         String role = sharedPreferences.getString("role", "-1");
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuItemLogin.setVisible(role.equals("-1"));
         menuItemAccount.setVisible(!role.equals("-1"));
         menuItemManage.setVisible(role.equals("1"));
+        menuItemSales.setVisible(role.equals("1"));
 
     }
     public void openFragment(Fragment fragment) {
@@ -189,8 +191,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         else if(itemId==R.id.nav_manage){
-            //Toast.makeText(MainActivity.this, "Quản trị", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "khóa tập", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, ManageTCActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivityIfNeeded(intent, 0);
+        }
+        else if(itemId==R.id.nav_sales){
+            //Toast.makeText(MainActivity.this, "doanh thu", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, SalesActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivityIfNeeded(intent, 0);
         }

@@ -2,22 +2,33 @@ package com.example.testbaitap.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testbaitap.R;
+import com.example.testbaitap.adapter.TrainingCourseAdapter;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
 import com.example.testbaitap.entity.HuanLuyenVien;
+import com.example.testbaitap.entity.Status;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
+
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +44,7 @@ public class DetailTCActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private ImageView imgHinhKT;
     private CardView  btnCapNhat;
+    private ConstraintLayout clEditKTDT;
 
     private static final int PERMISSION_CODE =1;
     private static final int PICK_IMAGE=1;
@@ -40,6 +52,8 @@ public class DetailTCActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_khoa_tap);
+
+        clEditKTDT = findViewById(R.id.clEditKTDT);
         edtTenKT = findViewById(R.id.edtTenKTDT);
         edtGiaKT = findViewById(R.id.edtGiaKTTheoThangDT);
         imgHinhKT = findViewById(R.id.imgKTDT);
@@ -88,26 +102,53 @@ public class DetailTCActivity extends AppCompatActivity {
                     if(hocVien_khoaTap.getMaKhoaTap().equals(maKT)){
                         tvCapNhat.setText("Hủy đăng ký");
                         tvLamLai.setVisibility(View.VISIBLE);
+                        tvLamLai.setVisibility(View.GONE);
                         tvLamLai.setText("Hoàn thành khóa tập");
                         //call api huy dk
+                        tvCapNhat.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(DetailTCActivity.this);
+                                builder.setTitle("Xác nhận");
+                                builder.setMessage("Bạn có thực sự muốn hủy đăng ký khóa tập này?");
+                                builder.setPositiveButton("Dong y", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        HuyDangKyKT(maHocVien, 0);
+                                    }
+                                });
+                                builder.setNegativeButton("Hủy thao tác", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Đã hủy thao tác", Snackbar.LENGTH_LONG);
+                                        snackbar.show();
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+                        });
                     }
                     else {
                         tvCapNhat.setText("Đăng ký");
                         tvLamLai.setVisibility(View.GONE);
-
                         btnCapNhat.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if(hocVien_khoaTap.getMaHocVien()!=null){
-                                    Toast.makeText(DetailTCActivity.this, "Bạn đã than gia khóa tập trước đó!", Toast.LENGTH_SHORT).show();
-                                }
+                                    Snackbar snackbar = Snackbar.make(clEditKTDT, "Bạn đã tham gia khóa tập trước đó", Snackbar.LENGTH_LONG);
+                                    snackbar.show();                                }
                                 else {
-                                    Intent intent = new Intent(DetailTCActivity.this, RegisterTCActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("maKT", hocVien_khoaTap.getMaKhoaTap());
-                                    intent.putExtras(bundle);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                    startActivityIfNeeded(intent, 0);
+                                      UpdateKhoaTapCHoHocVien(maHocVien, maKT);
+//                                    Random generator = new Random();
+//                                    System.out.println("Random Integer: " + generator.nextInt());
+//                                    Intent intent = new Intent(DetailTCActivity.this, RegisterTCActivity.class);
+//                                    Bundle bundle = new Bundle();
+//                                    bundle.putString("maKT", hocVien_khoaTap.getMaKhoaTap());
+//                                    intent.putExtras(bundle);
+//                                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                                    startActivityIfNeeded(intent, 0);
                                 }
 
                             }
@@ -146,6 +187,74 @@ public class DetailTCActivity extends AppCompatActivity {
             public void onFailure(Call<HuanLuyenVien> call, Throwable t) {
                 Log.d("quan", t.toString());
                 tvTTHLVDT.setText("Chưa có thông tin về HLV này!");
+            }
+        });
+    }
+
+    public void HuyDangKyKT(String maHV, int tt){
+        simpleAPI = Constants.instance();
+        simpleAPI.updateTrangThaiHocVien(maHV, tt).enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                Status status = response.body();
+                try {
+                    if(status.getStatus() == 2){
+                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Không tồn tại học viên này!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    if(status.getStatus() == 1){
+                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Cập nhật thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    else {
+                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Cập nhật không thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                }
+                catch (Exception e){
+                    Log.d("quan", e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                Log.d("quan", t.toString());
+            }
+        });
+    }
+
+    public void UpdateKhoaTapCHoHocVien(String maHV, String maKT){
+        simpleAPI = Constants.instance();
+        simpleAPI.updateKhoaTapChoHocVien(maHV, maKT).enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                Status status = response.body();
+                try {
+                    if(status.getStatus() == 3){
+                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Không tồn tại khóa tập này!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    if(status.getStatus() == 2){
+                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Không tồn tại học viên này!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    if(status.getStatus() == 1){
+                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Cập nhật thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    else {
+                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Cập nhật không thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                }
+                catch (Exception e){
+                    Log.d("quan", e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                Log.d("quan", t.toString());
             }
         });
     }

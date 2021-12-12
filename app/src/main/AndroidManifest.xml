@@ -16,7 +16,7 @@
         android:theme="@style/Theme.TestBaiTap"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.RegisterTCActivity"
+            android:name=".activity.SalesActivity"
             android:exported="false" />
         <activity
             android:name=".activity.DetailTCActivity"

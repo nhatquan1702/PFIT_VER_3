@@ -6,7 +6,7 @@ import com.example.testbaitap.entity.ChiTietBaiTap;
 import com.example.testbaitap.entity.ChiTietBaiTapChoHV;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
 import com.example.testbaitap.entity.HuanLuyenVien;
-import com.example.testbaitap.entity.KhachHang;
+import com.example.testbaitap.entity.HocVien;
 import com.example.testbaitap.entity.KhoaTap;
 import com.example.testbaitap.entity.NgayTap;
 import com.example.testbaitap.entity.NhomCo;
@@ -14,7 +14,6 @@ import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.entity.TaiKhoan;
 import com.example.testbaitap.entity.TheTrang;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -22,21 +21,20 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface SimpleAPI {
-    @POST("api/khachhang/dangnhap")
-    Call<Status> login(@Query("email") String email, @Query("password") String password);
+    @POST("api/hocvien/dangnhap")
+    Call<Status> dangNhap(@Query("email") String email, @Query("password") String password);
 
     @GET("api/nhomco")
     Call<ArrayList<NhomCo>> getListNhomCo();
 
-    @GET("api/khachhang/ttkhachhang")
-    Call<TaiKhoan> getTaiKhoan(@Query(value = "taikhoan") String taiKhoan);
+    @GET("api/hocvien/tthocvien")
+    Call<HocVien> getTaiKhoan(@Query(value = "taikhoan") String taiKhoan);
 
-    @GET("api/khachhang/ttkhachhangheader")
-    Call<KhachHang> getKhachHang(@Header(value = "taikhoan") String taiKhoan);
+    @GET("api/hocvien/tthocvienheader")
+    Call<HocVien> getKhachHang(@Header(value = "taikhoan") String taiKhoan);
 
     @GET("api/baitap/baitaptheomanhomco")
     Call<ArrayList<BaiTap>> getBaiTapTheoNhomCo(@Query("manhomco") String maNhomCo);
@@ -110,4 +108,9 @@ public interface SimpleAPI {
     @GET("api/khoatap/ttkhoatap")
     Call<KhoaTap> getKhoaTap(@Query("makhoatap") String maKT);
 
+    @POST("api/hocvien/updatetthv")
+    Call<Status> updateTrangThaiHocVien(@Query("mahocvien") String maHV, @Query("trangthai") int trangThai);
+
+    @POST("api/hocvien/updatekthv")
+    Call<Status> updateKhoaTapChoHocVien(@Query("mahocvien") String maHV, @Query("makhoatap") String maKT);
 }

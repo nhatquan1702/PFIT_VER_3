@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.sql.Date;
 import java.time.LocalDate;
 
-public class KhachHang {
+public class HocVien {
     @SerializedName("maHocVien")
     @Expose
     private String maHocVien;
@@ -39,15 +39,23 @@ public class KhachHang {
     @Expose
     private String diaChi;
 
-    @SerializedName("ghiChu")
+    @SerializedName("capDo")
     @Expose
-    private String ghiChu;
+    private Integer capDo;
 
     @SerializedName("trangThai")
     @Expose
     private Integer trangThai;
 
-    public KhachHang(String maHocVien, String matKhau, String hoTen, Integer tuoi, Integer gioiTinh, String ngayThamGia, String soDienThoai, String diaChi, String ghiChu, Integer trangThai) {
+    @SerializedName("ghiChu")
+    @Expose
+    private String ghiChu;
+
+    @SerializedName("maKhoaTap")
+    @Expose
+    private String maKhoaTap;
+
+    public HocVien(String maHocVien, String matKhau, String hoTen, Integer tuoi, Integer gioiTinh, String ngayThamGia, String soDienThoai, String diaChi, Integer capDo, Integer trangThai, String ghiChu, String maKhoaTap) {
         this.maHocVien = maHocVien;
         this.matKhau = matKhau;
         this.hoTen = hoTen;
@@ -56,8 +64,10 @@ public class KhachHang {
         this.ngayThamGia = ngayThamGia;
         this.soDienThoai = soDienThoai;
         this.diaChi = diaChi;
-        this.ghiChu = ghiChu;
+        this.capDo = capDo;
         this.trangThai = trangThai;
+        this.ghiChu = ghiChu;
+        this.maKhoaTap = maKhoaTap;
     }
 
     public String getMaHocVien() {
@@ -124,12 +134,12 @@ public class KhachHang {
         this.diaChi = diaChi;
     }
 
-    public String getGhiChu() {
-        return ghiChu;
+    public Integer getCapDo() {
+        return capDo;
     }
 
-    public void setGhiChu(String ghiChu) {
-        this.ghiChu = ghiChu;
+    public void setCapDo(Integer capDo) {
+        this.capDo = capDo;
     }
 
     public Integer getTrangThai() {
@@ -138,5 +148,21 @@ public class KhachHang {
 
     public void setTrangThai(Integer trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
+    }
+
+    public String getMaKhoaTap() {
+        return maKhoaTap;
+    }
+
+    public void setMaKhoaTap(String maKhoaTap) {
+        this.maKhoaTap = maKhoaTap;
     }
 }

@@ -227,7 +227,8 @@ public class MonthlyFragment extends Fragment {
                     dataSet.setValueTextColor(getResources().getColor(R.color.dot_dark_screen)); // styling, ...
                     LineData lineData = new LineData(dataSet);
                     lineChart.setData(lineData);
-                    lineChart.invalidate(); // refresh
+                    lineChart.invalidate();
+                    lineChart.animateX(2000);
 
 
                     Description description = new Description();
@@ -276,7 +277,7 @@ public class MonthlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
-
+                                            lineChart.animateX(2000);
 
                                             Description description = new Description();
                                             description.setText("Mô tả: Trục đứng biểu thị chỉ số bmi, trục ngang biểu thị các ngày");
@@ -320,7 +321,7 @@ public class MonthlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
-
+                                            lineChart.animateX(2000);
 
                                             Description description = new Description();
                                             description.setText("Mô tả: Trục đứng biểu thị cân nặng, trục ngang biểu thị các ngày");
@@ -365,7 +366,7 @@ public class MonthlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
-
+                                            lineChart.animateX(2000);
 
                                             Description description = new Description();
                                             description.setText("Mô tả: Trục đứng biểu thị chiều cao, trục ngang biểu thị các ngày");
@@ -410,7 +411,7 @@ public class MonthlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
-
+                                            lineChart.animateX(2000);
 
                                             Description description = new Description();
                                             description.setText("Mô tả: Trục đứng biểu thị số đo vòng 1, trục ngang biểu thị các ngày");
@@ -455,7 +456,7 @@ public class MonthlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
-
+                                            lineChart.animateX(2000);
 
                                             Description description = new Description();
                                             description.setText("Mô tả: Trục đứng biểu thị số đo vòng 2, trục ngang biểu thị các ngày");
@@ -500,7 +501,7 @@ public class MonthlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
-
+                                            lineChart.animateX(2000);
 
                                             Description description = new Description();
                                             description.setText("Mô tả: Trục đứng biểu thị số đo vòng 3, trục ngang biểu thị các ngày");
@@ -545,7 +546,7 @@ public class MonthlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
-
+                                            lineChart.animateX(2000);
 
                                             Description description = new Description();
                                             description.setText("Mô tả: Trục đứng biểu thị số đo vòng tay, trục ngang biểu thị các ngày");
@@ -590,7 +591,7 @@ public class MonthlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
-
+                                            lineChart.animateX(2000);
 
                                             Description description = new Description();
                                             description.setText("Mô tả: Trục đứng biểu thị số đo vòng đùi, trục ngang biểu thị các ngày");
@@ -634,7 +635,7 @@ public class MonthlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
-
+                                            lineChart.animateX(2000);
 
                                             Description description = new Description();
                                             description.setText("Mô tả: Trục đứng biểu thị lượng nước, trục ngang biểu thị các ngày");

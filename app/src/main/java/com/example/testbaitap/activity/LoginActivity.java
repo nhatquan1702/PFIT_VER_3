@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.testbaitap.R;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
+import com.example.testbaitap.entity.HocVien;
 import com.example.testbaitap.entity.NhomCo;
 import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.entity.TaiKhoan;
@@ -102,43 +103,53 @@ public class LoginActivity extends AppCompatActivity {
                 if(isValid){
                     SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    simpleAPI = Constants.instance();
-                    simpleAPI.login(email, pass).enqueue(new Callback<Status>() {
+                    simpleAPI =Constants.instance();
+                    simpleAPI.dangNhap(email, pass).enqueue(new Callback<Status>() {
                         @Override
                         public void onResponse(Call<Status> call, Response<Status> response) {
                             Status status = response.body();
-                            Toast.makeText(LoginActivity.this, String.valueOf(status), Toast.LENGTH_SHORT).show();
-                            if(status.getStatus()<1 || status.equals(null)){
-                                Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
+                            try {
+                                if(status.getStatus()==1){
+                                    Toast.makeText(LoginActivity.this, String.valueOf(status.getStatus()), Toast.LENGTH_SHORT).show();
+                                    simpleAPI = Constants.instance();
+                                    simpleAPI.getKhachHang(email).enqueue(new Callback<HocVien>() {
+                                        @Override
+                                        public void onResponse(Call<HocVien> call, Response<HocVien> response) {
+                                            HocVien taiKhoan = response.body();
+                                           try {
+                                               Intent intent;
+                                               editor.putString("email", taiKhoan.getMaHocVien().trim());
+                                               editor.putString("pass", taiKhoan.getMatKhau().trim());
+                                               editor.putString("role", String.valueOf(taiKhoan.getTrangThai()));
+                                               editor.commit();
+                                               Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                               intent = new Intent(LoginActivity.this, MainActivity.class);
+                                               startActivity(intent);
+                                               finish();
+                                           }
+                                           catch (Exception e){
+                                               Log.d("quan", e.toString());
+                                           }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<HocVien> call, Throwable t) {
+                                            Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                                else{
+                                    Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else{
-                                simpleAPI.getTaiKhoan(email).enqueue(new Callback<TaiKhoan>() {
-                                    @Override
-                                    public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
-                                        TaiKhoan taiKhoan = response.body();
-                                        Intent intent;
-                                        editor.putString("email", taiKhoan.getMaHocVien().trim());
-                                        editor.putString("pass", taiKhoan.getMatKhau().trim());
-                                        editor.putString("role", String.valueOf(taiKhoan.getTrangThai()));
-                                        editor.commit();
-                                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                                        intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<TaiKhoan> call, Throwable t) {
-                                        Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
+                            catch (Exception e){
+                                Log.d("quan", e.toString());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Status> call, Throwable t) {
-                            Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
+                            Log.d("quan", t.toString());
                         }
                     });
                 }

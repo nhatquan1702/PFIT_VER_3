@@ -9,6 +9,11 @@
         android:title="Quản lý khóa tập" />
 
     <item
+        android:id="@+id/nav_sales"
+        android:icon="@mipmap/manager_app"
+        android:title="Doanh thu" />
+
+    <item
         android:id="@+id/nav_share"
         android:icon="@mipmap/share_app"
         android:title="Chia sẻ" />

@@ -142,6 +142,7 @@ public class YearlyFragment extends Fragment {
                     LineData lineData = new LineData(dataSet);
                     lineChart.setData(lineData);
                     lineChart.invalidate(); // refresh
+                    lineChart.animateX(2000);
 
 
                     Description description = new Description();
@@ -190,6 +191,7 @@ public class YearlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
+                                            lineChart.animateX(2000);
 
 
                                             Description description = new Description();
@@ -234,6 +236,7 @@ public class YearlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
+                                            lineChart.animateX(2000);
 
 
                                             Description description = new Description();
@@ -279,6 +282,7 @@ public class YearlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
+                                            lineChart.animateX(2000);
 
 
                                             Description description = new Description();
@@ -324,6 +328,7 @@ public class YearlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
+                                            lineChart.animateX(2000);
 
 
                                             Description description = new Description();
@@ -369,6 +374,7 @@ public class YearlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
+                                            lineChart.animateX(2000);
 
 
                                             Description description = new Description();
@@ -414,6 +420,7 @@ public class YearlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
+                                            lineChart.animateX(2000);
 
 
                                             Description description = new Description();
@@ -459,6 +466,7 @@ public class YearlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
+                                            lineChart.animateX(2000);
 
 
                                             Description description = new Description();
@@ -504,6 +512,7 @@ public class YearlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
+                                            lineChart.animateX(2000);
 
 
                                             Description description = new Description();
@@ -548,6 +557,7 @@ public class YearlyFragment extends Fragment {
                                             LineData lineData = new LineData(dataSet);
                                             lineChart.setData(lineData);
                                             lineChart.invalidate(); // refresh
+                                            lineChart.animateX(2000);
 
 
                                             Description description = new Description();
