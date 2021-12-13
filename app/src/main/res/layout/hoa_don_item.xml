@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:sweet="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvHD"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        sweet:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/lnHT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvHTHD"
+                    android:layout_width="wrap_content"
+                    android:text="Họ tên: "
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/dot_dark_screen"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvHoTenHD"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnKT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/lnHT"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvKTHD"
+                    android:layout_width="wrap_content"
+                    android:text="Khóa tập: "
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/dot_dark_screen"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvKhoaTapHD"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnHTTT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/lnKT"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvNgayHD"
+                    android:layout_width="wrap_content"
+                    android:text="Thanh toán: "
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/dot_dark_screen"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvTongTTHD"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    android:text="1000000"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/lnHTTT"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvHTTTHD"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/dot_dark_screen"
+                    android:text="Hình thức:"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvHinhThucTTHD"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

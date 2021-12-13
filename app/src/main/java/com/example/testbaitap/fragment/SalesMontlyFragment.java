@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testbaitap.R;
+import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
+import com.example.testbaitap.entity.DoanhThu;
 import com.example.testbaitap.entity.TheTrang;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,9 +35,14 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,8 +53,7 @@ public class SalesMontlyFragment extends Fragment {
     private Spinner spinnerThang;
     private List<String> list, listThang;
     private SimpleAPI simpleAPI;
-    ArrayList<Integer> floatArrayList;
-    ArrayList<Integer> testArrayList;
+    ArrayList<DoanhThu> doanhThuArrayList;
     BarChart barChart;
 
     public static SalesMontlyFragment newInstance(String param1, String param2) {
@@ -86,11 +93,19 @@ public class SalesMontlyFragment extends Fragment {
         spinnerThang = (Spinner) view.findViewById(R.id.spinnerThang);
         ArrayAdapter spinnerAdapterThang = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, listThang);
         spinnerThang.setAdapter(spinnerAdapterThang);
-        spinnerThang.setSelection(0);
+        spinnerThang.setSelection(11);
+
+        doanhThuArrayList = new ArrayList<>();
+        SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd");
+        String tgHienTai = simpleDateFormat.format(Calendar.getInstance().getTime());
+        String thangTmp = tgHienTai.substring(6,8);
+        String tam = tgHienTai.substring(0,4);
+        LoadData("12", "2021");
         spinnerThang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                doanhThuArrayList = new ArrayList<>();
+                LoadData(listThang.get(position), tam);
             }
 
             @Override
@@ -106,8 +121,8 @@ public class SalesMontlyFragment extends Fragment {
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog datePicker = new DatePickerDialog(requireContext(),(view, year, month, dayOfMonth) ->
                 {
-                    floatArrayList = new ArrayList<>();
-                    //LoadData("quan", String.valueOf(month+1), String.valueOf(year));
+                    doanhThuArrayList = new ArrayList<>();
+                    LoadData( String.valueOf(month+1), String.valueOf(year));
                     int a = month+1;
                     if(a==1){
                         spinnerThang.setSelection(0);
@@ -151,48 +166,62 @@ public class SalesMontlyFragment extends Fragment {
             }
         });
 
-
-        floatArrayList = new ArrayList<>();
-        testArrayList = new ArrayList<>();
-        floatArrayList.add(2500000);
-        floatArrayList.add(2800000);
-        floatArrayList.add(2100000);
-        floatArrayList.add(3500000);
-        floatArrayList.add(3000000);
-        testArrayList.add(1);
-        testArrayList.add(2);
-        testArrayList.add(3);
-        testArrayList.add(4);
-        testArrayList.add(5);
-        LoadData();
         return view;
     }
 
-    public void LoadData(){
-        ArrayList<BarEntry> entryArrayList = new ArrayList<>();
-        for(int i=0; i<floatArrayList.size(); i++){
-            if(floatArrayList.size()>0){
-                entryArrayList.add(new BarEntry(testArrayList.get(i), floatArrayList.get(i)));
-            }
-            else { //2021-01-11
-                barChart.setNoDataText("Chưa có dữ liệu");
-                barChart.setNoDataTextColor(getResources().getColor(R.color.red));
-            }
-        }
-        BarDataSet dataSet = new BarDataSet(entryArrayList, "Doanh thu theo tháng"); // add entries to dataset
-        dataSet.setColor(getResources().getColor(R.color.dot_dark_screen));
-        dataSet.setValueTextColor(getResources().getColor(R.color.black)); // styling, ...
-        dataSet.setValueTextSize(10f);
-        BarData barData = new BarData(dataSet);
-        barChart.setFitBars(true);
-        barChart.setData(barData);
-        barChart.animateY(1000);
+    public void LoadData(String thang, String nam){
+        simpleAPI = Constants.instance();
+        simpleAPI.getDoanhThuTheoThang(thang, nam).enqueue(new Callback<ArrayList<DoanhThu>>() {
+            @Override
+            public void onResponse(Call<ArrayList<DoanhThu>> call, Response<ArrayList<DoanhThu>> response) {
+                doanhThuArrayList = response.body();
+                try {
+                    ArrayList<BarEntry> entryArrayList = new ArrayList<>();
+                    for(int i=0; i<doanhThuArrayList.size(); i++){
+                        if(doanhThuArrayList.size()>0){
+                            entryArrayList.add(new BarEntry(Integer.parseInt(doanhThuArrayList.get(i).getNgay()), doanhThuArrayList.get(i).getTongTien()));
+                            BarDataSet dataSet = new BarDataSet(entryArrayList, "Doanh thu theo tháng"); // add entries to dataset
+                            dataSet.setColor(getResources().getColor(R.color.dot_dark_screen));
+                            dataSet.setValueTextColor(getResources().getColor(R.color.black)); // styling, ...
+                            dataSet.setValueTextSize(10f);
+                            BarData barData = new BarData(dataSet);
+                            barChart.setFitBars(true);
+                            barChart.setData(barData);
+                            barChart.animateY(1000);
 
-        Description description = new Description();
-        description.setText("");
-        barChart.setDescription(description);
+                            Description description = new Description();
+                            description.setText("");
+                            barChart.setDescription(description);
 
-        barChart.setNoDataText("Chưa có dữ liệu");
-        barChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                            barChart.setNoDataText("Chưa có dữ liệu");
+                            barChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                        }
+                        else { //2021-01-11
+                            barChart.setNoDataText("Chưa có dữ liệu");
+                            barChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                        }
+                    }
+                }
+                catch (Exception e){
+                    Log.d("quan", e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<DoanhThu>> call, Throwable t) {
+                Log.d("quan", t.toString());
+            }
+        });
+//        ArrayList<BarEntry> entryArrayList = new ArrayList<>();
+//        for(int i=0; i<floatArrayList.size(); i++){
+//            if(floatArrayList.size()>0){
+//                entryArrayList.add(new BarEntry(testArrayList.get(i), floatArrayList.get(i)));
+//            }
+//            else { //2021-01-11
+//                barChart.setNoDataText("Chưa có dữ liệu");
+//                barChart.setNoDataTextColor(getResources().getColor(R.color.red));
+//            }
+//        }
+
     }
 }
