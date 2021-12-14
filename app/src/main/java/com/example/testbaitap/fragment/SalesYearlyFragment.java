@@ -37,7 +37,7 @@ import retrofit2.Response;
 
 public class SalesYearlyFragment extends Fragment {
     private Spinner spinnerThang;
-    private List<String> list, listThang;
+    private List<String> listThang;
     private SimpleAPI simpleAPI;
     ArrayList<DoanhThu> doanhThuArrayList;
     BarChart barChart;
@@ -83,7 +83,12 @@ public class SalesYearlyFragment extends Fragment {
         SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd");
         String tgHienTai = simpleDateFormat.format(Calendar.getInstance().getTime());
         String tam = tgHienTai.substring(0,4);
-        LoadData("2021");
+        for(int i=0; i<listThang.size(); i++){
+            if(listThang.get(i).equals(tam)){
+                spinnerThang.setSelection(i);
+            }
+        }
+        LoadData(tam);
         spinnerThang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -119,6 +124,7 @@ public class SalesYearlyFragment extends Fragment {
         simpleAPI.getDoanhThuTheoNam(nam).enqueue(new Callback<ArrayList<DoanhThu>>() {
             @Override
             public void onResponse(Call<ArrayList<DoanhThu>> call, Response<ArrayList<DoanhThu>> response) {
+                doanhThuArrayList = response.body();
                 try {
                     ArrayList<BarEntry> entryArrayList = new ArrayList<>();
                     for(int i=0; i<doanhThuArrayList.size(); i++){

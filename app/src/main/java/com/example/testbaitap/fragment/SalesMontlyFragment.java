@@ -174,11 +174,10 @@ public class SalesMontlyFragment extends Fragment {
         simpleAPI.getDoanhThuTheoThang(thang, nam).enqueue(new Callback<ArrayList<DoanhThu>>() {
             @Override
             public void onResponse(Call<ArrayList<DoanhThu>> call, Response<ArrayList<DoanhThu>> response) {
-                doanhThuArrayList = response.body();
                 try {
+                    doanhThuArrayList = response.body();
                     ArrayList<BarEntry> entryArrayList = new ArrayList<>();
                     for(int i=0; i<doanhThuArrayList.size(); i++){
-                        if(doanhThuArrayList.size()>0){
                             entryArrayList.add(new BarEntry(Integer.parseInt(doanhThuArrayList.get(i).getNgay()), doanhThuArrayList.get(i).getTongTien()));
                             BarDataSet dataSet = new BarDataSet(entryArrayList, "Doanh thu theo tháng"); // add entries to dataset
                             dataSet.setColor(getResources().getColor(R.color.dot_dark_screen));
@@ -193,23 +192,20 @@ public class SalesMontlyFragment extends Fragment {
                             description.setText("");
                             barChart.setDescription(description);
 
-                            barChart.setNoDataText("Chưa có dữ liệu");
-                            barChart.setNoDataTextColor(getResources().getColor(R.color.red));
-                        }
-                        else { //2021-01-11
-                            barChart.setNoDataText("Chưa có dữ liệu");
-                            barChart.setNoDataTextColor(getResources().getColor(R.color.red));
-                        }
                     }
                 }
                 catch (Exception e){
-                    Log.d("quan", e.toString());
+                    //Log.d("quan", e.toString());
+                    barChart.setNoDataText("Chưa có dữ liệu");
+                    barChart.setNoDataTextColor(getResources().getColor(R.color.red));
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<DoanhThu>> call, Throwable t) {
                 Log.d("quan", t.toString());
+                barChart.setNoDataText("Chưa có dữ liệu");
+                barChart.setNoDataTextColor(getResources().getColor(R.color.red));
             }
         });
 //        ArrayList<BarEntry> entryArrayList = new ArrayList<>();

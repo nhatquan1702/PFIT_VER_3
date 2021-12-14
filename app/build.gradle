@@ -12,6 +12,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -65,4 +66,8 @@ dependencies {
     implementation 'com.cloudinary:cloudinary-android:1.24.0'
 
     implementation 'com.cloudinary:cloudinary-android:1.30.0'
+
+    //pay
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.15.3'
+    //implementation 'com.paypal.sdk:paypal-android-sdk:2.14.2'
 }

@@ -203,6 +203,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivityIfNeeded(intent, 0);
         }
         else if(itemId==R.id.nav_setting){
+            Intent intent = new Intent(MainActivity.this, PayMentsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivityIfNeeded(intent, 0);
             Toast.makeText(MainActivity.this, "Cài đặt", Toast.LENGTH_SHORT).show();
         }
 
