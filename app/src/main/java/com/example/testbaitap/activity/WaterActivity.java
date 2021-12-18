@@ -7,6 +7,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlertDialog;
 import android.app.Notification;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +28,7 @@ import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.entity.TheTrang;
 import com.example.testbaitap.reciver.NotificationReceiver;
+import com.example.testbaitap.utils.Config;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -50,14 +52,17 @@ public class WaterActivity extends AppCompatActivity {
     private boolean checkClick;
     private TextView tvIntook;
     private StepProgressView intakeProgress;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water);
+        sharedPreferences = getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-
-        LoadTheTrang("quan", currentDate);
+        LoadTheTrang(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), currentDate);
 
         TypedValue outValue = new TypedValue();
         WaterActivity.this.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
@@ -144,7 +149,7 @@ public class WaterActivity extends AppCompatActivity {
                 op200ml.setBackgroundResource(outValue.resourceId);
                 op250ml.setBackgroundResource(outValue.resourceId);
                 opCustom.setBackgroundResource(R.drawable.option_select_bg);
-                luongNuocTam = 300F;
+                luongNuocTam=0F;
                 AlertDialog.Builder builder = new AlertDialog.Builder(WaterActivity.this);
                 builder.setTitle("Nhập lượng nước cần thêm");
                 final EditText input = new EditText(WaterActivity.this);
@@ -154,13 +159,20 @@ public class WaterActivity extends AppCompatActivity {
                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        boolean check = true;
                         String dm_Text = input.getText().toString();
-                        if(!dm_Text.isEmpty()){
-                            luongNuocTam = Float.valueOf(dm_Text);
+                        if(Integer.parseInt(dm_Text)>1000){
+                            Snackbar snackbar = Snackbar.make(main_activity_water, "Lượng nước thêm vào quá lớn cho 1 lần!", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                            check = false;
                         }
-                        else {
+                        if(dm_Text.isEmpty()){
                             Snackbar snackbar = Snackbar.make(main_activity_water, "Bạn chưa nhập lượng nước!", Snackbar.LENGTH_LONG);
                             snackbar.show();
+                            check = false;
+                        }
+                        if(check) {
+                            luongNuocTam = Float.valueOf(dm_Text);
                         }
                     }
                 });
@@ -194,7 +206,13 @@ public class WaterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if ((checkClick == true)){
-                    UpDateLuongNuoc(currentDate,"quan",luongNuocTam);
+                    if(luongNuocTam>0){
+                        UpDateLuongNuoc(currentDate,sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""),luongNuocTam);
+                    }
+                    else {
+                        Snackbar snackbar = Snackbar.make(main_activity_water, "Thêm nước không thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
                 }
                 else {
                     Snackbar snackbar = Snackbar.make(main_activity_water, "Vui lòng chọn lượng nước cần thêm!", Snackbar.LENGTH_LONG);
@@ -264,6 +282,8 @@ public class WaterActivity extends AppCompatActivity {
                         snackbar.show();
                     }
                     if(status.getStatus() == 1){
+                        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                        LoadTheTrang(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), currentDate);
                         Snackbar snackbar = Snackbar.make(main_activity_water, "Thêm nước thành công!", Snackbar.LENGTH_LONG);
                         snackbar.show();
                     }
@@ -280,14 +300,15 @@ public class WaterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Status> call, Throwable t) {
-                Toast.makeText(WaterActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                Log.d("quan", t.toString());
+                //Toast.makeText(WaterActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
     }
     private void sendOnChannel1()  {
-        String title = "alo alo";
+        String title = "Nhắc nhở";
         String message = "Hôm nay bạn chưa thêm nước";
 
         Notification notification = new NotificationCompat.Builder(this, NotificationReceiver.CHANNEL_1_ID)
@@ -303,7 +324,7 @@ public class WaterActivity extends AppCompatActivity {
     }
 
     private void sendOnChannel2()  {
-        String title = "alo alo";
+        String title = "Nhắc nhở";
         String message = "Bạn chưa cập nhật thể trạng hôm nay!";
 
 //        Notification notification = new NotificationCompat.Builder(this, NotificationReceiver.CHANNEL_2_ID)

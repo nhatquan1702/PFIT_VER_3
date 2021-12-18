@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
@@ -37,11 +38,13 @@ import com.example.testbaitap.activity.MainActivity;
 import com.example.testbaitap.adapter.NgayTapRecyclerAdapter;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
+import com.example.testbaitap.entity.HocVien;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
 import com.example.testbaitap.entity.KhoaTap;
 import com.example.testbaitap.entity.NgayTap;
 import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.excercise.ItemClickInterface;
+import com.example.testbaitap.utils.Config;
 import com.example.testbaitap.viewModel.PTNgayTapViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -61,7 +64,9 @@ public class Fragment_Workout extends Fragment {
     private SharedPreferences sharedPreferences;
     private GridLayoutManager manager;
     private TextView percentScore1;
+    private ProgressBar progressBarPT;
     private ProgressBar progressBar;
+    private SwipeRefreshLayout mSwipeRefresh;
     private RecyclerView recyclerView;
     private int squareSize;
     private int width;
@@ -99,11 +104,14 @@ public class Fragment_Workout extends Fragment {
         this.recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         b = (ImageView) view.findViewById(R.id.b);
         cvHKT = (CardView) view.findViewById(R.id.cvHKT);
+        progressBarPT = view.findViewById(R.id.progress_bar);
+        progressBarPT.setVisibility(View.VISIBLE);
+        mSwipeRefresh = view.findViewById(R.id.swipe_refresh);
 
-        sharedPreferences = getContext().getSharedPreferences("dataLogin", MODE_PRIVATE);
+        sharedPreferences = getContext().getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
         //Toast.makeText(requireContext(), sharedPreferences.getString("email", "username"), Toast.LENGTH_SHORT).show();
-        String taiKhoan = sharedPreferences.getString("email", "username");
-        if(taiKhoan.equals("username")){
+        String taiKhoan = sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, "");
+        if(taiKhoan.equals("")){
             constraintLayout.setVisibility(View.INVISIBLE);
             recyclerView.setVisibility(View.INVISIBLE);
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -128,20 +136,27 @@ public class Fragment_Workout extends Fragment {
         }
         else //lấy khóa tập tài khoản này, nếu chưa thì in thông báo chưa tham gia khóa tập nào{
         {
+            progressBarPT.setVisibility(View.VISIBLE);
             simpleAPI = Constants.instance();
-            simpleAPI.getMaKhoaTapTheoMaHocVien(taiKhoan).enqueue(new Callback<HocVien_KhoaTap>() {
+            simpleAPI.getKhachHang(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, "")).enqueue(new Callback<HocVien>() {
                 @Override
-                public void onResponse(Call<HocVien_KhoaTap> call, Response<HocVien_KhoaTap> response) {
-                    HocVien_KhoaTap hocVien_khoaTap = response.body();
+                public void onResponse(Call<HocVien> call, Response<HocVien> response) {
+                    HocVien hocVien = response.body();
                     try {
-                        LoadKhoaTap(hocVien_khoaTap.getMaKhoaTap());
-                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("dataHV_KT", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("maHocVien", hocVien_khoaTap.getMaHocVien().trim());
-                        editor.putString("maKhoaTap", hocVien_khoaTap.getMaKhoaTap().trim());
-                        LoadPTKhoaTap(hocVien_khoaTap.getMaKhoaTap().trim(), hocVien_khoaTap.getMaHocVien().trim());
-                        editor.commit();
-                        if(hocVien_khoaTap == null){
+                        LoadKhoaTap(hocVien.getMaKhoaTap());
+//                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("dataHV_KT", Context.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString("maHocVien", hocVien_khoaTap.getMaHocVien().trim());
+//                        editor.putString("maKhoaTap", hocVien_khoaTap.getMaKhoaTap().trim());
+                        LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
+
+                        mSwipeRefresh.setOnRefreshListener(() -> {
+                            LoadKhoaTap(hocVien.getMaKhoaTap());
+                            LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
+                            mSwipeRefresh.setRefreshing(false);
+                        });
+                        //editor.commit();
+                        if(hocVien.getMaKhoaTap() == null){
                             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                             builder.setTitle("Thông báo");
                             builder.setMessage("Bạn chưa tham gia khóa tập nào?");
@@ -162,15 +177,18 @@ public class Fragment_Workout extends Fragment {
                             AlertDialog dialog = builder.create();
                             dialog.show();
                         }
+                        progressBarPT.setVisibility(View.INVISIBLE);
                     }
                     catch (Exception e){
                         Log.d("quan", e.toString());
+                        progressBarPT.setVisibility(View.INVISIBLE);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<HocVien_KhoaTap> call, Throwable t) {
-                    Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                public void onFailure(Call<HocVien> call, Throwable t) {
+                    //Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                    progressBarPT.setVisibility(View.INVISIBLE);
                 }
             });
         }
@@ -264,7 +282,6 @@ public class Fragment_Workout extends Fragment {
             }
         });
 
-
         return view;
     }
 
@@ -293,7 +310,8 @@ public class Fragment_Workout extends Fragment {
         });
     }
 
-    public void LoadPTKhoaTap(String maKhoaTap, String maHocVien){
+    public void LoadPTKhoaTap(String maHocVien, String maKhoaTap){
+        progressBarPT.setVisibility(View.VISIBLE);
         simpleAPI = Constants.instance();
         simpleAPI.getPhanTramBTTheoKhoa(maKhoaTap, maHocVien).enqueue(new Callback<Status>() {
             @Override
@@ -302,14 +320,17 @@ public class Fragment_Workout extends Fragment {
                     Status status = response.body();
                     if(status.getStatus()>0){
                         percentScore1.setText(String.valueOf(status.getStatus())+"%");
+                        progressBarPT.setVisibility(View.INVISIBLE);
                     }
                     else{
                         percentScore1.setText(String.valueOf(0)+"%");
+                        progressBarPT.setVisibility(View.INVISIBLE);
                     }
                 }
                 catch (Exception e){
                     percentScore1.setText(String.valueOf(0)+"%");
                     Log.d("quan", e.toString());
+                    progressBarPT.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -317,11 +338,13 @@ public class Fragment_Workout extends Fragment {
             public void onFailure(Call<Status> call, Throwable t) {
                 percentScore1.setText(String.valueOf(0)+"%");
                 Log.d("quan", t.toString());
+                progressBarPT.setVisibility(View.INVISIBLE);
             }
         });
     }
 
     public void LoadKhoaTap(String maKT){
+        progressBarPT.setVisibility(View.VISIBLE);
         simpleAPI = Constants.instance();
         simpleAPI.getKhoaTap(maKT).enqueue(new Callback<KhoaTap>() {
             @Override
@@ -351,16 +374,18 @@ public class Fragment_Workout extends Fragment {
                             startActivity(intent);
                         }
                     });
+                    progressBarPT.setVisibility(View.INVISIBLE);
                 }
                 catch (Exception e){
                     percentScore1.setText(String.valueOf(0)+"%");
                     Log.d("quan", e.toString());
+                    progressBarPT.setVisibility(View.INVISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<KhoaTap> call, Throwable t) {
-
+                progressBarPT.setVisibility(View.INVISIBLE);
             }
         });
     }

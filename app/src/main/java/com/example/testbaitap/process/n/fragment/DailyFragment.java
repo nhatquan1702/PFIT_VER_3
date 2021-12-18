@@ -1,14 +1,14 @@
 package com.example.testbaitap.process.n.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -25,47 +25,34 @@ import com.example.testbaitap.R;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.TheTrang;
+import com.example.testbaitap.utils.Config;
 import com.example.testbaitap.utils.CustomProcessbar;
 import com.example.testbaitap.utils.ProgressItem;
-import com.github.mikephil.charting.charts.LineChart;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.BubbleEntry;
-import com.github.mikephil.charting.data.CandleEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.data.RadarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class WeeklyFragment extends Fragment {
+public class DailyFragment extends Fragment {
     private TextView tvTitleTenTheTrang, txtProgress, tvNhanXetBmi;
     private Spinner spinner;
     private List<String> list;
     private SimpleAPI simpleAPI;
     ArrayList<TheTrang> trangArrayList;
     private CustomProcessbar seekbar;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout mSwipeRefresh;
 
     private float totalSpan = 100;
 
@@ -83,13 +70,13 @@ public class WeeklyFragment extends Fragment {
     private ArrayList<ProgressItem> progressItemList;
     private ProgressItem mProgressItem;
 
-    public WeeklyFragment() {
+    public DailyFragment() {
         // Required empty public constructor
     }
 
 
-    public static WeeklyFragment newInstance() {
-        WeeklyFragment fragment = new WeeklyFragment();
+    public static DailyFragment newInstance() {
+        DailyFragment fragment = new DailyFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -108,6 +95,12 @@ public class WeeklyFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_weekly, container, false);
         seekbar = (CustomProcessbar) view.findViewById(R.id.customSeekBar);
+        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+        mSwipeRefresh = view.findViewById(R.id.swipe_refresh);
+        sharedPreferences = requireContext().getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         initDataToSeekbar();
         list = new ArrayList<>();
         list.add("Chỉ số bmi");
@@ -132,9 +125,8 @@ public class WeeklyFragment extends Fragment {
         txtProgress.setText("0");
 
         theTrang = new TheTrang();
-        SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd");
-        String tgHienTai = simpleDateFormat.format(Calendar.getInstance().getTime());
-        LoadData("quan", tgHienTai);
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        LoadData(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), currentDate);
 
         tvTitleTenTheTrang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +137,11 @@ public class WeeklyFragment extends Fragment {
                     theTrang = new TheTrang();
                     String strDate = year + "-" + (month + 1) + "-" + dayOfMonth;
                     tvTitleTenTheTrang.setText("Ngày " + dayOfMonth + " Tháng " + (month + 1) + " Năm " + year);
-                    LoadData("quan", strDate);
+                    LoadData(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), strDate);
+                    mSwipeRefresh.setOnRefreshListener(() -> {
+                        LoadData(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), strDate);
+                        mSwipeRefresh.setRefreshing(false);
+                    });
                 },now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
                 datePicker.show();
             }
@@ -155,12 +151,13 @@ public class WeeklyFragment extends Fragment {
     }
 
     public void LoadData(String maHocVien, String date){
+        progressBar.setVisibility(View.VISIBLE);
             simpleAPI = Constants.instance();
             simpleAPI.getTheTrangHVTheoNgay(maHocVien, date).enqueue(new Callback<TheTrang>() {
                 @Override
                 public void onResponse(Call<TheTrang> call, Response<TheTrang> response) {
-                    theTrang = response.body();
                     try {
+                        theTrang = response.body();
                         float chieuCaoM = theTrang.getChieuCao()/100;
                         float bmi = theTrang.getCanNang() / (chieuCaoM*2);
                         seekbar.setVisibility(View.VISIBLE);
@@ -190,12 +187,15 @@ public class WeeklyFragment extends Fragment {
                             txt = "Thể trạng nguy hiểm";
                         }
                         tvNhanXetBmi.setText(txt);
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                     catch (Exception e ){
                         seekbar.setVisibility(View.INVISIBLE);
                         txtProgress.setText("0");
                         tvNhanXetBmi.setText("Chưa có số liệu vào ngày này!");
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
+                    spinner.setSelection(0);
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -313,6 +313,7 @@ public class WeeklyFragment extends Fragment {
                     seekbar.setVisibility(View.INVISIBLE);
                     txtProgress.setText("0");
                     tvNhanXetBmi.setText("Chưa có số liệu vào ngày này!");
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             });
     }

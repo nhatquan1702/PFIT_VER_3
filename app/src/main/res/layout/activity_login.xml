@@ -36,6 +36,7 @@
         android:layout_marginEnd="10dp"
         android:background="@drawable/ic_baseline_qr_code_2_24"
         android:elevation="5dp"
+        android:visibility="gone"
         android:textColor="@color/colorWhite" />
 
     <TextView
@@ -249,7 +250,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/baloo"
-                android:text="Quên mật khẩu"
+                android:visibility="gone"
+                android:text="Xóa tài khoản"
                 android:textColor="@color/colorPurple" />
         </RelativeLayout>
     </ScrollView>

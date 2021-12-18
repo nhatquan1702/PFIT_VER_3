@@ -10,11 +10,21 @@
     android:orientation="vertical"
     android:background="@color/transperent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:id="@+id/progress_bar"
+        android:layout_gravity="center"
+        android:layout_marginBottom="-50dp"
+        android:layout_height="wrap_content">
+    </ProgressBar>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transperent"
-        />
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transperent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

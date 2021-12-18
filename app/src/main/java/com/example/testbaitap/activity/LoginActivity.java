@@ -27,6 +27,7 @@ import com.example.testbaitap.entity.HocVien;
 import com.example.testbaitap.entity.NhomCo;
 import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.entity.TaiKhoan;
+import com.example.testbaitap.utils.Config;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if(isValid){
-                    SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(Config.DATA_LOGIN, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     simpleAPI =Constants.instance();
                     simpleAPI.dangNhap(email, pass).enqueue(new Callback<Status>() {
@@ -118,9 +119,9 @@ public class LoginActivity extends AppCompatActivity {
                                             HocVien taiKhoan = response.body();
                                            try {
                                                Intent intent;
-                                               editor.putString("email", taiKhoan.getMaHocVien().trim());
-                                               editor.putString("pass", taiKhoan.getMatKhau().trim());
-                                               editor.putString("role", String.valueOf(taiKhoan.getTrangThai()));
+                                               editor.putString(Config.DATA_LOGIN_USERNAME, taiKhoan.getMaHocVien().trim());
+                                               editor.putString(Config.DATA_LOGIN_PASS, taiKhoan.getMatKhau().trim());
+                                               editor.putString(Config.DATA_LOGIN_ROLE, String.valueOf(taiKhoan.getTrangThai()));
                                                editor.commit();
                                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                                                intent = new Intent(LoginActivity.this, MainActivity.class);

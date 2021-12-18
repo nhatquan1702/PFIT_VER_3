@@ -5,8 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".process.n.fragment.WeeklyFragment">
-
+    tools:context=".process.n.fragment.DailyFragment">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,9 +65,16 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="10dp"/>
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+                </ProgressBar>
             </RelativeLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -67,6 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView"
         android:src="@drawable/ic_plus_solid" />
 
+
     <RelativeLayout
         android:id="@+id/rere"
         android:layout_width="match_parent"
@@ -81,17 +82,22 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:text="Thêm nước"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
+            android:textStyle="bold"
+            android:fontFamily="@font/baloo"
+            android:textSize="26sp"
+            android:textColor="@color/colorWhite" />
+
         <TextView
             android:id="@+id/textView51"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/baloo"
+            android:textSize="26sp"
             android:text="mỗi ngày"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
+            android:textColor="@color/colorWhite" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardviewone"
@@ -404,5 +410,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

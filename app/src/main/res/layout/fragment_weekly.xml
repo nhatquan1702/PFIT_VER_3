@@ -5,8 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".process.n.fragment.WeeklyFragment">
-
+    tools:context=".process.n.fragment.DailyFragment">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
    <androidx.cardview.widget.CardView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
@@ -20,10 +23,10 @@
            android:layout_height="match_parent"
            android:background="@color/white"
            android:orientation="vertical">
+
            <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="match_parent">
-
                <TextView
                    android:layout_marginTop="10dp"
                    android:paddingTop="10dp"
@@ -36,6 +39,7 @@
                    android:textSize="@dimen/text_16"
                    android:textStyle="bold"
                    android:text="Hôm nay" />
+
 
                <TextView
                    android:id="@+id/tvVien"
@@ -140,7 +144,6 @@
 
                </RelativeLayout>
 
-
                <LinearLayout
                    android:id="@+id/lin1"
                    android:layout_width="match_parent"
@@ -170,6 +173,16 @@
                             android:id="@+id/constraintBMI"
                             android:layout_height="match_parent">
 
+                            <ProgressBar
+                                android:id="@+id/progress_bar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+                            </ProgressBar>
                             <TextView
                                 android:id="@+id/MoTa"
                                 android:layout_width="wrap_content"
@@ -184,6 +197,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <RelativeLayout
+                                android:id="@+id/relativeLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/colorPrimary"
@@ -368,5 +382,8 @@
        </LinearLayout>
 
    </androidx.cardview.widget.CardView>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

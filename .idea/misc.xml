@@ -92,13 +92,15 @@
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_edit_khoa_tap.xml" value="0.16" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_excercice_by_muscle.xml" value="0.1587962962962963" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_insert_khoa_tap.xml" value="0.1" />
+        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_loading.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_pay_ment.xml" value="0.18" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_payment_details.xml" value="0.1" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_qlkhoa_tap.xml" value="0.22" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_register_tcactivity.xml" value="0.1" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_sales.xml" value="0.1" />
-        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_water.xml" value="0.1" />
+        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/activity_water.xml" value="0.22" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/content_main.xml" value="0.1587962962962963" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/custom_excercise_item.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/excercise_item.xml" value="0.22" />
@@ -108,14 +110,15 @@
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment__workout.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.22" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_home_excercise.xml" value="0.1814814814814815" />
-        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_monthly.xml" value="0.16" />
+        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_monthly.xml" value="0.33" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_sales_daily.xml" value="0.25" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_sales_montly.xml" value="0.1" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_sales_yearly.xml" value="0.12175925925925926" />
-        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_weekly.xml" value="0.33" />
+        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_weekly.xml" value="0.2" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/fragment_yearly.xml" value="0.25" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/hoa_don_item.xml" value="0.3468208092485549" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/item_khoa_tap.xml" value="0.2058011049723757" />
+        <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/loaddinglayout.xml" value="0.25" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/layout/ngay_tap_item.xml" value="0.21158690176322417" />
         <entry key="..\:/Users/nhatquan/Downloads/AndroidStudioProjects/AndroidStudioProjects/TestBaiTap/app/src/main/res/menu/activity_main_drawer.xml" value="0.1587962962962963" />
       </map>

@@ -3,32 +3,56 @@ package com.example.testbaitap.activity;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testbaitap.R;
 ;
+import com.example.testbaitap.adapter.BaiTapTheoNhomCoRecyclerAdapter;
+import com.example.testbaitap.api.Constants;
+import com.example.testbaitap.api.SimpleAPI;
+import com.example.testbaitap.entity.BaiTap;
+import com.example.testbaitap.entity.NhomCo;
+import com.example.testbaitap.excercise.ItemClickInterface;
 import com.example.testbaitap.fragment.Fragment_Excercise;
 import com.example.testbaitap.fragment.Fragment_Home;
 import com.example.testbaitap.fragment.Fragment_Process;
 import com.example.testbaitap.fragment.Fragment_Reminder;
 import com.example.testbaitap.fragment.Fragment_Workout;
+import com.example.testbaitap.utils.Config;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     SharedPreferences sharedPreferences;
@@ -39,8 +63,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     MenuItem menuItemLogin, menuItemAccount, menuItemManage, menuItemSales;
-
-
+    LinearLayout container;
+    ConstraintLayout serverError;
+    SimpleAPI simpleAPI;
+    ProgressBar progressMain;
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -82,6 +108,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        serverError = findViewById(R.id.serverError);
+        container = findViewById(R.id.container);
+        progressMain = findViewById(R.id.progressMain);
+
+        ConnectivityManager cm =
+                (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        if(isConnected){
+            serverError.setVisibility(View.INVISIBLE);
+            container.setVisibility(View.VISIBLE);
+        }
+        else {
+            serverError.setVisibility(View.VISIBLE);
+            container.setVisibility(View.INVISIBLE);
+            Toast.makeText(MainActivity.this, "Bạn cần kết nối Internet!", Toast.LENGTH_SHORT).show();
+        }
+
+        simpleAPI = Constants.instance();
+        simpleAPI.getListNhomCo().enqueue(new Callback<ArrayList<NhomCo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<NhomCo>> call, Response<ArrayList<NhomCo>> response) {
+                serverError.setVisibility(View.INVISIBLE);
+                container.setVisibility(View.VISIBLE);
+                progressMain.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<NhomCo>> call, Throwable t) {
+                serverError.setVisibility(View.VISIBLE);
+                container.setVisibility(View.INVISIBLE);
+                progressMain.setVisibility(View.INVISIBLE);
+            }
+        });
+
         this.navigationView = (NavigationView) findViewById(R.id.nav_views);
         //this.imageView1 = (ImageView) findViewById(R.id.setting);
         this.toolbar = initToolbar();
@@ -114,8 +178,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         menuItemManage = menu.findItem(R.id.nav_manage);
         menuItemSales = menu.findItem(R.id.nav_sales);
 
-        sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
-        String role = sharedPreferences.getString("role", "-1");
+        sharedPreferences = getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
+        String role = sharedPreferences.getString(Config.DATA_LOGIN_ROLE, "-1");
 
         menuItemLogin.setVisible(role.equals("-1"));
         menuItemAccount.setVisible(!role.equals("-1"));

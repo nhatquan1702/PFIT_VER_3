@@ -221,6 +221,7 @@
             android:text="Chọn HLV cho khóa tập: "
             android:textSize="20sp"
             android:textStyle="bold"
+            android:visibility="gone"
             android:fontFamily="@font/kanit"
             android:textColor="@color/dot_dark_screen"
             android:paddingBottom="10dp"
@@ -232,6 +233,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvHLV" />

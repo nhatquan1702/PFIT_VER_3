@@ -81,7 +81,7 @@ public class ExcerciceByMuscleActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<BaiTap>> call, Throwable t) {
-                Toast.makeText(ExcerciceByMuscleActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ExcerciceByMuscleActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

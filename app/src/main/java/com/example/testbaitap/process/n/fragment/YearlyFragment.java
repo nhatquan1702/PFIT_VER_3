@@ -1,8 +1,12 @@
 package com.example.testbaitap.process.n.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,6 +22,7 @@ import com.example.testbaitap.R;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.TheTrang;
+import com.example.testbaitap.utils.Config;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -44,6 +50,10 @@ public class YearlyFragment extends Fragment {
     private SimpleAPI simpleAPI;
     ArrayList<TheTrang> trangArrayList;
     LineChart lineChart;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout mSwipeRefresh;
     public YearlyFragment() {
         // Required empty public constructor
     }
@@ -68,6 +78,11 @@ public class YearlyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_yearly, container, false);
+        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+        mSwipeRefresh = view.findViewById(R.id.swipe_refresh);
+        sharedPreferences = requireContext().getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         lineChart = view.findViewById(R.id.lineChartY);
         list = new ArrayList<>();
@@ -100,7 +115,12 @@ public class YearlyFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 trangArrayList=new ArrayList<>();
-                LoadDataYearLy("quan", listNam.get(position));
+                LoadDataYearLy(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), listNam.get(position));
+                mSwipeRefresh.setOnRefreshListener(() -> {
+                    LoadDataYearLy(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), listNam.get(position));
+                    mSwipeRefresh.setRefreshing(false);
+                });
+
             }
 
             @Override
@@ -119,6 +139,7 @@ public class YearlyFragment extends Fragment {
     }
 
     public void LoadDataYearLy(String maHocVien, String nam){
+        progressBar.setVisibility(View.VISIBLE);
         simpleAPI = Constants.instance();
         simpleAPI.getTheTrangHVTheoNam(maHocVien, nam).enqueue(new Callback<ArrayList<TheTrang>>() {
             @Override
@@ -166,10 +187,12 @@ public class YearlyFragment extends Fragment {
                             else return "";
                         }
                     });
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
                 catch (Exception e){
                     lineChart.setNoDataText("Chưa có dữ liệu");
                     lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -596,6 +619,7 @@ public class YearlyFragment extends Fragment {
                         catch (Exception e ){
                             lineChart.setNoDataText("Chưa có dữ liệu");
                             lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                     @Override
@@ -603,13 +627,15 @@ public class YearlyFragment extends Fragment {
                         Toast.makeText(requireContext(), "onNothingSelected", Toast.LENGTH_SHORT).show();
                         lineChart.setNoDataText("Chưa có dữ liệu");
                         lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
             }
 
             @Override
             public void onFailure(Call<ArrayList<TheTrang>> call, Throwable t) {
-                Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

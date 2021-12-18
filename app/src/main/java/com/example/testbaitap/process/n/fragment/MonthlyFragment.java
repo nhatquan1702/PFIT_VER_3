@@ -1,9 +1,13 @@
 package com.example.testbaitap.process.n.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +24,7 @@ import com.example.testbaitap.R;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.TheTrang;
+import com.example.testbaitap.utils.Config;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -47,6 +53,11 @@ public class MonthlyFragment extends Fragment {
     ArrayList<TheTrang> trangArrayList;
     LineChart lineChart;
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout mSwipeRefresh;
+
     public MonthlyFragment() {
         // Required empty public constructor
     }
@@ -70,6 +81,12 @@ public class MonthlyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_monthly, container, false);
+
+        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+        mSwipeRefresh = view.findViewById(R.id.swipe_refresh);
+        sharedPreferences = requireContext().getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         lineChart = view.findViewById(R.id.lineChart);
 
@@ -132,7 +149,11 @@ public class MonthlyFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 trangArrayList=new ArrayList<>();
-                LoadData("quan", listThang.get(position), tam);
+                LoadData(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), listThang.get(position), tam);
+                mSwipeRefresh.setOnRefreshListener(() -> {
+                    LoadData(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), listThang.get(position), tam);
+                    mSwipeRefresh.setRefreshing(false);
+                });
             }
 
             @Override
@@ -150,7 +171,8 @@ public class MonthlyFragment extends Fragment {
                 {
                     trangArrayList = new ArrayList<>();
                     //Log.d("quan", String.valueOf(month+1)+"+"+String.valueOf(year));
-                    LoadData("quan", String.valueOf(month+1), String.valueOf(year));
+                    LoadData(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), String.valueOf(month+1), String.valueOf(year));
+
                     int a = month+1;
                     if(a==1){
                         spinnerThang.setSelection(0);
@@ -205,12 +227,13 @@ public class MonthlyFragment extends Fragment {
     }
 
     public void LoadData(String maHocVien, String thang, String nam){
+        progressBar.setVisibility(View.VISIBLE);
         simpleAPI = Constants.instance();
         simpleAPI.getTheTrangHVTheoThang(maHocVien, thang, nam).enqueue(new Callback<ArrayList<TheTrang>>() {
             @Override
             public void onResponse(Call<ArrayList<TheTrang>> call, Response<ArrayList<TheTrang>> response) {
-                trangArrayList = response.body();
                 try {
+                    trangArrayList = response.body();
                     ArrayList<Entry> entryArrayList = new ArrayList<>();
                     for(int i=0; i<trangArrayList.size(); i++){
                         if(trangArrayList.size()>0){
@@ -252,10 +275,12 @@ public class MonthlyFragment extends Fragment {
                             else return "";
                         }
                     });
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
                 catch (Exception e){
                     lineChart.setNoDataText("Chưa có dữ liệu");
                     lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -673,6 +698,7 @@ public class MonthlyFragment extends Fragment {
                         catch (Exception e ){
                             lineChart.setNoDataText("Chưa có dữ liệu");
                             lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                     @Override
@@ -680,6 +706,7 @@ public class MonthlyFragment extends Fragment {
                         Toast.makeText(requireContext(), "onNothingSelected", Toast.LENGTH_SHORT).show();
                         lineChart.setNoDataText("Chưa có dữ liệu");
                         lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
             }
@@ -689,6 +716,7 @@ public class MonthlyFragment extends Fragment {
                 Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
                 lineChart.setNoDataText("Chưa có dữ liệu");
                 lineChart.setNoDataTextColor(getResources().getColor(R.color.red));
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

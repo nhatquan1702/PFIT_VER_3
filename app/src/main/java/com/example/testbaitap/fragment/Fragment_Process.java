@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.testbaitap.R;
 import com.example.testbaitap.process.n.fragment.MonthlyFragment;
-import com.example.testbaitap.process.n.fragment.WeeklyFragment;
+import com.example.testbaitap.process.n.fragment.DailyFragment;
 import com.example.testbaitap.process.n.fragment.YearlyFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -71,7 +71,7 @@ public class Fragment_Process extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         new ViewPagerAdapter(null);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(WeeklyFragment.newInstance(), getString(R.string.week));
+        adapter.addFragment(DailyFragment.newInstance(), getString(R.string.week));
         adapter.addFragment(MonthlyFragment.newInstance(), getString(R.string.month));
         adapter.addFragment(YearlyFragment.newInstance(), getString(R.string.year));
         viewPager.setAdapter(adapter);

@@ -2,6 +2,7 @@ package com.example.testbaitap.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +33,19 @@ public class AccountActivity extends AppCompatActivity {
     private SimpleAPI simpleAPI;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout mSwipeRefresh;
     ImageView imageEditHoTen, imgEditTuoi, imgEditGioiTinh, imgEditSDT, imgEditDiaChi, imgEditMK, imgEditQR;
     TextView textViewHoTen, textViewTuoi, textViewGioiTinh, textViewSDT, textViewDiaChi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+        mSwipeRefresh = findViewById(R.id.swipe_refresh);
+
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
         //Toast.makeText(AccountActivity.this, sharedPreferences.getString("email", "username"), Toast.LENGTH_SHORT).show();
         textViewHoTen = findViewById(R.id.textViewHoTen);
@@ -45,36 +54,11 @@ public class AccountActivity extends AppCompatActivity {
         textViewSDT = findViewById(R.id.textViewSDT);
         textViewDiaChi = findViewById(R.id.textViewDiaChi);
         editor = sharedPreferences.edit();
-        simpleAPI = Constants.instance();
-        simpleAPI.getKhachHang(sharedPreferences.getString("email", "username")).enqueue(new Callback<HocVien>() {
-            @Override
-            public void onResponse(Call<HocVien> call, Response<HocVien> response) {
-                HocVien khachHang = response.body();
-                Log.d("quan", khachHang.getMaHocVien());
-                Log.d("quan", khachHang.getMatKhau());
-                Log.d("quan", String.valueOf(khachHang.getTrangThai()));
-                textViewHoTen.setText(khachHang.getHoTen());
-                textViewTuoi.setText(String.valueOf(khachHang.getTuoi()));
-                int gt = khachHang.getGioiTinh();
-                if(gt==1){
-                    textViewGioiTinh.setText("Nam");
-                }
-                else if(gt==0){
-                    textViewGioiTinh.setText("Nữ");
-                }
-                else{
-                    textViewGioiTinh.setText("Khác");
-                }
-                textViewSDT.setText(khachHang.getSoDienThoai());
-                textViewDiaChi.setText(khachHang.getDiaChi());
-            }
-
-            @Override
-            public void onFailure(Call<HocVien> call, Throwable t) {
-                Toast.makeText(AccountActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
-            }
+        LoadThongTinCaNhan(sharedPreferences.getString("email", "username"));
+        mSwipeRefresh.setOnRefreshListener(() -> {
+            LoadThongTinCaNhan(sharedPreferences.getString("email", "username"));
+            mSwipeRefresh.setRefreshing(false);
         });
-
         CardView button = findViewById(R.id.cvDKTK);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +126,40 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     public void LoadThongTinCaNhan(String tk){
+        progressBar.setVisibility(View.VISIBLE);
+        simpleAPI = Constants.instance();
+        simpleAPI.getKhachHang(tk).enqueue(new Callback<HocVien>() {
+            @Override
+            public void onResponse(Call<HocVien> call, Response<HocVien> response) {
+               try {
+                   HocVien khachHang = response.body();
+                   textViewHoTen.setText(khachHang.getHoTen());
+                   textViewTuoi.setText(String.valueOf(khachHang.getTuoi()));
+                   int gt = khachHang.getGioiTinh();
+                   if(gt==1){
+                       textViewGioiTinh.setText("Nam");
+                   }
+                   else if(gt==0){
+                       textViewGioiTinh.setText("Nữ");
+                   }
+                   else{
+                       textViewGioiTinh.setText("Khác");
+                   }
+                   textViewSDT.setText(khachHang.getSoDienThoai());
+                   textViewDiaChi.setText(khachHang.getDiaChi());
+                   progressBar.setVisibility(View.GONE);
+               }catch (Exception e){
+                   e.printStackTrace();
+                   progressBar.setVisibility(View.GONE);
+               }
+            }
 
+            @Override
+            public void onFailure(Call<HocVien> call, Throwable t) {
+                Toast.makeText(AccountActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     public BottomSheetDialog diaLogBottomHotten() {
@@ -232,7 +249,7 @@ public class AccountActivity extends AppCompatActivity {
                 sheetDialog.dismiss();
             }
         });
-        String data = "quan_123";
+        String data = sharedPreferences.getString("email", "")+"||"+sharedPreferences.getString("password", "");
         ImageView imageView = (ImageView)viewDialog.findViewById(R.id.imgQR);
         QRGEncoder qrgEncoder = new QRGEncoder(data, null, QRGContents.Type.TEXT, data.length());
         try {

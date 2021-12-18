@@ -26,6 +26,7 @@ import com.example.testbaitap.entity.HocVien;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
 import com.example.testbaitap.entity.HuanLuyenVien;
 import com.example.testbaitap.entity.Status;
+import com.example.testbaitap.utils.Config;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -43,6 +44,7 @@ public class DetailTCActivity extends AppCompatActivity {
     private String hlv, nv;
     private int  trangThai, giaKT;
     SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     private ImageView imgHinhKT;
     private CardView  btnCapNhat;
     private ConstraintLayout clEditKTDT;
@@ -54,6 +56,8 @@ public class DetailTCActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_khoa_tap);
 
+        sharedPreferences = getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         clEditKTDT = findViewById(R.id.clEditKTDT);
         edtTenKT = findViewById(R.id.edtTenKTDT);
         edtGiaKT = findViewById(R.id.edtGiaKTTheoThangDT);
@@ -67,7 +71,7 @@ public class DetailTCActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle!= null) {
             String maKT = bundle.getString("maKT", "");
-            KiemTraDangKyKT("quan", maKT);
+            KiemTraDangKyKT(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maKT);
             edtTenKT.setText(bundle.getString("tenKT", ""));
             imgReceive = bundle.getString("hinhKT", "");
             hlv = bundle.getString("hlvKT", "");
@@ -150,12 +154,7 @@ public class DetailTCActivity extends AppCompatActivity {
                             btnCapNhat.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    if(hocVien.getMaHocVien().equals("quan")||hocVien.getMaHocVien().equals("huy")){
-                                        UpdateTrangThaiHV(hocVien.getMaHocVien(), 0);
-                                    }
-                                    else {
-                                        UpdateTrangThaiHV(hocVien.getMaHocVien(), 1);
-                                    }
+                                    UpdateTrangThaiHV(hocVien.getMaHocVien(), Integer.parseInt(sharedPreferences.getString(Config.DATA_LOGIN_ROLE, "")));
                                 }
                             });
                         }

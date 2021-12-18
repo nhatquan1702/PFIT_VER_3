@@ -31,6 +31,7 @@ import com.example.testbaitap.entity.BaiTapFull;
 import com.example.testbaitap.entity.ChiTietBaiTap;
 import com.example.testbaitap.entity.ChiTietBaiTapChoHV;
 import com.example.testbaitap.entity.Status;
+import com.example.testbaitap.utils.Config;
 import com.example.testbaitap.utils.VideoViewUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -88,6 +89,8 @@ public class DetailExcerciseActivity extends AppCompatActivity {
         tvCacBuoc = (TextView) findViewById(R.id.tvCacBuoc);
         tvGhiChuFinal = (TextView) findViewById(R.id.ghiChu);
         tvGhiChu = (TextView) findViewById(R.id.tvGhiChuFinal);
+        sharedPreferences = getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         tvGhiChuFinal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +104,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String dm_Text = input.getText().toString();
                         if(!dm_Text.isEmpty()){
-                            UpdateGhiChuBTChoHV("quan", maBaiTap, dm_Text);
+                            UpdateGhiChuBTChoHV(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap, dm_Text);
                         }
                         else {
                             dialog.dismiss();
@@ -121,9 +124,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
             }
         });
         relDetailEx = (RelativeLayout) findViewById(R.id.relDetailEx);
-        SharedPreferences sharedPreferences = getSharedPreferences("checkBT", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        LoadChiTietBTChoHV("quan", maBaiTap);
+        LoadChiTietBTChoHV(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap);
         checkboxHTBT = (CheckBox) findViewById(R.id.checkboxHTBT);
         checkboxHTBT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -134,7 +135,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                     builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            UpdateTrangThaiBTChoHV("quan", maBaiTap, 1);
+                            UpdateTrangThaiBTChoHV(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap, 1);
                         }
                     });
                     builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -152,7 +153,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                     builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            UpdateTrangThaiBTChoHV("quan", maBaiTap, 0);
+                            UpdateTrangThaiBTChoHV(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap, 0);
                         }
                     });
                     builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -367,6 +368,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                         snackbar.show();
                     }
                     if(status.getStatus()==1){
+                        LoadChiTietBTChoHV(maHocVien, maBaiTap);
                         Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật thành công!", Snackbar.LENGTH_LONG);
                         snackbar.show();
                     }
@@ -399,6 +401,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                         snackbar.show();
                     }
                     if(status.getStatus()==1){
+                        LoadChiTietBTChoHV(maHocVien, maBaiTap);
                         Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật thành công!", Snackbar.LENGTH_LONG);
                         snackbar.show();
                     }

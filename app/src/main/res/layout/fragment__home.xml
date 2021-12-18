@@ -10,6 +10,11 @@
     android:id="@+id/relHomeFr"
     app:ignore="NamespaceTypo">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,6 +35,7 @@
                     android:layout_height="300dp"
                     android:background="@drawable/a1_grad">
                 </RelativeLayout>
+
 
 
                 <RelativeLayout
@@ -475,10 +481,15 @@
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:id="@+id/progress_bar"
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content">
+                </ProgressBar>
             </RelativeLayout>
-
         </LinearLayout>
     </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
