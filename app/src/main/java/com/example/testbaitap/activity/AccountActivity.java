@@ -21,6 +21,7 @@ import com.example.testbaitap.R;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
 import com.example.testbaitap.entity.HocVien;
+import com.example.testbaitap.entity.TaiKhoan;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -35,8 +36,8 @@ public class AccountActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     private ProgressBar progressBar;
     private SwipeRefreshLayout mSwipeRefresh;
-    ImageView imageEditHoTen, imgEditTuoi, imgEditGioiTinh, imgEditSDT, imgEditDiaChi, imgEditMK, imgEditQR;
-    TextView textViewHoTen, textViewTuoi, textViewGioiTinh, textViewSDT, textViewDiaChi;
+    ImageView imageEditHoTen, imgEditSDT, imgEditDiaChi, imgEditMK, imgEditQR;
+    TextView textViewHoTen, textViewSDT, textViewDiaChi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +50,6 @@ public class AccountActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
         //Toast.makeText(AccountActivity.this, sharedPreferences.getString("email", "username"), Toast.LENGTH_SHORT).show();
         textViewHoTen = findViewById(R.id.textViewHoTen);
-        textViewTuoi = findViewById(R.id.textViewTuoi);
-        textViewGioiTinh = findViewById(R.id.textViewGioiTinh);
         textViewSDT = findViewById(R.id.textViewSDT);
         textViewDiaChi = findViewById(R.id.textViewDiaChi);
         editor = sharedPreferences.edit();
@@ -81,20 +80,7 @@ public class AccountActivity extends AppCompatActivity {
                 diaLogBottomHotten().show();
             }
         });
-        imgEditTuoi = findViewById(R.id.imgEditTuoi);
-        imgEditTuoi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                diaLogBottomTuoi().show();
-            }
-        });
-        imgEditGioiTinh = findViewById(R.id.imgEditGioiTinh);
-        imgEditGioiTinh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                diaLogBottomGioiTinh().show();
-            }
-        });
+
         imgEditSDT = findViewById(R.id.imgEditSDT);
         imgEditSDT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,23 +114,12 @@ public class AccountActivity extends AppCompatActivity {
     public void LoadThongTinCaNhan(String tk){
         progressBar.setVisibility(View.VISIBLE);
         simpleAPI = Constants.instance();
-        simpleAPI.getKhachHang(tk).enqueue(new Callback<HocVien>() {
+        simpleAPI.getThongTinTaiKhoan(tk).enqueue(new Callback<TaiKhoan>() {
             @Override
-            public void onResponse(Call<HocVien> call, Response<HocVien> response) {
+            public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
                try {
-                   HocVien khachHang = response.body();
+                   TaiKhoan khachHang = response.body();
                    textViewHoTen.setText(khachHang.getHoTen());
-                   textViewTuoi.setText(String.valueOf(khachHang.getTuoi()));
-                   int gt = khachHang.getGioiTinh();
-                   if(gt==1){
-                       textViewGioiTinh.setText("Nam");
-                   }
-                   else if(gt==0){
-                       textViewGioiTinh.setText("Nữ");
-                   }
-                   else{
-                       textViewGioiTinh.setText("Khác");
-                   }
                    textViewSDT.setText(khachHang.getSoDienThoai());
                    textViewDiaChi.setText(khachHang.getDiaChi());
                    progressBar.setVisibility(View.GONE);
@@ -155,7 +130,7 @@ public class AccountActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<HocVien> call, Throwable t) {
+            public void onFailure(Call<TaiKhoan> call, Throwable t) {
                 Toast.makeText(AccountActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
             }

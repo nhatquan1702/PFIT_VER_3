@@ -325,6 +325,7 @@
                     android:layout_marginBottom="30dp"
                     android:text="Hoàn thành bài tập"
                     android:textSize="@dimen/text_14"
+                    android:checked="false"
                     android:textColor="@color/colorPurple"
                     android:fontFamily="@font/baloo"
                     app:layout_constraintStart_toStartOf="parent"

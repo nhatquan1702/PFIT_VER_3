@@ -66,6 +66,7 @@ public class NgayTapRecyclerAdapter extends RecyclerView.Adapter<NgayTapRecycler
         public RelativeLayout rel1,rel2;
         public ViewHolder(@NonNull View view) {
             super(view);
+            this.setIsRecyclable(false);
             this.ngayTap = (TextView) view.findViewById(R.id.row_day);
             this.cardView = (CardView) view.findViewById(R.id.cardviewone);
             this.imgNgayNghi = (ImageView) view.findViewById(R.id.restImageView);
@@ -80,11 +81,22 @@ public class NgayTapRecyclerAdapter extends RecyclerView.Adapter<NgayTapRecycler
             if ((i + 1) % 4 != 0 || i > 27) {
                 viewHolder.imgNgayNghi.setVisibility(View.GONE);
                 viewHolder.rel2.setVisibility(View.GONE);
-                viewHolder.numberProgressBar.setVisibility(View.GONE);
+                viewHolder.numberProgressBar.setVisibility(View.VISIBLE);
                 viewHolder.ngayTap.setText("Ngày "+ String.valueOf(ngayTapArrayList.get(i).getNgayTap()));
                 viewHolder.ngayTap.setVisibility(View.VISIBLE);
                 viewHolder.rel1.setVisibility(View.VISIBLE);
-                viewHolder.numberProgressBar.setText(String.valueOf(process.get(i)) + "%");
+                if(ngayTapArrayList.get(i).getTrangThai()==0){
+                    numberProgressBar.setVisibility(View.GONE);
+                }
+                if(ngayTapArrayList.get(i).getTrangThai()==1) {
+                    numberProgressBar.setVisibility(View.VISIBLE);
+                }
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        itemClickInterface.onClick(v, i);
+                    }
+                });
             } else {
                 viewHolder.numberProgressBar.setVisibility(View.GONE);
                 viewHolder.rel1.setVisibility(View.GONE);
@@ -92,12 +104,6 @@ public class NgayTapRecyclerAdapter extends RecyclerView.Adapter<NgayTapRecycler
                 viewHolder.imgNgayNghi.setVisibility(View.VISIBLE);
                 viewHolder.rel2.setVisibility(View.VISIBLE);
             }
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    itemClickInterface.onClick(v, i);
-                }
-            });
         }
     }
     public void setOnClickItemRecyclerView(ItemClickInterface itemRecyclerView){

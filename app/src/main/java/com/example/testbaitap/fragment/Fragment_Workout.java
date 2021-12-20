@@ -148,11 +148,11 @@ public class Fragment_Workout extends Fragment {
 //                        SharedPreferences.Editor editor = sharedPreferences.edit();
 //                        editor.putString("maHocVien", hocVien_khoaTap.getMaHocVien().trim());
 //                        editor.putString("maKhoaTap", hocVien_khoaTap.getMaKhoaTap().trim());
-                        LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
+                        //LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
 
                         mSwipeRefresh.setOnRefreshListener(() -> {
                             LoadKhoaTap(hocVien.getMaKhoaTap());
-                            LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
+                            //LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
                             mSwipeRefresh.setRefreshing(false);
                         });
                         //editor.commit();
@@ -218,6 +218,7 @@ public class Fragment_Workout extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<NgayTap>> call, Response<ArrayList<NgayTap>> response) {
                 ngayTapArrayList = response.body();
+                LoadPhanTramNgayTap();
                 for(int i=0; i<ngayTapArrayList.size(); i++){
                     processArraylist.add(ngayTapArrayList.get(i).getNgayTap());
                 }
@@ -272,6 +273,7 @@ public class Fragment_Workout extends Fragment {
                         intent.putExtra("ngayTap", String.valueOf(ngayTapArrayList.get(position).getNgayTap()));
                         startActivity(intent);
                     }
+
                 });
                 recyclerView.setLayoutManager(mLayoutManager);
             }
@@ -308,6 +310,17 @@ public class Fragment_Workout extends Fragment {
                 processArraylist.addAll(integers);
             }
         });
+    }
+
+    public void LoadPhanTramNgayTap(){
+        int dem = 0;
+        for(int i=0 ; i<ngayTapArrayList.size(); i++){
+            if(ngayTapArrayList.get(i).getTrangThai()==1)
+                dem++;
+        }
+        int pt = dem*100/23;
+        percentScore1.setText(String.valueOf(pt)+"%");
+        progressBarPT.setProgress(pt);
     }
 
     public void LoadPTKhoaTap(String maHocVien, String maKhoaTap){

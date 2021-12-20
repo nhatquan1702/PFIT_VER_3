@@ -8,8 +8,13 @@ public class NgayTap {
     @Expose
     private Integer ngayTap;
 
-    public NgayTap(Integer ngayTap) {
+    @SerializedName("trangThai")
+    @Expose
+    private Integer trangThai;
+
+    public NgayTap(Integer ngayTap, Integer trangThai) {
         this.ngayTap = ngayTap;
+        this.trangThai = trangThai;
     }
 
     public Integer getNgayTap() {
@@ -18,5 +23,13 @@ public class NgayTap {
 
     public void setNgayTap(Integer ngayTap) {
         this.ngayTap = ngayTap;
+    }
+
+    public Integer getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(Integer trangThai) {
+        this.trangThai = trangThai;
     }
 }

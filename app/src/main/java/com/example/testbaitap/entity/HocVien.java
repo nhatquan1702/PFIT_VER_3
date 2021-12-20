@@ -11,14 +11,6 @@ public class HocVien {
     @Expose
     private String maHocVien;
 
-    @SerializedName("matKhau")
-    @Expose
-    private String matKhau;
-
-    @SerializedName("hoTen")
-    @Expose
-    private String hoTen;
-
     @SerializedName("tuoi")
     @Expose
     private Integer tuoi;
@@ -31,14 +23,6 @@ public class HocVien {
     @Expose
     private String ngayThamGia;
 
-    @SerializedName("soDienThoai")
-    @Expose
-    private String soDienThoai;
-
-    @SerializedName("diaChi")
-    @Expose
-    private String diaChi;
-
     @SerializedName("capDo")
     @Expose
     private Integer capDo;
@@ -47,26 +31,17 @@ public class HocVien {
     @Expose
     private Integer trangThai;
 
-    @SerializedName("ghiChu")
-    @Expose
-    private String ghiChu;
-
     @SerializedName("maKhoaTap")
     @Expose
     private String maKhoaTap;
 
-    public HocVien(String maHocVien, String matKhau, String hoTen, Integer tuoi, Integer gioiTinh, String ngayThamGia, String soDienThoai, String diaChi, Integer capDo, Integer trangThai, String ghiChu, String maKhoaTap) {
+    public HocVien(String maHocVien, Integer tuoi, Integer gioiTinh, String ngayThamGia, Integer capDo, Integer trangThai, String maKhoaTap) {
         this.maHocVien = maHocVien;
-        this.matKhau = matKhau;
-        this.hoTen = hoTen;
         this.tuoi = tuoi;
         this.gioiTinh = gioiTinh;
         this.ngayThamGia = ngayThamGia;
-        this.soDienThoai = soDienThoai;
-        this.diaChi = diaChi;
         this.capDo = capDo;
         this.trangThai = trangThai;
-        this.ghiChu = ghiChu;
         this.maKhoaTap = maKhoaTap;
     }
 
@@ -76,22 +51,6 @@ public class HocVien {
 
     public void setMaHocVien(String maHocVien) {
         this.maHocVien = maHocVien;
-    }
-
-    public String getMatKhau() {
-        return matKhau;
-    }
-
-    public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
-    }
-
-    public String getHoTen() {
-        return hoTen;
-    }
-
-    public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
     }
 
     public Integer getTuoi() {
@@ -118,22 +77,6 @@ public class HocVien {
         this.ngayThamGia = ngayThamGia;
     }
 
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
-
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
-    }
-
-    public String getDiaChi() {
-        return diaChi;
-    }
-
-    public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
-    }
-
     public Integer getCapDo() {
         return capDo;
     }
@@ -148,14 +91,6 @@ public class HocVien {
 
     public void setTrangThai(Integer trangThai) {
         this.trangThai = trangThai;
-    }
-
-    public String getGhiChu() {
-        return ghiChu;
-    }
-
-    public void setGhiChu(String ghiChu) {
-        this.ghiChu = ghiChu;
     }
 
     public String getMaKhoaTap() {

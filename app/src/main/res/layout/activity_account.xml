@@ -64,6 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/corner1"
                     android:paddingBottom="50dp">
 
@@ -119,114 +120,6 @@
                             android:fontFamily="@font/baloo"
                             app:layout_constraintBottom_toBottomOf="@+id/imgIconHoTen"
                             app:layout_constraintStart_toEndOf="@+id/imgIconHoTen" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_margin="5dp"
-                        android:padding="5dp"
-                        android:background="@drawable/tttk_bg"
-                        android:layout_height="wrap_content">
-
-
-                        <ImageView
-                            android:id="@+id/imgIconTuoi"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_baseline_perm_contact_calendar_24"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewTuoi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:fontFamily="@font/baloo"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgIconTuoi" />
-
-                        <ImageView
-                            android:id="@+id/imgEditTuoi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="5dp"
-                            android:src="@drawable/ic_baseline_arrow_right_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewTTTuoi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="Tuổi"
-                            android:fontFamily="@font/baloo"
-                            android:textColor="@color/colorPurple"
-                            app:layout_constraintBottom_toBottomOf="@+id/imgIconTuoi"
-                            app:layout_constraintStart_toEndOf="@+id/imgIconTuoi" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_margin="5dp"
-                        android:padding="5dp"
-                        android:background="@drawable/tttk_bg"
-                        android:layout_height="wrap_content">
-
-
-                        <ImageView
-                            android:id="@+id/imgIconGioiTinh"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_baseline_male_24"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewGioiTinh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:fontFamily="@font/kanit"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgIconGioiTinh" />
-
-                        <ImageView
-                            android:id="@+id/imgEditGioiTinh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="5dp"
-                            android:src="@drawable/ic_baseline_arrow_right_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewTTGioiTinh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="Giới tính"
-                            android:fontFamily="@font/baloo"
-                            android:textColor="@color/colorPurple"
-                            app:layout_constraintBottom_toBottomOf="@+id/imgIconGioiTinh"
-                            app:layout_constraintStart_toEndOf="@+id/imgIconGioiTinh" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout

@@ -17,8 +17,9 @@
         android:theme="@style/Theme.TestBaiTap"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.LoadingActivity"
-             >
+            android:name=".activity.AddReminderWaterActivity"
+            android:exported="false" />
+        <activity android:name=".activity.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,8 +79,17 @@
         <activity
             android:name=".activity.WaterActivity"
             android:exported="true" />
-        <activity android:name=".activity.MainActivity">
-        </activity>
+        <activity android:name=".activity.MainActivity" />
+
+        <service
+            android:name=".utils.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <receiver android:name=".reciver.ReminderAddWaterBroadcast"/>
+        <receiver android:name=".reciver.ReminderAddStatusBroadcast"/>
     </application>
 
 </manifest>

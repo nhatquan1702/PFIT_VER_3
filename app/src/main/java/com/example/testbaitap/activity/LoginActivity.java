@@ -111,17 +111,17 @@ public class LoginActivity extends AppCompatActivity {
                             Status status = response.body();
                             try {
                                 if(status.getStatus()==1){
-                                    Toast.makeText(LoginActivity.this, String.valueOf(status.getStatus()), Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(LoginActivity.this, String.valueOf(status.getStatus()), Toast.LENGTH_SHORT).show();
                                     simpleAPI = Constants.instance();
-                                    simpleAPI.getKhachHang(email).enqueue(new Callback<HocVien>() {
+                                    simpleAPI.getThongTinTaiKhoan(email).enqueue(new Callback<TaiKhoan>() {
                                         @Override
-                                        public void onResponse(Call<HocVien> call, Response<HocVien> response) {
-                                            HocVien taiKhoan = response.body();
-                                           try {
+                                        public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
+                                            TaiKhoan taiKhoan = response.body();
+                                            try {
                                                Intent intent;
-                                               editor.putString(Config.DATA_LOGIN_USERNAME, taiKhoan.getMaHocVien().trim());
+                                               editor.putString(Config.DATA_LOGIN_USERNAME, taiKhoan.getTaiKhoan().trim());
                                                editor.putString(Config.DATA_LOGIN_PASS, taiKhoan.getMatKhau().trim());
-                                               editor.putString(Config.DATA_LOGIN_ROLE, String.valueOf(taiKhoan.getTrangThai()));
+                                               editor.putString(Config.DATA_LOGIN_ROLE, String.valueOf(taiKhoan.getQuyen()));
                                                editor.commit();
                                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                                                intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                         }
 
                                         @Override
-                                        public void onFailure(Call<HocVien> call, Throwable t) {
+                                        public void onFailure(Call<TaiKhoan> call, Throwable t) {
                                             Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
                                         }
                                     });

@@ -1,5 +1,6 @@
 package com.example.testbaitap.activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -9,7 +10,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.util.Calendar;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -35,6 +38,10 @@ import com.example.testbaitap.utils.Config;
 import com.example.testbaitap.utils.VideoViewUtils;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,6 +64,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
 
     private CardView card_view_ct, cardVideo;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +97,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
         tvCacBuoc = (TextView) findViewById(R.id.tvCacBuoc);
         tvGhiChuFinal = (TextView) findViewById(R.id.ghiChu);
         tvGhiChu = (TextView) findViewById(R.id.tvGhiChuFinal);
+        checkboxHTBT = (CheckBox) findViewById(R.id.checkboxHTBT);
         sharedPreferences = getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         tvGhiChuFinal.setOnClickListener(new View.OnClickListener() {
@@ -125,52 +134,64 @@ public class DetailExcerciseActivity extends AppCompatActivity {
         });
         relDetailEx = (RelativeLayout) findViewById(R.id.relDetailEx);
         LoadChiTietBTChoHV(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap);
-        checkboxHTBT = (CheckBox) findViewById(R.id.checkboxHTBT);
-        checkboxHTBT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(checkboxHTBT.isChecked()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailExcerciseActivity.this);
-                    builder.setTitle("Bạn có muốn thay đổi trạng thái hoàn thành bài tập?");
-                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            UpdateTrangThaiBTChoHV(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap, 1);
+        String currentDate = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+        //Toast.makeText(DetailExcerciseActivity.this, currentDate.substring(0,2), Toast.LENGTH_SHORT).show();
+        int a = Integer.parseInt(currentDate.substring(0,2));
+        if((a>8 && a<12) || (a>14 && a<23)){
+            checkboxHTBT.setOnClickListener(v -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(DetailExcerciseActivity.this);
+                builder.setTitle("Bạn có muốn thay đổi trạng thái hoàn thành bài tập?");
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Integer ttt = -1;
+                        if(checkboxHTBT.isChecked()){
+                            ttt=1;
                         }
-                    });
-                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+                        else {
+                            ttt=0;
                         }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-                else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailExcerciseActivity.this);
-                    builder.setTitle("Bạn có muốn thay đổi trạng thái hoàn thành bài tập?");
-                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            UpdateTrangThaiBTChoHV(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap, 0);
+                        UpdateTrangThaiBTChoHV(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap, ttt);
+                    }
+                });
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            });
+        }
+        else {
+            checkboxHTBT.setOnClickListener(v -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(DetailExcerciseActivity.this);
+                builder.setTitle("Hiện tại đang ngoài khung giờ luyện tập!");
+                builder.setMessage("Bạn có muốn thay đổi trạng thái hoàn thành bài tập?");
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Integer ttt = -1;
+                        if(checkboxHTBT.isChecked()){
+                            ttt=1;
                         }
-                    });
-                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+                        else {
+                            ttt=0;
                         }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-//                editor.putString("checkHTBT", String.valueOf(check));
-//                editor.commit();
-            }
-        });
-
-
+                        UpdateTrangThaiBTChoHV(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap, ttt);
+                    }
+                });
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            });
+        }
 
         simpleAPI = Constants.instance();
         simpleAPI.getFullBaiTapTheoMa(maBaiTap).enqueue(new Callback<BaiTapFull>() {
@@ -327,14 +348,8 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                     else {
                         tvGhiChu.setText("Chưa có ghi chú nào!");
                     }
-                    if(chiTietBaiTapChoHV.getTrangThai()==0){
-                        checkboxHTBT.setChecked(false);
-                    }
-                    else if(chiTietBaiTapChoHV.getTrangThai()==1){
+                    if(chiTietBaiTapChoHV.getTrangThai()==1){
                         checkboxHTBT.setChecked(true);
-                    }
-                    else {
-                        checkboxHTBT.setChecked(false);
                     }
                 }
                 catch (Exception e ){

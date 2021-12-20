@@ -161,7 +161,7 @@ public class WaterActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         boolean check = true;
                         String dm_Text = input.getText().toString();
-                        if(Integer.parseInt(dm_Text)>1000){
+                        if(Integer.parseInt(dm_Text)>500){
                             Snackbar snackbar = Snackbar.make(main_activity_water, "Lượng nước thêm vào quá lớn cho 1 lần!", Snackbar.LENGTH_LONG);
                             snackbar.show();
                             check = false;
@@ -225,7 +225,15 @@ public class WaterActivity extends AppCompatActivity {
         fabNotifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //sendOnChannel1();
+                Intent intent = new Intent(WaterActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        fabStas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WaterActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
         this.notificationManagerCompat = NotificationManagerCompat.from(this);

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.testbaitap.R;
+import com.example.testbaitap.process.n.fragment.CompareFragment;
 import com.example.testbaitap.process.n.fragment.MonthlyFragment;
 import com.example.testbaitap.process.n.fragment.DailyFragment;
 import com.example.testbaitap.process.n.fragment.YearlyFragment;
@@ -74,6 +75,7 @@ public class Fragment_Process extends Fragment {
         adapter.addFragment(DailyFragment.newInstance(), getString(R.string.week));
         adapter.addFragment(MonthlyFragment.newInstance(), getString(R.string.month));
         adapter.addFragment(YearlyFragment.newInstance(), getString(R.string.year));
+        adapter.addFragment(CompareFragment.newInstance(), "So sánh");
         viewPager.setAdapter(adapter);
     }
     public class ViewPagerAdapter extends FragmentPagerAdapter {

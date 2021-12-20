@@ -72,6 +72,7 @@ public class ExcerciceByMuscleActivity extends AppCompatActivity {
                             intent.putExtra("maBaiTap", String.valueOf(baiTapArrayList.get(position).getMaBaiTap()));
                             startActivity(intent);
                         }
+
                     });
                 }
                 catch (Exception e){

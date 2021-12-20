@@ -52,7 +52,6 @@ public class DailyFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     private ProgressBar progressBar;
-    private SwipeRefreshLayout mSwipeRefresh;
 
     private float totalSpan = 100;
 
@@ -96,8 +95,6 @@ public class DailyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_weekly, container, false);
         seekbar = (CustomProcessbar) view.findViewById(R.id.customSeekBar);
         progressBar = view.findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
-        mSwipeRefresh = view.findViewById(R.id.swipe_refresh);
         sharedPreferences = requireContext().getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -138,10 +135,6 @@ public class DailyFragment extends Fragment {
                     String strDate = year + "-" + (month + 1) + "-" + dayOfMonth;
                     tvTitleTenTheTrang.setText("Ngày " + dayOfMonth + " Tháng " + (month + 1) + " Năm " + year);
                     LoadData(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), strDate);
-                    mSwipeRefresh.setOnRefreshListener(() -> {
-                        LoadData(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), strDate);
-                        mSwipeRefresh.setRefreshing(false);
-                    });
                 },now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
                 datePicker.show();
             }
@@ -187,6 +180,119 @@ public class DailyFragment extends Fragment {
                             txt = "Thể trạng nguy hiểm";
                         }
                         tvNhanXetBmi.setText(txt);
+                        spinner.setSelection(0);
+                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                                //đối số postion là vị trí phần tử trong list Data
+                                try {
+                                    float chieuCaoM = theTrang.getChieuCao()/100;
+                                    float bmi = theTrang.getCanNang() / (chieuCaoM*2);
+                                    String msg = "position :" + position + " value :" + list.get(position);
+                                    String strDouble1 = String.format("%.2f", theTrang.getCanNang());
+                                    String strDouble2 = String.format("%.2f", theTrang.getChieuCao());
+                                    String strDouble3 = String.format("%.2f", theTrang.getVong1());
+                                    String strDouble4 = String.format("%.2f", theTrang.getVong2());
+                                    String strDouble5 = String.format("%.2f", theTrang.getVong3());
+                                    String strDouble6 = String.format("%.2f", theTrang.getVongTay());
+                                    String strDouble7 = String.format("%.2f", theTrang.getVongDui());
+                                    String strDouble8 = String.format("%.0f", theTrang.getLuongNuoc());
+                                    String strDouble = String.format("%.2f", bmi);
+                                    String txt = "";
+                                    if (bmi<16){
+                                        txt = "Trông bạn quá gầy";
+                                    }
+                                    if (bmi<18 &&bmi>16 || bmi ==16){
+                                        txt = "Trông bạn hơi gầy";
+                                    }
+                                    if (bmi>18 && bmi<25 || bmi ==18){
+                                        txt = "Thể trạng bình thường";
+                                    }
+                                    if (bmi>25 && bmi<30 || bmi ==25){
+                                        txt = "Trông bạn hơi béo";
+                                    }
+                                    if (bmi>30 && bmi<35 || bmi ==30){
+                                        txt = "Trông bạn quá béo";
+                                    }
+                                    if (bmi>35 && bmi<40 || bmi ==35){
+                                        txt = "Trông bạn rất béo";
+                                    }
+                                    if (bmi>40 || bmi ==40){
+                                        txt = "Thể trạng nguy hiểm";
+                                    }
+
+                                    switch (position){
+                                        case 0: {
+                                            seekbar.setVisibility(View.VISIBLE);
+                                            seekbar.setProgress((int)(bmi));
+                                            txtProgress.setText(strDouble +" kg/m2");
+                                            tvNhanXetBmi.setText(txt);
+                                            break;
+                                        }
+                                        case 1: {
+                                            seekbar.setVisibility(View.INVISIBLE);
+                                            txtProgress.setText(strDouble1+ " kg");
+                                            tvNhanXetBmi.setText(txt);
+                                            break;
+                                        }
+                                        case 2: {
+                                            seekbar.setVisibility(View.INVISIBLE);
+                                            txtProgress.setText(strDouble2 + " cm");
+                                            tvNhanXetBmi.setText(txt);
+                                            break;
+                                        }
+                                        case 3: {
+                                            seekbar.setVisibility(View.INVISIBLE);
+                                            txtProgress.setText(strDouble3 +" cm");
+                                            tvNhanXetBmi.setText(txt);
+                                            break;
+                                        }
+                                        case 4: {
+                                            seekbar.setVisibility(View.INVISIBLE);
+                                            txtProgress.setText(strDouble4 +" cm");
+                                            tvNhanXetBmi.setText(txt);
+                                            break;
+                                        }
+                                        case 5: {
+                                            seekbar.setVisibility(View.INVISIBLE);
+                                            txtProgress.setText(strDouble5 +" cm");
+                                            tvNhanXetBmi.setText(txt);
+                                            break;
+                                        }
+                                        case 6: {
+                                            seekbar.setVisibility(View.INVISIBLE);
+                                            txtProgress.setText(strDouble6 +" cm");
+                                            tvNhanXetBmi.setText(txt);
+                                            break;
+                                        }
+                                        case 7: {
+                                            seekbar.setVisibility(View.INVISIBLE);
+                                            txtProgress.setText(strDouble7 +" cm");
+                                            tvNhanXetBmi.setText(txt);
+                                            break;
+                                        }
+                                        case 8: {
+                                            seekbar.setVisibility(View.INVISIBLE);
+                                            txtProgress.setText(strDouble8 +" ml");
+                                            tvNhanXetBmi.setText(txt);
+                                            break;
+                                        }
+                                        default: break;
+                                    }
+                                }
+                                catch (Exception e ){
+                                    seekbar.setVisibility(View.INVISIBLE);
+                                    txtProgress.setText("0");
+                                    tvNhanXetBmi.setText("Chưa có số liệu vào ngày này!");
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parentView) {
+                                Toast.makeText(requireContext(), "onNothingSelected", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        });
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                     catch (Exception e ){
@@ -195,117 +301,7 @@ public class DailyFragment extends Fragment {
                         tvNhanXetBmi.setText("Chưa có số liệu vào ngày này!");
                         progressBar.setVisibility(View.INVISIBLE);
                     }
-                    spinner.setSelection(0);
-                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                            //đối số postion là vị trí phần tử trong list Data
-                            try {
-                                float chieuCaoM = theTrang.getChieuCao()/100;
-                                float bmi = theTrang.getCanNang() / (chieuCaoM*2);
-                                String msg = "position :" + position + " value :" + list.get(position);
-                                String strDouble1 = String.format("%.2f", theTrang.getCanNang());
-                                String strDouble2 = String.format("%.2f", theTrang.getChieuCao());
-                                String strDouble3 = String.format("%.2f", theTrang.getVong1());
-                                String strDouble4 = String.format("%.2f", theTrang.getVong2());
-                                String strDouble5 = String.format("%.2f", theTrang.getVong3());
-                                String strDouble6 = String.format("%.2f", theTrang.getVongTay());
-                                String strDouble7 = String.format("%.2f", theTrang.getVongDui());
-                                String strDouble8 = String.format("%.0f", theTrang.getLuongNuoc());
-                                String strDouble = String.format("%.2f", bmi);
-                                String txt = "";
-                                if (bmi<16){
-                                    txt = "Trông bạn quá gầy";
-                                }
-                                if (bmi<18 &&bmi>16 || bmi ==16){
-                                    txt = "Trông bạn hơi gầy";
-                                }
-                                if (bmi>18 && bmi<25 || bmi ==18){
-                                    txt = "Thể trạng bình thường";
-                                }
-                                if (bmi>25 && bmi<30 || bmi ==25){
-                                    txt = "Trông bạn hơi béo";
-                                }
-                                if (bmi>30 && bmi<35 || bmi ==30){
-                                    txt = "Trông bạn quá béo";
-                                }
-                                if (bmi>35 && bmi<40 || bmi ==35){
-                                    txt = "Trông bạn rất béo";
-                                }
-                                if (bmi>40 || bmi ==40){
-                                    txt = "Thể trạng nguy hiểm";
-                                }
 
-                                switch (position){
-                                    case 0: {
-                                        seekbar.setVisibility(View.VISIBLE);
-                                        seekbar.setProgress((int)(bmi));
-                                        txtProgress.setText(strDouble +" kg/m2");
-                                        tvNhanXetBmi.setText(txt);
-                                        break;
-                                    }
-                                    case 1: {
-                                        seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble1+ " kg");
-                                        tvNhanXetBmi.setText(txt);
-                                        break;
-                                    }
-                                    case 2: {
-                                        seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble2 + " cm");
-                                        tvNhanXetBmi.setText(txt);
-                                        break;
-                                    }
-                                    case 3: {
-                                        seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble3 +" cm");
-                                        tvNhanXetBmi.setText(txt);
-                                        break;
-                                    }
-                                    case 4: {
-                                        seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble4 +" cm");
-                                        tvNhanXetBmi.setText(txt);
-                                        break;
-                                    }
-                                    case 5: {
-                                        seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble5 +" cm");
-                                        tvNhanXetBmi.setText(txt);
-                                        break;
-                                    }
-                                    case 6: {
-                                        seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble6 +" cm");
-                                        tvNhanXetBmi.setText(txt);
-                                        break;
-                                    }
-                                    case 7: {
-                                        seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble7 +" cm");
-                                        tvNhanXetBmi.setText(txt);
-                                        break;
-                                    }
-                                    case 8: {
-                                        seekbar.setVisibility(View.INVISIBLE);
-                                        txtProgress.setText(strDouble8 +" ml");
-                                        tvNhanXetBmi.setText(txt);
-                                        break;
-                                    }
-                                    default: break;
-                                }
-                            }
-                            catch (Exception e ){
-                                seekbar.setVisibility(View.INVISIBLE);
-                                txtProgress.setText("0");
-                                tvNhanXetBmi.setText("Chưa có số liệu vào ngày này!");
-                            }
-                        }
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parentView) {
-                            Toast.makeText(requireContext(), "onNothingSelected", Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 }
 
                 @Override

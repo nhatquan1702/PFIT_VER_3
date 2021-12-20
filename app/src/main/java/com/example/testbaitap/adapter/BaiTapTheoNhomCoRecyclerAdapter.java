@@ -1,6 +1,9 @@
 package com.example.testbaitap.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testbaitap.R;
@@ -37,6 +41,7 @@ public class BaiTapTheoNhomCoRecyclerAdapter extends RecyclerView.Adapter<BaiTap
         return viewHolder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull BaiTapTheoNhomCoRecyclerAdapter.ViewHolder holder, int position) {
         holder.bind(position);
@@ -47,9 +52,9 @@ public class BaiTapTheoNhomCoRecyclerAdapter extends RecyclerView.Adapter<BaiTap
         return baiTapArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imgHinhMinhHoa;
-        public RelativeLayout rel2;
+        public RelativeLayout rel2, rel1;
         public TextView tvTenBaiTap;
 
         public ViewHolder(@NonNull View itemView) {
@@ -57,10 +62,12 @@ public class BaiTapTheoNhomCoRecyclerAdapter extends RecyclerView.Adapter<BaiTap
             this.tvTenBaiTap = (TextView) itemView.findViewById(R.id.tvTenBaiTap);
             this.imgHinhMinhHoa = (ImageView) itemView.findViewById(R.id.imgHinhMinhHoa);
             this.rel2 = (RelativeLayout) itemView.findViewById(R.id.relBaiTap);
+            this.rel1 = (RelativeLayout) itemView.findViewById(R.id.rel1);
         }
 
 
-        public void bind(int i){
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        public void bind(int i) {
             tvTenBaiTap.setText(baiTapArrayList.get(i).getTenBaiTap());
             Picasso.get()
                     .load(baiTapArrayList.get(i).getHinhMinhHoa())
@@ -75,9 +82,29 @@ public class BaiTapTheoNhomCoRecyclerAdapter extends RecyclerView.Adapter<BaiTap
                     itemClickInterface.onClick(v, i);
                 }
             });
+            if (baiTapArrayList.get(i).getTrangThai() == 1)
+                rel1.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.colorBlueT)));
+            else
+                rel1.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.color_corner1)));
+            rel1.setOnClickListener(view -> {
+                if (baiTapArrayList.get(i).getTrangThai() == 1) {
+                    view.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.color_corner1)));
+                    baiTapArrayList.get(i).setTrangThai(0);
+                } else {
+                    rel1.setBackgroundTintList(ColorStateList.valueOf(context.getColor(R.color.colorBlueT)));
+                    baiTapArrayList.get(i).setTrangThai(1);
+                }
+                int precent = 0;
+                for(int index=0;index<baiTapArrayList.size();index++)
+                    if(baiTapArrayList.get(index).getTrangThai()==1)
+                        precent++;
+                precent = precent*100/baiTapArrayList.size();
+
+            });
         }
     }
-    public void setOnClickItemRecyclerView(ItemClickInterface itemRecyclerView){
+
+    public void setOnClickItemRecyclerView(ItemClickInterface itemRecyclerView) {
         itemClickInterface = itemRecyclerView;
     }
 }

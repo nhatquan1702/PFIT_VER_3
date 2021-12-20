@@ -30,8 +30,8 @@ public class LoadingActivity extends AppCompatActivity {
         txtAnimation2= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.tranx);
         tvPFIT=findViewById(R.id.textView3);
         tvTT=findViewById(R.id.textView2);
-        tvTT.setVisibility(View.GONE);
-        tvPFIT.setVisibility(View.GONE);
+        tvTT.setVisibility(View.INVISIBLE);
+        tvPFIT.setVisibility(View.INVISIBLE);
 
         new Handler().postDelayed(new Runnable() {
             @Override

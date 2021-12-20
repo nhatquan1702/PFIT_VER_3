@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,13 +39,17 @@ public class ExcerciseByCourseActivity extends AppCompatActivity {
     private ArrayList<BaiTap> baiTapArrayList;
     RecyclerView baiTapRecyclerView;
     TextView tvTB;
+    Button btnHoanThanh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_excercice_by_muscle);
          tvTB = findViewById(R.id.tvTB);
-
+        btnHoanThanh = findViewById(R.id.btnHoanThanh);
+        btnHoanThanh.setOnClickListener(view->{
+            Toast.makeText(this,"cc nhat quan",Toast.LENGTH_SHORT).show();
+        });
         Toolbar toolbar = (Toolbar) findViewById(R.id.mtoolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -106,6 +111,12 @@ public class ExcerciseByCourseActivity extends AppCompatActivity {
                             intent.putExtra("maBaiTap", String.valueOf(baiTapArrayList.get(position).getMaBaiTap()));
                             startActivity(intent);
                         }
+
+//                            if(precent == 100){
+//                                btnHoanThanh.setEnabled(true);
+//                            }
+//                            else
+//                                btnHoanThanh.setEnabled(false);
                     });
                 }
                 catch (Exception e){

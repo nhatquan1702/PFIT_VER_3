@@ -99,6 +99,7 @@ public class HomeFragmentExcercise extends Fragment {
                             intent.putExtra("tenNhomCo", String.valueOf(nhomCoArrayList.get(position).getTenNhomCo()));
                             startActivity(intent);
                         }
+
                     });
                     progressBar.setVisibility(View.GONE);
                 }

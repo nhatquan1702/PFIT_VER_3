@@ -133,6 +133,7 @@ public class ManageTCActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(intent, 0);
             }
+
         });
         mSwipeRefresh.setOnRefreshListener(() -> {
             LoadKhoaTap();

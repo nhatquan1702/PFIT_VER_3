@@ -15,13 +15,36 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.testbaitap.R;
+import com.example.testbaitap.activity.MainActivity;
+import com.example.testbaitap.entity.Notifi;
 
 
 public class NotificationReceiver extends Application {
     public static final  String CHANNEL_1_ID = "channel1";
     public static final  String CHANNEL_2_ID = "channel2";
+    public static void showNotifi(Context context,String channel,String title){
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel)
+                .setSmallIcon(R.mipmap.logo1)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo11))
+                .setContentTitle("Nhắc nhở")
+                .setContentText(title)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(NotificationManager.IMPORTANCE_HIGH)
+                .addAction(new NotificationCompat.Action(
+                        android.R.drawable.sym_call_outgoing,
+                        "OK",
+                        PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)));
+        NotificationManagerCompat notificationManagerCompat =  NotificationManagerCompat.from(context);
+        notificationManagerCompat.notify(200, builder.build());
+    }
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,7 +62,7 @@ public class NotificationReceiver extends Application {
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_2_ID,
                     "Channel 2",
-                    NotificationManager.IMPORTANCE_LOW
+                    NotificationManager.IMPORTANCE_HIGH
             );
             channel1.setDescription("This is channel 2");
 

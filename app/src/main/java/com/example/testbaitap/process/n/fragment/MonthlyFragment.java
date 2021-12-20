@@ -144,7 +144,7 @@ public class MonthlyFragment extends Fragment {
         SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd");
         String tgHienTai = simpleDateFormat.format(Calendar.getInstance().getTime());
         String tam = tgHienTai.substring(0,4);
-        LoadData("quan", "01", tam);
+        LoadData(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), "01", tam);
         spinnerThang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

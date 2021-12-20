@@ -4,10 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class BaiTap {
-    public BaiTap(String maBaiTap, String tenBaiTap, String hinhMinhHoa) {
+    public BaiTap(String maBaiTap, String tenBaiTap, String hinhMinhHoa, Integer trangThai) {
         this.maBaiTap = maBaiTap;
         this.tenBaiTap = tenBaiTap;
         this.hinhMinhHoa = hinhMinhHoa;
+        this.trangThai = trangThai;
     }
 
     @SerializedName("maBaiTap")
@@ -22,6 +23,17 @@ public class BaiTap {
     @Expose
     private String hinhMinhHoa;
 
+    @SerializedName("trangThai")
+    @Expose
+    private Integer trangThai;
+
+    public Integer getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(Integer trangThai) {
+        this.trangThai = trangThai;
+    }
 
     public String getMaBaiTap() {
         return maBaiTap;

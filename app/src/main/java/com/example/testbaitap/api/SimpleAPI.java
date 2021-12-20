@@ -12,6 +12,7 @@ import com.example.testbaitap.entity.HocVien;
 import com.example.testbaitap.entity.KhoaTap;
 import com.example.testbaitap.entity.NgayTap;
 import com.example.testbaitap.entity.NhomCo;
+import com.example.testbaitap.entity.Notifi;
 import com.example.testbaitap.entity.Status;
 import com.example.testbaitap.entity.TaiKhoan;
 import com.example.testbaitap.entity.TheTrang;
@@ -26,7 +27,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface SimpleAPI {
-    @POST("api/hocvien/dangnhap")
+    @POST("api/taikhoan/dangnhap")
     Call<Status> dangNhap(@Query("email") String email, @Query("password") String password);
 
     @GET("api/nhomco")
@@ -127,4 +128,10 @@ public interface SimpleAPI {
 
     @GET("api/hoadon/dshoadontrongngay")
     Call<ArrayList<HoaDon>> getHoaDonTrongNgay(@Query("ngay") String ngay);
+
+    @GET("api/taikhoan/tttaikhoan")
+    Call<TaiKhoan> getThongTinTaiKhoan(@Query(value = "taikhoan") String taiKhoan);
+
+    @POST("notification")
+    Call<Status> pushNotifi(@Body Notifi notifi);
 }
