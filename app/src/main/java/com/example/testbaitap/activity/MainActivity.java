@@ -8,7 +8,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -22,29 +21,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testbaitap.R;
 ;
-import com.example.testbaitap.adapter.BaiTapTheoNhomCoRecyclerAdapter;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;
-import com.example.testbaitap.entity.BaiTap;
 import com.example.testbaitap.entity.NhomCo;
-import com.example.testbaitap.excercise.ItemClickInterface;
 import com.example.testbaitap.fragment.Fragment_Excercise;
 import com.example.testbaitap.fragment.Fragment_Home;
 import com.example.testbaitap.fragment.Fragment_Process;
 import com.example.testbaitap.fragment.Fragment_Reminder;
 import com.example.testbaitap.fragment.Fragment_Workout;
 import com.example.testbaitap.utils.Config;
-import com.github.ybq.android.spinkit.sprite.Sprite;
-import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 

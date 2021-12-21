@@ -45,8 +45,11 @@ public interface SimpleAPI {
     @GET("api/baitap/baitaptheomabaitap")
     Call<BaiTapFull> getFullBaiTapTheoMa(@Query("mabaitap") String maBaiTap);
 
+    @GET("api/chitietbaitap/ctbtchothanghocvien")
+    Call<ChiTietBaiTap> getChiTietBaiTapTheoMa(@Query("mabaitap") String maBaiTap, @Query("mahocvien") String maHocVien);
+
     @GET("api/chitietbaitap/chitietbaitaptheomabaitap")
-    Call<ChiTietBaiTap> getChiTietBaiTapTheoMa(@Query("mabaitap") String maBaiTap);
+    Call<ChiTietBaiTap> getChiTietBaiTapTheoMaNhomCo(@Query("mabaitap") String maBaiTap);
 
     @GET("api/ngaytap")
     Call<ArrayList<NgayTap>> getListNgayTap();
@@ -134,4 +137,10 @@ public interface SimpleAPI {
 
     @POST("notification")
     Call<Status> pushNotifi(@Body Notifi notifi);
+
+    @POST("api/ngaytap/updatettnt")
+    Call<Status> upDateTrangThaiNgayTap(@Query("ngay") String ngay, @Query("trangthai") int trangthai);
+
+    @GET("api/chitietbaitap/getctbttheongay")
+    Call<ArrayList<ChiTietBaiTapChoHV>> getListChiTietBTTheoNgay(@Query("makhoatap") String maKhoaTap, @Query("mahocvien") String maHocVien, @Query("ngaytap") Integer ngayTap);
 }

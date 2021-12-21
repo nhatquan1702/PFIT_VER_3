@@ -95,19 +95,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:layout_marginBottom="10dp"
                     android:background="@color/white"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-                <Button
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnHoanThanh"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hoan thanh"
-                    android:enabled="false"
-                    />
+                    android:layout_gravity="center"
+                    android:text="Đã hoàn thành"
+                    android:backgroundTint="@color/dot_dark_screen"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="20dp"
+                    android:textSize="@dimen/text_16"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:iconGravity="textStart"
+                    app:icon="@drawable/ic_check"
+                    android:fontFamily="@font/kanit" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

@@ -7,10 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.testbaitap.R;
 import com.example.testbaitap.adapter.BaiTapTheoNhomCoRecyclerAdapter;
@@ -29,12 +28,15 @@ public class ExcerciceByMuscleActivity extends AppCompatActivity {
     private SimpleAPI simpleAPI;
     TextView textViewTenNhomCo;
     private ArrayList<BaiTap> baiTapArrayList;
+    Button btnHoanThanh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_excercice_by_muscle);
         TextView tvTB = findViewById(R.id.tvTB);
+        btnHoanThanh = findViewById(R.id.btnHoanThanh);
+        btnHoanThanh.setVisibility(View.GONE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.mtoolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -57,8 +59,8 @@ public class ExcerciceByMuscleActivity extends AppCompatActivity {
         simpleAPI.getBaiTapTheoNhomCo(maNhomCo).enqueue(new Callback<ArrayList<BaiTap>>() {
             @Override
             public void onResponse(Call<ArrayList<BaiTap>> call, Response<ArrayList<BaiTap>> response) {
-                baiTapArrayList = response.body();
                 try {
+                    baiTapArrayList = response.body();
                     if(baiTapArrayList.size()==0){
                         tvTB.setText("Chưa có bài tập nào");
                     }
@@ -68,7 +70,7 @@ public class ExcerciceByMuscleActivity extends AppCompatActivity {
                     baiTapTheoNhomCoRecyclerAdapter.setOnClickItemRecyclerView(new ItemClickInterface() {
                         @Override
                         public void onClick(View view, int position) {
-                            Intent intent = new Intent(ExcerciceByMuscleActivity.this, DetailExcerciseActivity.class);
+                            Intent intent = new Intent(ExcerciceByMuscleActivity.this, DetailExcerciseByMuscleActivity.class);
                             intent.putExtra("maBaiTap", String.valueOf(baiTapArrayList.get(position).getMaBaiTap()));
                             startActivity(intent);
                         }
@@ -83,6 +85,7 @@ public class ExcerciceByMuscleActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<BaiTap>> call, Throwable t) {
                 //Toast.makeText(ExcerciceByMuscleActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                tvTB.setText("Chưa có bài tập nào");
             }
         });
 

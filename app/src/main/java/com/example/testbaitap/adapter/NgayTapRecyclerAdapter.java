@@ -81,16 +81,10 @@ public class NgayTapRecyclerAdapter extends RecyclerView.Adapter<NgayTapRecycler
             if ((i + 1) % 4 != 0 || i > 27) {
                 viewHolder.imgNgayNghi.setVisibility(View.GONE);
                 viewHolder.rel2.setVisibility(View.GONE);
-                viewHolder.numberProgressBar.setVisibility(View.VISIBLE);
+                viewHolder.numberProgressBar.setVisibility(View.GONE);
                 viewHolder.ngayTap.setText("Ngày "+ String.valueOf(ngayTapArrayList.get(i).getNgayTap()));
                 viewHolder.ngayTap.setVisibility(View.VISIBLE);
                 viewHolder.rel1.setVisibility(View.VISIBLE);
-                if(ngayTapArrayList.get(i).getTrangThai()==0){
-                    numberProgressBar.setVisibility(View.GONE);
-                }
-                if(ngayTapArrayList.get(i).getTrangThai()==1) {
-                    numberProgressBar.setVisibility(View.VISIBLE);
-                }
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

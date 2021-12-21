@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.testbaitap.R;
-import com.example.testbaitap.activity.ExcerciseByCourseActivity;
-import com.example.testbaitap.adapter.BaiTapTheoNhomCoRecyclerAdapter;
 import com.example.testbaitap.adapter.RecyclerHDAdapter;
 import com.example.testbaitap.api.Constants;
 import com.example.testbaitap.api.SimpleAPI;

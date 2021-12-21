@@ -148,11 +148,12 @@ public class Fragment_Workout extends Fragment {
 //                        SharedPreferences.Editor editor = sharedPreferences.edit();
 //                        editor.putString("maHocVien", hocVien_khoaTap.getMaHocVien().trim());
 //                        editor.putString("maKhoaTap", hocVien_khoaTap.getMaKhoaTap().trim());
-                        //LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
+                        LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
 
                         mSwipeRefresh.setOnRefreshListener(() -> {
                             LoadKhoaTap(hocVien.getMaKhoaTap());
-                            //LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
+                            LoadNgayTap();
+                            LoadPTKhoaTap(hocVien.getMaHocVien(), hocVien.getMaKhoaTap());
                             mSwipeRefresh.setRefreshing(false);
                         });
                         //editor.commit();
@@ -208,17 +209,23 @@ public class Fragment_Workout extends Fragment {
         this.progressBar = (ProgressBar) view.findViewById(R.id.progress);
         this.progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.launch_progressbar));
 
+        LoadNgayTap();
 
+
+
+
+        return view;
+    }
+
+    public void LoadNgayTap(){
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         simpleAPI = Constants.instance();
         ngayTapArrayList = new ArrayList<>();
         processArraylist = new ArrayList<>();
-
         simpleAPI.getListNgayTap().enqueue(new Callback<ArrayList<NgayTap>>() {
             @Override
             public void onResponse(Call<ArrayList<NgayTap>> call, Response<ArrayList<NgayTap>> response) {
                 ngayTapArrayList = response.body();
-                LoadPhanTramNgayTap();
                 for(int i=0; i<ngayTapArrayList.size(); i++){
                     processArraylist.add(ngayTapArrayList.get(i).getNgayTap());
                 }
@@ -283,8 +290,6 @@ public class Fragment_Workout extends Fragment {
                 Toast.makeText(requireContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        return view;
     }
 
     public void  LoadPhanTramNgayTap (PTNgayTapViewModel ptNgayTapViewModel, String maKhoaTap, String maHocVien, Integer ngayTap){
@@ -312,16 +317,16 @@ public class Fragment_Workout extends Fragment {
         });
     }
 
-    public void LoadPhanTramNgayTap(){
-        int dem = 0;
-        for(int i=0 ; i<ngayTapArrayList.size(); i++){
-            if(ngayTapArrayList.get(i).getTrangThai()==1)
-                dem++;
-        }
-        int pt = dem*100/23;
-        percentScore1.setText(String.valueOf(pt)+"%");
-        progressBarPT.setProgress(pt);
-    }
+//    public void LoadPhanTramNgayTap(){
+//        int dem = 0;
+//        for(int i=0 ; i<ngayTapArrayList.size(); i++){
+//            if(ngayTapArrayList.get(i).getTrangThai()==1)
+//                dem++;
+//        }
+//        int pt = dem*100/23;
+//        percentScore1.setText(String.valueOf(pt)+"%");
+//        progressBarPT.setProgress(pt);
+//    }
 
     public void LoadPTKhoaTap(String maHocVien, String maKhoaTap){
         progressBarPT.setVisibility(View.VISIBLE);
@@ -331,17 +336,11 @@ public class Fragment_Workout extends Fragment {
             public void onResponse(Call<Status> call, Response<Status> response) {
                 try {
                     Status status = response.body();
-                    if(status.getStatus()>0){
-                        percentScore1.setText(String.valueOf(status.getStatus())+"%");
-                        progressBarPT.setVisibility(View.INVISIBLE);
-                    }
-                    else{
-                        percentScore1.setText(String.valueOf(0)+"%");
-                        progressBarPT.setVisibility(View.INVISIBLE);
-                    }
+                    percentScore1.setText(String.valueOf(status.getStatus())+"%");
+                    progressBar.setProgress(status.getStatus());
+                    progressBarPT.setVisibility(View.VISIBLE);
                 }
                 catch (Exception e){
-                    percentScore1.setText(String.valueOf(0)+"%");
                     Log.d("quan", e.toString());
                     progressBarPT.setVisibility(View.INVISIBLE);
                 }
@@ -349,7 +348,6 @@ public class Fragment_Workout extends Fragment {
 
             @Override
             public void onFailure(Call<Status> call, Throwable t) {
-                percentScore1.setText(String.valueOf(0)+"%");
                 Log.d("quan", t.toString());
                 progressBarPT.setVisibility(View.INVISIBLE);
             }
@@ -402,4 +400,5 @@ public class Fragment_Workout extends Fragment {
             }
         });
     }
+
 }

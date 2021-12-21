@@ -49,6 +49,7 @@
                 android:background="@drawable/ic_check"
                 android:textColor="@color/dot_dark_screen"
                 android:textSize="@dimen/text_16"
+                android:visibility="gone"
                 android:textStyle="bold" />
 
         </RelativeLayout>

@@ -17,6 +17,9 @@
         android:theme="@style/Theme.TestBaiTap"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.DetailExcerciseByMuscleActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.AddReminderWaterActivity"
             android:exported="false" />
         <activity android:name=".activity.LoadingActivity">
@@ -88,8 +91,9 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <receiver android:name=".reciver.ReminderAddWaterBroadcast"/>
-        <receiver android:name=".reciver.ReminderAddStatusBroadcast"/>
+
+        <receiver android:name=".reciver.ReminderAddWaterBroadcast" />
+        <receiver android:name=".reciver.ReminderAddStatusBroadcast" />
     </application>
 
 </manifest>

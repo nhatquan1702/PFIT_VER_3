@@ -207,6 +207,14 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                     mtoolbar_title.setText(baiTapFull.getTenBaiTap());
                     tvCacBuoc.setText(baiTapFull.getMoTa());
                     tvTenDungCu.setText(baiTapFull.getTenDungCu());
+                    buttonURL.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            String videoURL = VideoViewUtils.URL_VIDEO_SAMPLE;
+                            String videoURL = baiTapFull.getVideo();
+                            VideoViewUtils.playURLVideo(DetailExcerciseActivity.this, videoView, videoURL);
+                        }
+                    });
                 }
                 catch (Exception e){
                     mtoolbar_title.setText("Chưa có bài tập này!");
@@ -222,7 +230,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
             }
         });
 
-        simpleAPI.getChiTietBaiTapTheoMa(maBaiTap).enqueue(new Callback<ChiTietBaiTap>() {
+        simpleAPI.getChiTietBaiTapTheoMa(maBaiTap, sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, "")).enqueue(new Callback<ChiTietBaiTap>() {
             @Override
             public void onResponse(Call<ChiTietBaiTap> call, Response<ChiTietBaiTap> response) {
                 ChiTietBaiTap chiTietBaiTap = response.body();
@@ -303,13 +311,7 @@ public class DetailExcerciseActivity extends AppCompatActivity {
 //            }
 //        });
 
-        this.buttonURL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String videoURL = VideoViewUtils.URL_VIDEO_SAMPLE;
-                VideoViewUtils.playURLVideo(DetailExcerciseActivity.this, videoView, videoURL);
-            }
-        });
+
 
     }
 
