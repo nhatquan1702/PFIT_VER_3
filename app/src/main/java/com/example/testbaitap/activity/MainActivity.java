@@ -175,8 +175,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         menuItemLogin.setVisible(role.equals("-1"));
         menuItemAccount.setVisible(!role.equals("-1"));
-        menuItemManage.setVisible(role.equals("1"));
-        menuItemSales.setVisible(role.equals("1"));
+        if(role.equals("2")){
+            menuItemManage.setVisible(true);
+        }
+        else {
+            menuItemManage.setVisible(false);
+        }
+
+        if(role.equals("3")){
+            menuItemSales.setVisible(true);
+        }
+        else {
+            menuItemSales.setVisible(false);
+        }
+
+
 
     }
     public void openFragment(Fragment fragment) {

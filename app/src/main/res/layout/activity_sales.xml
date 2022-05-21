@@ -56,6 +56,20 @@
             android:layout_marginBottom="5dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabDX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/ic_baseline_person_outline_24"
+            android:visibility="visible"
+            app:backgroundTint="#814BF8"
+            app:fabCustomSize="40dp"
+            app:fabSize="auto" />
     </RelativeLayout>
 
 </LinearLayout>

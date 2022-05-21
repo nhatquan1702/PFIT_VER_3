@@ -118,16 +118,49 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
                                             TaiKhoan taiKhoan = response.body();
                                             try {
-                                               Intent intent;
-                                               editor.putString(Config.DATA_LOGIN_USERNAME, taiKhoan.getTaiKhoan().trim());
-                                               editor.putString(Config.DATA_LOGIN_PASS, taiKhoan.getMatKhau().trim());
-                                               editor.putString(Config.DATA_LOGIN_ROLE, String.valueOf(taiKhoan.getQuyen()));
-                                               editor.commit();
-                                               Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                                               intent = new Intent(LoginActivity.this, MainActivity.class);
-                                               startActivity(intent);
-                                               finish();
-                                           }
+//                                               Intent intent;
+//                                               editor.putString(Config.DATA_LOGIN_USERNAME, taiKhoan.getTaiKhoan().trim());
+//                                               editor.putString(Config.DATA_LOGIN_PASS, taiKhoan.getMatKhau().trim());
+//                                               editor.putString(Config.DATA_LOGIN_ROLE, String.valueOf(taiKhoan.getQuyen()));
+//                                               editor.commit();
+//                                               Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+//                                               intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                               startActivity(intent);
+                                               if(taiKhoan.getQuyen()==3){
+                                                   Intent intent;
+                                                   editor.putString(Config.DATA_LOGIN_USERNAME, taiKhoan.getTaiKhoan().trim());
+                                                   editor.putString(Config.DATA_LOGIN_PASS, taiKhoan.getMatKhau().trim());
+                                                   editor.putString(Config.DATA_LOGIN_ROLE, String.valueOf(taiKhoan.getQuyen()));
+                                                   editor.commit();
+                                                   Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                                   intent = new Intent(LoginActivity.this, ManageTCActivity.class);
+                                                   startActivity(intent);
+                                                   finish();
+                                               }
+                                                if(taiKhoan.getQuyen()==2){
+                                                    Intent intent;
+                                                    editor.putString(Config.DATA_LOGIN_USERNAME, taiKhoan.getTaiKhoan().trim());
+                                                    editor.putString(Config.DATA_LOGIN_PASS, taiKhoan.getMatKhau().trim());
+                                                    editor.putString(Config.DATA_LOGIN_ROLE, String.valueOf(taiKhoan.getQuyen()));
+                                                    editor.commit();
+                                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                                    intent = new Intent(LoginActivity.this, SalesActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                                if(taiKhoan.getQuyen()==1){
+                                                    Intent intent;
+                                                    editor.putString(Config.DATA_LOGIN_USERNAME, taiKhoan.getTaiKhoan().trim());
+                                                    editor.putString(Config.DATA_LOGIN_PASS, taiKhoan.getMatKhau().trim());
+                                                    editor.putString(Config.DATA_LOGIN_ROLE, String.valueOf(taiKhoan.getQuyen()));
+                                                    editor.commit();
+                                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+
+                                            }
                                            catch (Exception e){
                                                Log.d("quan", e.toString());
                                            }

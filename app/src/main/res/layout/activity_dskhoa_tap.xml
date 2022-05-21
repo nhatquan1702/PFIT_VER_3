@@ -26,26 +26,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/helth_bg1" />
-
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/tvTieuDeLBV"
+            android:layout_marginHorizontal="@dimen/text_16"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/text_16"
+            android:layout_marginEnd="16dp"
+            app:queryHint="Tìm kiếm khóa tập" />
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
-            android:layout_below="@+id/tvTieuDeLBV"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_listbaiviet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_below="@+id/search"
                 android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="10dp"
-                android:layout_below="@+id/tvTieuDeLBV"
-                tools:listitem="@layout/item_khoa_tap"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_khoa_tap" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar

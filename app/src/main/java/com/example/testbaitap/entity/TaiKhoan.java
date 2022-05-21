@@ -21,7 +21,7 @@ public class TaiKhoan {
     @Expose
     private String soDienThoai;
 
-    @SerializedName("String")
+    @SerializedName("diaChi")
     @Expose
     private String diaChi;
 

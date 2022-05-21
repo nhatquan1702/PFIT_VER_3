@@ -17,6 +17,15 @@
         android:theme="@style/Theme.TestBaiTap"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.InsertHV"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AcceptUserRegister"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ListAccountRegisterTC"
+            android:exported="false" />
+        <activity
             android:name=".activity.DetailExcerciseByMuscleActivity"
             android:exported="false" />
         <activity

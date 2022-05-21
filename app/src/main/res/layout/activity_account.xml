@@ -60,7 +60,7 @@
                 app:cardCornerRadius="15dp"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -68,257 +68,137 @@
                     android:background="@drawable/corner1"
                     android:paddingBottom="50dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtTaiKhoan"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/tttk_bg"
-                        android:padding="5dp">
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:theme="@style/TextInputLayoutAppearance">
 
+                        <EditText
+                            android:id="@+id/edtTKED"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@null"
+                            android:hint="Tên tài khoản"
+                            android:inputType="text"
+                            android:maxLength="16"
+                            android:paddingStart="10dp"
+                            android:paddingBottom="10dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                        <ImageView
-                            android:id="@+id/imgIconHoTen"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_baseline_person_outline_24"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewHoTen"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:fontFamily="@font/kanit"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textViewTTHoTen" />
-
-                        <ImageView
-                            android:id="@+id/imageEditHoTen"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="5dp"
-                            android:src="@drawable/ic_baseline_arrow_right_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewTTHoTen"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="Họ và Tên"
-                            android:textColor="@color/colorPurple"
-                            android:fontFamily="@font/baloo"
-                            app:layout_constraintBottom_toBottomOf="@+id/imgIconHoTen"
-                            app:layout_constraintStart_toEndOf="@+id/imgIconHoTen" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtMatKhau"
                         android:layout_width="match_parent"
-                        android:layout_margin="5dp"
-                        android:padding="5dp"
-                        android:background="@drawable/tttk_bg"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_below="@+id/edtTaiKhoan"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:theme="@style/TextInputLayoutAppearance">
 
+                        <EditText
+                            android:id="@+id/edtMKED"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@null"
+                            android:hint="Mật khẩu"
+                            android:inputType="textPassword"
+                            android:maxLength="12"
+                            android:paddingStart="10dp"
+                            android:paddingBottom="10dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                        <ImageView
-                            android:id="@+id/imgIconSDT"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_baseline_phone_24"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/edtXacNhanMatKhau"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="8dp"
+                            android:layout_below="@+id/edtMatKhau"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:theme="@style/TextInputLayoutAppearance">
 
-                        <TextView
-                            android:id="@+id/textViewSDT"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:fontFamily="@font/kanit"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgIconSDT" />
+                            <EditText
+                                android:id="@+id/edtXNMKED"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:background="@null"
+                                android:hint="Xác nhận mật khẩu"
+                                android:inputType="textPassword"
+                                android:maxLength="12"
+                                android:paddingStart="10dp"
+                                android:paddingBottom="10dp" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <ImageView
-                            android:id="@+id/imgEditSDT"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="5dp"
-                            android:src="@drawable/ic_baseline_arrow_right_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewTTSDT"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="Số điện thọai"
-                            android:fontFamily="@font/baloo"
-                            android:textColor="@color/colorPurple"
-                            app:layout_constraintBottom_toBottomOf="@+id/imgIconSDT"
-                            app:layout_constraintStart_toEndOf="@+id/imgIconSDT" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtHoTen"
                         android:layout_width="match_parent"
-                        android:layout_margin="5dp"
-                        android:padding="5dp"
-                        android:background="@drawable/tttk_bg"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_below="@+id/edtXacNhanMatKhau"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:theme="@style/TextInputLayoutAppearance">
 
+                        <EditText
+                            android:id="@+id/edtHTED"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@null"
+                            android:hint="Họ tên"
+                            android:inputType="text"
+                            android:maxLength="50"
+                            android:paddingStart="10dp"
+                            android:paddingBottom="10dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                        <ImageView
-                            android:id="@+id/imgIconDiaChi"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_baseline_location_on_24"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewDiaChi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:fontFamily="@font/kanit"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgIconDiaChi" />
-
-                        <ImageView
-                            android:id="@+id/imgEditDiaChi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="5dp"
-                            android:src="@drawable/ic_baseline_arrow_right_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewTTDiaChi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="Địa chỉ"
-                            android:textColor="@color/colorPurple"
-                            android:fontFamily="@font/baloo"
-                            app:layout_constraintBottom_toBottomOf="@+id/imgIconDiaChi"
-                            app:layout_constraintStart_toEndOf="@+id/imgIconDiaChi" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtSDT"
                         android:layout_width="match_parent"
-                        android:layout_margin="5dp"
-                        android:padding="5dp"
-                        android:background="@drawable/tttk_bg"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_below="@+id/edtHoTen"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:theme="@style/TextInputLayoutAppearance">
 
+                        <EditText
+                            android:id="@+id/edtSDTED"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@null"
+                            android:hint="Số điện thoại"
+                            android:inputType="number"
+                            android:maxLength="12"
+                            android:paddingStart="10dp"
+                            android:paddingBottom="10dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                        <ImageView
-                            android:id="@+id/imgIconDMK"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginBottom="0dp"
-                            android:src="@drawable/ic_baseline_lock_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/imgEditMK"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="0dp"
-                            android:src="@drawable/ic_baseline_arrow_right_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewDMK"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="Đổi mật khẩu"
-                            android:textColor="@color/colorPurple"
-                            android:fontFamily="@font/baloo"
-                            app:layout_constraintBottom_toBottomOf="@+id/imgIconDMK"
-                            app:layout_constraintStart_toEndOf="@+id/imgIconDMK" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/edtDiaChi"
                         android:layout_width="match_parent"
-                        android:layout_margin="5dp"
-                        android:padding="5dp"
-                        android:background="@drawable/tttk_bg"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_below="@+id/edtSDT"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:theme="@style/TextInputLayoutAppearance">
 
+                        <EditText
+                            android:id="@+id/edtDCED"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@null"
+                            android:hint="Địa chỉ"
+                            android:inputType="text"
+                            android:paddingStart="10dp"
+                            android:paddingBottom="10dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                        <ImageView
-                            android:id="@+id/imgIconQR"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginBottom="0dp"
-                            android:src="@drawable/ic_baseline_qr_code_24_black"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/imgEditQR"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="0dp"
-                            android:src="@drawable/ic_baseline_arrow_right_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textViewQR"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="QR code của tôi"
-                            android:textColor="@color/colorPurple"
-                            android:fontFamily="@font/baloo"
-                            app:layout_constraintBottom_toBottomOf="@+id/imgIconQR"
-                            app:layout_constraintStart_toEndOf="@+id/imgIconQR" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
+                </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
             <RelativeLayout

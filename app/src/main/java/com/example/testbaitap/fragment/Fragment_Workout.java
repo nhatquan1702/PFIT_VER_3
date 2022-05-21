@@ -211,9 +211,6 @@ public class Fragment_Workout extends Fragment {
 
         LoadNgayTap();
 
-
-
-
         return view;
     }
 

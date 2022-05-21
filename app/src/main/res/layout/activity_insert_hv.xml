@@ -21,7 +21,7 @@
         android:layout_marginTop="30dp"
         android:elevation="10dp"
         android:transitionName="tvLogin"
-        android:text="Đăng ký tài khoản"
+        android:text="Đăng ký học viên"
         android:fontFamily="@font/baloo"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
@@ -95,7 +95,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:background="@null"
-                            android:hint="Tên tài khoản"
+                            android:hint="Mã học viên"
                             android:inputType="text"
                             android:maxLength="16"
                             android:paddingStart="10dp"
@@ -117,106 +117,44 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:background="@null"
-                            android:hint="Mật khẩu"
-                            android:inputType="textPassword"
-                            android:maxLength="12"
+                            android:hint="Tuổi"
+                            android:inputType="number"
+                            android:maxLength="3"
                             android:paddingStart="10dp"
                             android:paddingBottom="10dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edtXacNhanMatKhau"
+                    <RadioGroup
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
                         android:layout_below="@+id/edtMatKhau"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:theme="@style/TextInputLayoutAppearance">
+                        android:id="@+id/rGroup"
+                        android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/edtXNMKED"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:background="@null"
-                            android:hint="Xác nhận mật khẩu"
-                            android:inputType="textPassword"
-                            android:maxLength="12"
-                            android:paddingStart="10dp"
-                            android:paddingBottom="10dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <RadioButton
+                            android:id="@+id/rNam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="Nam" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edtHoTen"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
-                        android:layout_below="@+id/edtXacNhanMatKhau"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:theme="@style/TextInputLayoutAppearance">
-
-                        <EditText
-                            android:id="@+id/edtHTED"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:background="@null"
-                            android:hint="Họ tên"
-                            android:inputType="text"
-                            android:maxLength="50"
-                            android:paddingStart="10dp"
-                            android:paddingBottom="10dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edtSDT"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
-                        android:layout_below="@+id/edtHoTen"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:theme="@style/TextInputLayoutAppearance">
-
-                        <EditText
-                            android:id="@+id/edtSDTED"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:background="@null"
-                            android:hint="Số điện thoại"
-                            android:inputType="number"
-                            android:maxLength="12"
-                            android:paddingStart="10dp"
-                            android:paddingBottom="10dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/edtDiaChi"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
-                        android:layout_below="@+id/edtSDT"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:theme="@style/TextInputLayoutAppearance">
-
-                        <EditText
-                            android:id="@+id/edtDCED"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:background="@null"
-                            android:hint="Địa chỉ"
-                            android:inputType="text"
-                            android:paddingStart="10dp"
-                            android:paddingBottom="10dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <CheckBox
-                        android:text="Hiện mật khẩu"
-                        android:id="@+id/checkboxHienMK"
-                        android:layout_below="@+id/edtDiaChi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:id="@+id/rNu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Nữ" />
+                        <RadioButton
+                            android:id="@+id/rOther"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Khác" />
+                    </RadioGroup>
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
@@ -257,16 +195,6 @@
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
-            <TextView
-                android:id="@+id/tvDaCoTK"
-                android:layout_below="@+id/cv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/baloo"
-                android:textColor="@color/colorPurple"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:text="Bạn đã có tài khoản?"/>
         </RelativeLayout>
     </ScrollView>
 

@@ -143,4 +143,26 @@ public interface SimpleAPI {
 
     @GET("api/chitietbaitap/getctbttheongay")
     Call<ArrayList<ChiTietBaiTapChoHV>> getListChiTietBTTheoNgay(@Query("makhoatap") String maKhoaTap, @Query("mahocvien") String maHocVien, @Query("ngaytap") Integer ngayTap);
+
+    @GET("api/hocvien/allhvtheokt")
+    Call<ArrayList<HocVien>> getHVChuaDuyet(@Query("makhoatap") String maKhoaTap,@Query("trangthai") int trangThai);
+
+    @POST("api/taikhoan/insert")
+    Call<Status> insertTaiKhoan(@Body TaiKhoan taiKhoan);
+
+    @POST("api/hocvien/insert")
+    Call<Status> insertHocVien(@Body HocVien hocVien);
+
+    @GET("api/hocvien/checktontaihv")
+    Call<Status> checkHocVienTonTai(@Query("mahocvien") String maHocVien);
+
+    @POST("api/chitietbaitap/customctbt")
+    Call<Status> customCTBT(@Query (value = "mabaitap") String maBaiTap,
+                            @Query (value = "mahocvien") String maHocVien,
+                            @Query (value = "khoiluong") Float khoiLuong,
+                            @Query (value = "sohiep") String soHiep,
+                            @Query (value = "solanlap") String soLanLap,
+                            @Query (value = "tocdo") String tocDo,
+                            @Query (value = "tgnghi") String tgNghi);
+
 }

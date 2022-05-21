@@ -75,12 +75,12 @@ public class RecyclerHDAdapter extends RecyclerView.Adapter<RecyclerHDAdapter.Vi
                 tvHinhThucTTHD.setText("thanh toán tiền mặt");
             }
             tvTongTTHD.setText(String.valueOf(hoaDonArrayList.get(i).getTongThanhToan())+" VND");
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    itemClickInterface.onClick(v, i);
-                }
-            });
+//            cardView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    itemClickInterface.onClick(v, i);
+//                }
+//            });
         }
     }
 }

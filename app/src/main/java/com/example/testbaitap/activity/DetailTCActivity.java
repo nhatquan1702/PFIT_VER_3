@@ -26,6 +26,7 @@ import com.example.testbaitap.entity.HocVien;
 import com.example.testbaitap.entity.HocVien_KhoaTap;
 import com.example.testbaitap.entity.HuanLuyenVien;
 import com.example.testbaitap.entity.Status;
+import com.example.testbaitap.entity.TaiKhoan;
 import com.example.testbaitap.utils.Config;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
@@ -99,112 +100,177 @@ public class DetailTCActivity extends AppCompatActivity {
     }
     public void KiemTraDangKyKT(String maHocVien, String maKT){
         simpleAPI = Constants.instance();
-        simpleAPI.getKhachHang(maHocVien).enqueue(new Callback<HocVien>() {
+        simpleAPI.checkHocVienTonTai(maHocVien).enqueue(new Callback<Status>() {
             @Override
-            public void onResponse(Call<HocVien> call, Response<HocVien> response) {
+            public void onResponse(Call<Status> call, Response<Status> response) {
                 try {
-                    HocVien hocVien = response.body();
-                    // trang thai = 0 user dang tham gia khoa tap,
-                    // = 2 hoan thanh khoa tap
-                    // = 3 khong tham gia khoa tap nao
-                    if(hocVien.getMaKhoaTap().equals(maKT)){ //khóa tập đang tham gia
-                        if(hocVien.getTrangThai()==0 || hocVien.getTrangThai()==1){ // tk đang tham gia
-                            tvCapNhat.setText("Hủy đăng ký");
-                            tvLamLai.setVisibility(View.GONE);
-                            //call api huy dk
-                            tvCapNhat.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailTCActivity.this);
-                                    builder.setTitle("Xác nhận");
-                                    builder.setMessage("Bạn có thực sự muốn hủy đăng ký khóa tập này?");
-                                    builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            UpdateTrangThaiHV(hocVien.getMaHocVien(), 3);
-                                            Snackbar snackbar = Snackbar.make(clEditKTDT, "Hủy đăng ký khóa tập thành công!", Snackbar.LENGTH_LONG);
-                                            snackbar.show();
+                    Status status = new Status();
+                    status  = response.body();
+                    if(status.getStatus()==1){
+                        simpleAPI = Constants.instance();
+                        simpleAPI.getKhachHang(maHocVien).enqueue(new Callback<HocVien>() {
+                            @Override
+                            public void onResponse(Call<HocVien> call, Response<HocVien> response) {
+                                try {
+                                    HocVien hocVien = response.body();
+                                    // trang thai
+                                    // = 0 user đang đăng ký tham gia khoa tap -  có thể hủy
+                                    // = 1 đã duyệt, chờ thanh toán - có thể hủy
+                                    // = 2 thanh toán xong - đang hoạt động
+                                    // = 3 hoàn thành khóa tập
+                                    // = -1 hủy đăng ký hoặc bị hủy
+                                    if(hocVien.getMaKhoaTap().equals(maKT)){ //khóa tập đang tham gia
+                                        if(hocVien.getTrangThai()==0){ // tk đang tham gia
+                                            tvCapNhat.setText("Hủy đăng ký");
+                                            tvLamLai.setVisibility(View.GONE);
+                                            //call api huy dk
+                                            btnCapNhat.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailTCActivity.this);
+                                                    builder.setTitle("Xác nhận");
+                                                    builder.setMessage("Bạn có thực sự muốn hủy đăng ký khóa tập này?");
+                                                    builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            UpdateTrangThaiHV(hocVien.getMaHocVien(), -1);
+                                                            Snackbar snackbar = Snackbar.make(clEditKTDT, "Hủy đăng ký khóa tập thành công!", Snackbar.LENGTH_LONG);
+                                                            snackbar.show();
+                                                        }
+                                                    });
+                                                    builder.setNegativeButton("Hủy thao tác", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                            Snackbar snackbar = Snackbar.make(clEditKTDT, "Đã hủy thao tác", Snackbar.LENGTH_LONG);
+                                                            snackbar.show();
+                                                        }
+                                                    });
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
+                                                }
+                                            });
                                         }
-                                    });
-                                    builder.setNegativeButton("Hủy thao tác", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            Snackbar snackbar = Snackbar.make(clEditKTDT, "Đã hủy thao tác", Snackbar.LENGTH_LONG);
-                                            snackbar.show();
+                                        if(hocVien.getTrangThai()==1){ // tk đang tham gia
+                                            tvCapNhat.setText("Thanh toán");
+                                            btnCapNhat.setVisibility(View.VISIBLE);
+                                            btnCapNhat.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Intent intent = new Intent(DetailTCActivity.this, PayMentsActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                                    startActivityIfNeeded(intent, 0);
+                                                }
+                                            });
+                                            tvLamLai.setVisibility(View.VISIBLE);
+                                            tvLamLai.setText("Hủy đăng ký");
+                                            //call api huy dk
+                                            tvLamLai.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailTCActivity.this);
+                                                    builder.setTitle("Xác nhận");
+                                                    builder.setMessage("Bạn có thực sự muốn hủy đăng ký khóa tập này?");
+                                                    builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            UpdateTrangThaiHV(hocVien.getMaHocVien(), -1);
+                                                            Snackbar snackbar = Snackbar.make(clEditKTDT, "Hủy đăng ký khóa tập thành công!", Snackbar.LENGTH_LONG);
+                                                            snackbar.show();
+                                                        }
+                                                    });
+                                                    builder.setNegativeButton("Hủy thao tác", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                            Snackbar snackbar = Snackbar.make(clEditKTDT, "Đã hủy thao tác", Snackbar.LENGTH_LONG);
+                                                            snackbar.show();
+                                                        }
+                                                    });
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
+                                                }
+                                            });
                                         }
-                                    });
-                                    AlertDialog dialog = builder.create();
-                                    dialog.show();
+                                        if(hocVien.getTrangThai()==2) { //đã thanh toán
+                                            tvCapNhat.setVisibility(View.GONE);
+                                            tvLamLai.setVisibility(View.VISIBLE);
+                                            tvLamLai.setText("Bạn đang tham gia khóa tập này");
+                                            btnCapNhat.setVisibility(View.GONE);
+                                        }
+                                        if(hocVien.getTrangThai()==3) { //đã hoàn thành
+                                            tvCapNhat.setVisibility(View.GONE);
+                                            tvLamLai.setVisibility(View.VISIBLE);
+                                            tvLamLai.setText("Bạn đã hoàn thành khóa tập này");
+                                            btnCapNhat.setVisibility(View.GONE);
+                                        }
+                                        if(hocVien.getTrangThai()==-1) { //hủy khóa tập này trc đó
+                                            tvCapNhat.setVisibility(View.VISIBLE);
+                                            tvCapNhat.setText("Đăng ký lại");
+                                            tvLamLai.setVisibility(View.VISIBLE);
+                                            tvLamLai.setText("Bạn đã hủy khóa tập này trước đó!");
+                                            btnCapNhat.setVisibility(View.VISIBLE);
+                                            btnCapNhat.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    UpdateTrangThaiHV(hocVien.getMaHocVien(), 0);
+                                                }
+                                            });
+                                        }
+                                    }
+                                    else { //khóa tập chưa tham gia
+                                        if(hocVien.getTrangThai()==-1 || hocVien.getTrangThai()==3){
+                                            tvCapNhat.setText("Đăng ký");
+                                            tvLamLai.setVisibility(View.GONE);
+                                            btnCapNhat.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    //đăng ký khóa tập này
+                                                    try {
+                                                        UpdateTrangThaiHV(hocVien.getMaHocVien(), 0);
+                                                        UpdateKhoaTapCHoHocVien(hocVien.getMaHocVien(), maKT);
+                                                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Đăng ký khóa tập thành công!", Snackbar.LENGTH_LONG);
+                                                        snackbar.show();
+                                                    }
+                                                    catch (Exception e){
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            });
+                                        }
+
+                                        else {
+                                            tvCapNhat.setText("Đăng ký");
+                                            tvLamLai.setVisibility(View.GONE);
+                                            btnCapNhat.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Snackbar snackbar = Snackbar.make(clEditKTDT, "Bạn đã tham gia khóa tập trước đó!", Snackbar.LENGTH_LONG);
+                                                    snackbar.show();
+                                                }
+                                            });
+                                        }
+                                    }
                                 }
-                            });
-                        }
-                        if(hocVien.getTrangThai()==2) { //hoàn thành khóa tập này
-                            tvCapNhat.setVisibility(View.GONE);
-                            tvLamLai.setVisibility(View.VISIBLE);
-                            tvLamLai.setText("Bạn đã hoàn thành khóa tập này");
-                            btnCapNhat.setVisibility(View.GONE);
-                        }
-                        if(hocVien.getTrangThai()==3) { //hoàn thành khóa tập này
-                            tvCapNhat.setVisibility(View.VISIBLE);
-                            tvCapNhat.setText("Đăng ký lại");
-                            tvLamLai.setVisibility(View.VISIBLE);
-                            tvLamLai.setText("Bạn đã hủy khóa tập này trước đó!");
-                            btnCapNhat.setVisibility(View.VISIBLE);
-                            btnCapNhat.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    UpdateTrangThaiHV(hocVien.getMaHocVien(), Integer.parseInt(sharedPreferences.getString(Config.DATA_LOGIN_ROLE, "")));
+                                catch (Exception e){
+                                    e.printStackTrace();
                                 }
-                            });
-                        }
-                        if(hocVien.getTrangThai()==4){ // chờ thanh toán, thanh toán xong trạng thái về 0
-                            tvCapNhat.setVisibility(View.VISIBLE);
-                            tvCapNhat.setText("Thanh toán");
-                            tvLamLai.setVisibility(View.VISIBLE);
-                            tvLamLai.setText("Bạn cần thanh toán!");
-                            btnCapNhat.setVisibility(View.VISIBLE);
-                            btnCapNhat.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(DetailTCActivity.this, PayMentsActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                    startActivityIfNeeded(intent, 0);
-                                }
-                            });
-                        }
+                            }
+
+                            @Override
+                            public void onFailure(Call<HocVien> call, Throwable t) {
+                                Log.d("quan", t.toString());
+                            }
+                        });
                     }
-                    else { //khóa tập chưa tham gia
-                        if(hocVien.getTrangThai()==3){
-                            tvCapNhat.setText("Đăng ký");
-                            tvLamLai.setVisibility(View.GONE);
-                            btnCapNhat.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    //đăng ký khóa tập này
-                                    try {
-                                        UpdateTrangThaiHV(hocVien.getMaHocVien(), 1);
-                                        UpdateKhoaTapCHoHocVien(hocVien.getMaHocVien(), maKT);
-                                        Snackbar snackbar = Snackbar.make(clEditKTDT, "Đăng ký khóa tập thành công!", Snackbar.LENGTH_LONG);
-                                        snackbar.show();
-                                    }
-                                    catch (Exception e){
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
-                        }
-                        else {
-                            tvCapNhat.setText("Đăng ký");
-                            tvLamLai.setVisibility(View.GONE);
-                            btnCapNhat.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Snackbar snackbar = Snackbar.make(clEditKTDT, "Bạn đã tham gia khóa tập trước đó!", Snackbar.LENGTH_LONG);
-                                    snackbar.show();
-                                }
-                            });
-                        }
+                    else {
+                        Intent intent = new Intent(DetailTCActivity.this, InsertHV.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("mahocvien", maHocVien);
+                        bundle.putString("makhoatap", maKT);
+                        intent.putExtras(bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivityIfNeeded(intent, 0);
                     }
                 }
                 catch (Exception e){
@@ -213,10 +279,12 @@ public class DetailTCActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<HocVien> call, Throwable t) {
+            public void onFailure(Call<Status> call, Throwable t) {
                 Log.d("quan", t.toString());
             }
         });
+
+
 
 //        simpleAPI = Constants.instance();
 //        simpleAPI.getMaKhoaTapTheoMaHocVien(maHocVien).enqueue(new Callback<HocVien_KhoaTap>() {
@@ -266,14 +334,14 @@ public class DetailTCActivity extends AppCompatActivity {
     }
     public void LoadHLV(String maHLV){
         simpleAPI = Constants.instance();
-        simpleAPI.getHLV(maHLV).enqueue(new Callback<HuanLuyenVien>() {
+        simpleAPI.getThongTinTaiKhoan(maHLV).enqueue(new Callback<TaiKhoan>() {
             @Override
-            public void onResponse(Call<HuanLuyenVien> call, Response<HuanLuyenVien> response) {
-                HuanLuyenVien huanLuyenVien = response.body();
+            public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
+                TaiKhoan taiKhoan = response.body();
                 try {
-                    tvTTHLVDT.setText("Họ tên: "+ huanLuyenVien.getHoTen()+"\n\n"+
-                            "Số điện thoại: "+ huanLuyenVien.getSoDienThoai()+"\n\n"+
-                            "Địa chỉ: "+huanLuyenVien.getDiaChi());
+                    tvTTHLVDT.setText("Họ tên: "+ taiKhoan.getHoTen()+"\n\n"+
+                            "Số điện thoại: "+ taiKhoan.getSoDienThoai()+"\n\n"+
+                            "Địa chỉ: "+taiKhoan.getDiaChi());
                 }
                 catch (Exception e){
                     Log.d("quan", e.toString());
@@ -282,7 +350,7 @@ public class DetailTCActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<HuanLuyenVien> call, Throwable t) {
+            public void onFailure(Call<TaiKhoan> call, Throwable t) {
                 Log.d("quan", t.toString());
                 tvTTHLVDT.setText("Chưa có thông tin về HLV này!");
             }

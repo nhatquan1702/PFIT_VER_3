@@ -120,7 +120,7 @@ public class Fragment_Reminder extends Fragment {
             public void onResponse(Call<TheTrang> call, Response<TheTrang> response) {
                 try {
                     theTrang = response.body();
-                    Toast.makeText(requireContext(), theTrang.getMaHocVien(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(requireContext(), theTrang.getMaHocVien(), Toast.LENGTH_SHORT).show();
 
                     if(theTrang.getBmi()>0){
                         //ẩn

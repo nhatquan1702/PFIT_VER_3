@@ -131,6 +131,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <RelativeLayout
+                    android:id="@+id/relativeLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/colorPrimary"
@@ -172,14 +173,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvDungCu" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tvKhoiLuong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:inputType="numberDecimal"
                     android:textSize="@dimen/text_14"
                     app:layout_constraintBottom_toBottomOf="@+id/tvKL"
-                    app:layout_constraintStart_toEndOf="@+id/tvKL"/>
+                    app:layout_constraintStart_toEndOf="@+id/tvKL"
+                    app:layout_constraintTop_toTopOf="@+id/tvKL" />
 
                 <TextView
                     android:id="@+id/tvSH"
@@ -193,14 +196,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvKL" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tvSoHiep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:textSize="@dimen/text_14"
                     app:layout_constraintBottom_toBottomOf="@+id/tvSH"
-                    app:layout_constraintStart_toEndOf="@+id/tvSH"/>
+                    app:layout_constraintStart_toEndOf="@+id/tvSH"
+                    app:layout_constraintTop_toTopOf="@+id/tvSH" />
 
                 <TextView
                     android:id="@+id/tvSLL"
@@ -214,14 +218,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvSH" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tvSoLanLap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:textSize="@dimen/text_14"
                     app:layout_constraintBottom_toBottomOf="@+id/tvSLL"
-                    app:layout_constraintStart_toEndOf="@+id/tvSLL"/>
+                    app:layout_constraintStart_toEndOf="@+id/tvSLL"
+                    app:layout_constraintTop_toTopOf="@+id/tvSLL" />
 
                 <TextView
                     android:id="@+id/tvTD"
@@ -235,14 +240,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvSLL" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tvTocDo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:textSize="@dimen/text_14"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTD"
-                    app:layout_constraintStart_toEndOf="@+id/tvTD"/>
+                    app:layout_constraintStart_toEndOf="@+id/tvTD"
+                    app:layout_constraintTop_toTopOf="@+id/tvTD" />
 
                 <TextView
                     android:id="@+id/tvTGN"
@@ -256,14 +262,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvTD" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tvThoiGianNghi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:textSize="@dimen/text_14"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTGN"
-                    app:layout_constraintStart_toEndOf="@+id/tvTGN"/>
+                    app:layout_constraintStart_toEndOf="@+id/tvTGN"
+                    app:layout_constraintTop_toTopOf="@+id/tvTGN" />
 
                 <TextView
                     android:id="@+id/cacBuoc"
@@ -308,6 +315,8 @@
                     android:textSize="@dimen/text_14"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ghiChu"/>
+
+
                 <RelativeLayout
                     android:id="@+id/rlcuoi"
                     android:layout_width="match_parent"
@@ -330,6 +339,18 @@
                     android:fontFamily="@font/baloo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvGhiChuFinal"/>
+
+                <TextView
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:drawableEnd="@drawable/ic_check"
+                    android:padding="5dp"
+                    android:textColor="@color/dot_dark_screen"
+                    app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

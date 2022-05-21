@@ -26,10 +26,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/helth_bg1" />
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/tvTieuDeLBV"
+            android:layout_marginHorizontal="@dimen/text_16"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/text_16"
+            android:layout_marginEnd="16dp"
+            app:queryHint="Tìm kiếm khóa tập" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
-            android:layout_below="@+id/tvTieuDeLBV"
+            android:layout_below="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -111,7 +121,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="90dp"
-            android:src="@drawable/ic_baseline_refresh_24"
+            android:src="@drawable/ic_baseline_person_outline_24"
             android:visibility="gone"
             app:backgroundTint="#00B0FF"
             app:fabCustomSize="40dp"

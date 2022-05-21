@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:sweet="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvHD"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        sweet:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/lnHT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvHTHD"
+                    android:layout_width="wrap_content"
+                    android:text="Tài khoản: "
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/dot_dark_screen"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvHoTenHD"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnKT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/lnHT"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvKTHD"
+                    android:layout_width="wrap_content"
+                    android:text="Ngày đăng ký: "
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/dot_dark_screen"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvKhoaTapHD"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_16"
+                    android:fontFamily="@font/kanit"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

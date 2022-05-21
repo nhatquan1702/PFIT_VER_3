@@ -46,7 +46,7 @@ import retrofit2.Response;
 
 public class EditTCActivity extends AppCompatActivity {
     private EditText edtMaKT, edtTenKT, edtGiaKT;
-    private TextView tvLamLai, mText, tvCapNhat;
+    private TextView tvLamLai, mText, tvCapNhat, tvTieuDe;
     private SimpleAPI simpleAPI;
     private String encoded = null; // encoded img bitmap to base64
     private String imgReceive = null;
@@ -91,6 +91,7 @@ public class EditTCActivity extends AppCompatActivity {
 
         tvCapNhat = findViewById(R.id.tvCapNhat);
         tvLamLai = findViewById(R.id.tvLamLai);
+
         tvCapNhat.setText("Cập nhật");
        // mBtnUpload.setVisibility(View.GONE);
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);

@@ -48,14 +48,15 @@ import retrofit2.Response;
 
 public class DetailExcerciseActivity extends AppCompatActivity {
 
-    private TextView mtoolbar_title, tvTenDungCu, tvKhoiLuong, tvSoHiep, tvSoLanLap, tvTocDo, tvThoiGianNghi, tvCacBuoc, tvGhiChu, tvGhiChuFinal;
+    private TextView mtoolbar_title, tvTenDungCu, tvCacBuoc, tvGhiChu, tvGhiChuFinal;
+    private EditText tvKhoiLuong, tvSoHiep, tvSoLanLap, tvTocDo, tvThoiGianNghi;
     private VideoView videoView;
     private Button button_raw, button_local, button_url;
     private int position = 0;
     private MediaController mediaController;
-    private Button buttonRaw;
+    private Button buttonRaw ;
     private Button buttonLocal;
-    private TextView buttonURL;
+    private TextView buttonURL, button2;
     private SimpleAPI simpleAPI;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -83,23 +84,64 @@ public class DetailExcerciseActivity extends AppCompatActivity {
         this.videoView = (VideoView) findViewById(R.id.videoView);
         this.cardVideo = (CardView) findViewById(R.id.caedVideo);
         this.card_view_ct = (CardView) findViewById(R.id.card_view_ct);
-//        this.buttonRaw = (Button) findViewById(R.id.button_raw);
+        this.button2 = (TextView) findViewById(R.id.button2);
 //        this.buttonLocal = (Button) findViewById(R.id.button_local );
         this.buttonURL = (TextView) findViewById(R.id.button_url);
 
         mtoolbar_title = (TextView) findViewById(R.id.mtoolbar_title);
         tvTenDungCu = (TextView) findViewById(R.id.tvTenDungCu);
-        tvKhoiLuong = (TextView) findViewById(R.id.tvKhoiLuong);
-        tvSoHiep = (TextView) findViewById(R.id.tvSoHiep);
-        tvSoLanLap = (TextView) findViewById(R.id.tvSoLanLap);
-        tvTocDo = (TextView) findViewById(R.id.tvTocDo);
-        tvThoiGianNghi = (TextView) findViewById(R.id.tvThoiGianNghi);
+        tvKhoiLuong = (EditText) findViewById(R.id.tvKhoiLuong);
+        tvSoHiep = (EditText) findViewById(R.id.tvSoHiep);
+        tvSoLanLap = (EditText) findViewById(R.id.tvSoLanLap);
+        tvTocDo = (EditText) findViewById(R.id.tvTocDo);
+        tvThoiGianNghi = (EditText) findViewById(R.id.tvThoiGianNghi);
         tvCacBuoc = (TextView) findViewById(R.id.tvCacBuoc);
         tvGhiChuFinal = (TextView) findViewById(R.id.ghiChu);
         tvGhiChu = (TextView) findViewById(R.id.tvGhiChuFinal);
         checkboxHTBT = (CheckBox) findViewById(R.id.checkboxHTBT);
         sharedPreferences = getSharedPreferences(Config.DATA_LOGIN, MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean check = true;
+                String kt = tvKhoiLuong.getText().toString().trim();
+                String sh = tvSoHiep.getText().toString().trim();
+                String sll = tvSoLanLap.getText().toString().trim();
+                String td = tvTocDo.getText().toString().trim();
+                String tgn = tvThoiGianNghi.getText().toString().trim();
+                if(kt.isEmpty()){
+                    Snackbar snackbar = Snackbar.make(relDetailEx, "Bạn chưa nhập khối lượng!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    check = false;
+                }
+                if(sh.isEmpty()){
+                    Snackbar snackbar = Snackbar.make(relDetailEx, "Bạn chưa nhập số hiệp!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    check = false;
+                }
+                if(sll.isEmpty()){
+                    Snackbar snackbar = Snackbar.make(relDetailEx, "Bạn chưa nhập số lần lặp!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    check = false;
+                }
+                if(td.isEmpty()){
+                    Snackbar snackbar = Snackbar.make(relDetailEx, "Bạn chưa nhập tốc độ!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    check = false;
+                }
+                if(tgn.isEmpty()){
+                    Snackbar snackbar = Snackbar.make(relDetailEx, "Bạn chưa nhập thời gian nghỉ!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    check = false;
+                }
+                if(check){
+                    CustomCTBT(sharedPreferences.getString(Config.DATA_LOGIN_USERNAME, ""), maBaiTap, Float.parseFloat(kt), sh, sll,  td,  tgn);
+                }
+            }
+        });
+
         tvGhiChuFinal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,11 +282,11 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                         cardVideo.setVisibility(View.INVISIBLE);
                         card_view_ct.setVisibility(View.INVISIBLE);
                     }
-                    tvKhoiLuong.setText(String.valueOf(chiTietBaiTap.getKhoiLuong()) + " (kg)");
-                    tvSoHiep.setText(String.valueOf(chiTietBaiTap.getSoHiep()) + (" (hiệp)"));
-                    tvSoLanLap.setText(String.valueOf(chiTietBaiTap.getSoLanLap()) + " (lần)");
-                    tvTocDo.setText(String.valueOf(chiTietBaiTap.getTocDo()) + (" (giây)"));
-                    tvThoiGianNghi.setText(String.valueOf(chiTietBaiTap.getThoiGianNghi())+ (" (giây)"));
+                    tvKhoiLuong.setText(String.valueOf(chiTietBaiTap.getKhoiLuong()));
+                    tvSoHiep.setText(String.valueOf(chiTietBaiTap.getSoHiep()) );
+                    tvSoLanLap.setText(String.valueOf(chiTietBaiTap.getSoLanLap()));
+                    tvTocDo.setText(String.valueOf(chiTietBaiTap.getTocDo())  );
+                    tvThoiGianNghi.setText(String.valueOf(chiTietBaiTap.getThoiGianNghi()));
                 }
                 catch (Exception e){
                     mtoolbar_title.setText("Chưa có bài tập này!");
@@ -425,6 +467,34 @@ public class DetailExcerciseActivity extends AppCompatActivity {
                 }catch (Exception e){
                     Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật không thành công!", Snackbar.LENGTH_LONG);
                     snackbar.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Status> call, Throwable t) {
+                Log.d("quan", t.toString());
+            }
+        });
+    }
+
+    public void CustomCTBT(String maHV, String maBT, Float kl, String sh, String sll, String td, String tgn){
+        simpleAPI = Constants.instance();
+        simpleAPI.customCTBT(maBT, maHV, kl, sh, sll, td, tgn).enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(Call<Status> call, Response<Status> response) {
+                try {
+                    Status status = response.body();
+                    if(status.getStatus()==1){
+                        Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                    if (status.getStatus()==0){
+                        Snackbar snackbar = Snackbar.make(relDetailEx, "Cập nhật không thành công!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
                 }
             }
 
